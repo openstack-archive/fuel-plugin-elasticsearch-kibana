@@ -1,0 +1,8 @@
+- role: ['base-os']
+  stage: post_deployment
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/site.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+

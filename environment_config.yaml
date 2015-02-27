@@ -1,0 +1,18 @@
+attributes:
+
+  node_name:
+    value: 'elasticsearch'
+    label: 'Node name'
+    description: 'The name of the node where the plugin will be deployed'
+    weight: 20
+    type: "text"
+
+  dedicated_disks:
+    value: 'sdb'
+    label: 'Dedicated disks'
+    description: 'Comma-separated list of disk devices used to store Elasticsearch data (for instance "sdb,sdc")'
+    weight: 25
+    type: "text"
+    regex:
+        source: '\S'
+        error: "Invalid disk name"
