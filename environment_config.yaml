@@ -1,0 +1,15 @@
+attributes:
+
+  ek_dedicated_disk:
+    value: ''
+    label: 'Dedicated disk'
+    description: 'Comma separated list of disks used to store Elasticsearch data'
+    weight: 25
+    type: "text"
+
+  ek_node_name:
+    value: 'put the name of the EK node'
+    label: 'Node name'
+    description: 'The name of the node where the plugin will be deployed'
+    weight: 25
+    type: "text"
