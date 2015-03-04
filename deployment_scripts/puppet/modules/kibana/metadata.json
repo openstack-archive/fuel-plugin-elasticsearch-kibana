@@ -1,8 +1,8 @@
 {
-    "name": "elasticsearch_kibana",
+    "name": "kibana",
     "version": "6.1.0",
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
-    "summary": "Elasticsearch and kibana Installer",
+    "summary": "Kibana Installer",
     "license": "Apache License 2.0",
     "source": "git://git.openstack.org/cgit/stackforge/fuel-plugin-elasticsearch-kibana.git",
     "project_page": "none",
@@ -17,11 +17,9 @@
             "operatingsystemrelease": ["6"]
         }
     ],
-    "description": "Puppet module for configuring Elasticsearch server and Kibana dashboard",
+    "description": "Puppet module for configuring Kibana dashboard",
     "dependencies": [
         {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
-        {"name": "puppetlabs/lvm", "version_requirement": ">= 0.4.0"},
-        {"name": "elasticsearch/elasticsearch", "version_requirement": ">= 0.9.1"},
         {"name": "jfryman/nginx", "version_requirement": ">= 0.2.2"}
     ]
 }
