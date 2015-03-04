@@ -41,6 +41,25 @@ class elasticsearch_kibana (
     }
 
     # Start an instance of elasticsearch
-    elasticsearch::instance { $elasticsearch_kibana::params::es_instance: }
+    elasticsearch::instance { $elasticsearch_kibana::params::es_instance:
+      config => {
+        "http.cors.allow-origin" => "/.*/",
+        "http.cors.enabled" => "true"
+      },
+    }
+
+    # Install nginx and kibana
+    file { '/opt/kibana':
+      source  => "puppet:///modules/elasticsearch_kibana/kibana",
+      recurse => true,
+    }
+
+    class { 'nginx':
+      manage_repo => false,
+      nginx_vhosts => { 'kibana.local' => { 'www_root' => '/opt/kibana' } },
+      nginx_vhosts_defaults => { 'listen_options' => 'default_server' },
+      require     => File['/opt/kibana']
+    }
+
 }
 
