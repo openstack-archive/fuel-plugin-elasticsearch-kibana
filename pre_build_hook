@@ -36,7 +36,7 @@ deb_download https://download.elasticsearch.org/elasticsearch/elasticsearch/elas
 
 # Install puppet manifests
 # Clean-up first
-rm -rf ${MODULES}/{stdlib,lvm,elasticsearch,nginx}
+rm -rf ${MODULES}/{stdlib,concat,lvm,elasticsearch,nginx}
 mkdir -p ${MODULES}/{elasticsearch,nginx}
 
 # Include elasticsearch and nginx manifests from puppetlabs
@@ -46,9 +46,9 @@ wget -qO- "${NGINX_TARBALL_URL}" | tar -C "${MODULES}/nginx" --strip-components=
 # Include dependent manifests from fuel-library
 wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
     tar -C "${MODULES}" --strip-components=3 -zxvf - \
-    fuel-library-${FUEL_LIB_VERSION}/deployment/puppet/{stdlib,lvm}
+    fuel-library-${FUEL_LIB_VERSION}/deployment/puppet/{stdlib,concat,lvm}
 
 # Untar kibana
-KIBANA_FOLDER="${MODULES}/kibana/files/kibana"
+KIBANA_FOLDER="${MODULES}/kibana/files/src"
 mkdir -p ${KIBANA_FOLDER}
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
