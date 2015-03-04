@@ -16,4 +16,9 @@ class { "elasticsearch":
 }
 
 # Start an instance of elasticsearch
-elasticsearch::instance { $es_instance: }
+elasticsearch::instance { $es_instance:
+  config => {
+    "http.cors.allow-origin" => "/.*/",
+    "http.cors.enabled" => "true"
+  },
+}
