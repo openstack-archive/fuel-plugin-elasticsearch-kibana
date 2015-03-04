@@ -2,7 +2,15 @@
   stage: post_deployment
   type: puppet
   parameters:
-    puppet_manifest: puppet/site.pp
+    puppet_manifest: puppet/manifests/elasticsearch.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+
+- role: ['base-os']
+  stage: post_deployment
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/manifests/kibana.pp
     puppet_modules: puppet/modules
     timeout: 600
 

@@ -4,15 +4,13 @@ Elasticsearch_kibana module for Puppet
 Description
 -----------
 
-Puppet module for configuring Elasticsearch server and kibana dashboard.
+Puppet module for configuring kibana dashboard.
 
 Usage
 -----
 
 ```puppet
-class {'elasticsearch_kibana':
-  pv_name => '/dev/sdb',
-}
+class {'kibana': }
 
 ```
 
