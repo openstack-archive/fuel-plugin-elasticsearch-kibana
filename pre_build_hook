@@ -19,20 +19,33 @@ FUEL_LIB_TARBALL_URL="https://github.com/stackforge/fuel-library/archive/${FUEL_
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
 
-# Downloads needed DEB
-function deb_download {
-    FILE=$(basename $1)
-    wget -qO - $1 > ${DEB_REPO}/$FILE
+# Downloads needed RPM or DEB packages
+function download {
+    case "$1" in
+        deb) REPO=$DEB_REPO;;
+        rpm) REPO=$RPM_REPO;;
+    esac
+    shift
+
+    while [ $# -gt 0 ]; do
+        FILE=$(basename $1)
+        wget -qO - $1 > $REPO/$FILE
+        shift
+    done
 }
 
 # Packages needed to install JRE headless
-deb_download http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata_2015a-0ubuntu0.12.04_all.deb
-deb_download http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata-java_2015a-0ubuntu0.12.04_all.deb
-deb_download http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.7.4-2ubuntu2_amd64.deb
-deb_download http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20110912ubuntu6_all.deb
-deb_download http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.43ubuntu2_all.deb
-deb_download http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-7/openjdk-7-jre-headless_7u75-2.5.4-1~precise1_amd64.deb
-deb_download https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.deb
+download deb http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata_2015a-0ubuntu0.12.04_all.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata-java_2015a-0ubuntu0.12.04_all.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.7.4-2ubuntu2_amd64.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20110912ubuntu6_all.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.43ubuntu2_all.deb \
+             http://security.ubuntu.com/ubuntu/pool/universe/o/openjdk-7/openjdk-7-jre-headless_7u75-2.5.4-1~precise1_amd64.deb \
+             https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.deb
+
+# For redhat only java 1.8 headless is needed
+download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm \
+             https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.noarch.rpm
 
 # Install puppet manifests
 # Clean-up first

@@ -12,7 +12,16 @@ $fstype  = "ext3"
 # Params related to Elasticsearch.
 $es_dir      = "/es-data"
 $es_instance = "es-01"
-$java        = "openjdk-7-jre-headless"
+
+# Java
+case $::operatingsystem {
+  'CentOS': {
+    $java = "java-1.8.0-openjdk-headless"
+  }
+  'Ubuntu': {
+    $java = "openjdk-7-jre-headless"
+  }
+}
 
 
 # Creates the logical volume
