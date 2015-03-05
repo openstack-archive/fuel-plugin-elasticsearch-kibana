@@ -33,6 +33,13 @@ class disk_management (
   $vg_name,
 ) {
 
+  # CentOS is deployed with a /boot in RAID 1. We create a new partition with
+  # an ID 4. Until we improve this we need to deal with it.
+  $usedisks = $::operatingsystem ? {
+    CentOS => regsubst($disks, '/dev/([a-z]+)', '/dev/\14', 'G'),
+    Ubuntu => $disks
+  }
+
   disk_management::partition { $disks:
   }
 
