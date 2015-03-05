@@ -4,15 +4,26 @@ attributes:
     value: 'elasticsearch'
     label: 'Node name'
     description: 'The name of the node where the plugin will be deployed'
-    weight: 20
+    weight: 10
     type: "text"
 
   dedicated_disks:
     value: 'sdb'
     label: 'Dedicated disks'
     description: 'Comma-separated list of disk devices used to store Elasticsearch data (for instance "sdb,sdc")'
-    weight: 25
+    weight: 20
     type: "text"
     regex:
         source: '\S'
         error: "Invalid disk name"
+
+  # Parameter hidden in the UI on purpose
+  data_dir:
+    value: '/es-data'
+    label: 'Elasticsearch directory'
+    description: 'Directory used by elasticsearch to store data'
+    weight: 30
+    type: "text"
+    restrictions:
+      - condition: true
+        action: hide
