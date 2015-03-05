@@ -1,7 +1,7 @@
 class kibana (
-    $kibana_dir  = $kibana::params::dir
-    $kibana_conf = $kibana::params::config
-    $kibana_dash = $kibana::params::dashboard
+    $kibana_dir  = $kibana::params::dir,
+    $kibana_conf = $kibana::params::config,
+    $kibana_dash = $kibana::params::dashboard,
 ) inherits kibana::params {
 
     # Deploy kibana
