@@ -1,17 +1,16 @@
-Kibana module for Puppet
-========================
+LMA Logging Analytics module for Puppet
+=======================================
 
 Description
 -----------
 
-Puppet module for configuring Kibana dashboard.
+Puppet module for configuring the Kibana dashboard and Elasticsearch.
 
 Usage
 -----
 
 ```puppet
-class {'kibana': }
-
+class {'lma_logging_analytics::kibana': }
 ```
 
 Limitations

@@ -1,0 +1,60 @@
+{
+    "mappings": {
+        "message": {
+            "properties": {
+                "Logger": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "programname": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "Hostname": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "hostname": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "fuel_environment": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "openstack_region": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "openstack_release": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "deployment_id": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "deployment_mode": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "request_id": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "tenant_id": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "user_id": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "settings": {
+        "number_of_shards": <%= @number_of_shards %>
+    },
+    "template": "<%= @index_prefix %>-*"
+}
