@@ -1,5 +1,4 @@
 $fuel_settings = parseyaml(file('/etc/astute.yaml'))
-
 # Params related to Elasticsearch.
 $es_dir      = $fuel_settings['elasticsearch_kibana']['data_dir']
 $es_instance = "es-01"
@@ -27,4 +26,8 @@ elasticsearch::instance { $es_instance:
     "http.cors.allow-origin" => "/.*/",
     "http.cors.enabled" => "true"
   },
+}
+
+lma_logging_analytics::es_template { ['log', 'notification']:
+  require => Elasticsearch::Instance[$es_instance],
 }

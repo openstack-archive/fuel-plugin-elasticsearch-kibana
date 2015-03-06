@@ -1,1 +1,1 @@
-class { 'kibana': }
+class { 'lma_logging_analytics::kibana': }

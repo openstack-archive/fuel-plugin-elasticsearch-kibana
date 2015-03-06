@@ -62,6 +62,6 @@ wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
     fuel-library-${FUEL_LIB_VERSION}/deployment/puppet/{stdlib,concat,lvm}
 
 # Untar kibana
-KIBANA_FOLDER="${MODULES}/kibana/files/src"
+KIBANA_FOLDER="${MODULES}/lma_logging_analytics/files/kibana/src"
 mkdir -p ${KIBANA_FOLDER}
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz

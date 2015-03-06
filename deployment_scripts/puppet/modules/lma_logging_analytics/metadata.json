@@ -1,8 +1,8 @@
 {
-    "name": "kibana",
+    "name": "lma_logging_analytics",
     "version": "6.1.0",
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
-    "summary": "Kibana Installer",
+    "summary": "Provides additional resources for the LMA logging analytics"
     "license": "Apache License 2.0",
     "source": "git://git.openstack.org/cgit/stackforge/fuel-plugin-elasticsearch-kibana.git",
     "project_page": "none",
@@ -17,9 +17,10 @@
             "operatingsystemrelease": ["6"]
         }
     ],
-    "description": "Puppet module for configuring Kibana dashboard",
+    "description": "Puppet module for configuring the Kibana dashboard and Elasticsearch",
     "dependencies": [
         {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
         {"name": "jfryman/nginx", "version_requirement": ">= 0.2.2"}
+        {"name": "elasticsearch/elasticsearch", "version_requirement": ">= 0.9.0"}
     ]
 }
