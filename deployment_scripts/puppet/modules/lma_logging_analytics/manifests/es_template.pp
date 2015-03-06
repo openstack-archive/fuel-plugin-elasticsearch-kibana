@@ -1,0 +1,9 @@
+define lma_logging_analytics::es_template (
+  $number_of_shards = 3
+) {
+  $index_prefix = $title
+
+  elasticsearch::template {
+    content => template('lma_logging_analytics/es_template.json.erb'),
+  }
+}
