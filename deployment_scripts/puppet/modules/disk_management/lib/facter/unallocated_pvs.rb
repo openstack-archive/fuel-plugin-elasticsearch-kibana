@@ -21,4 +21,4 @@ devices.each do |device|
     end
 end
 
-Facter.add("unallocated_pvs") { setcode { unallocated_pvs } }
+Facter.add("unallocated_pvs") { setcode { unallocated_pvs.sort.join(',') } }
