@@ -1,53 +1,19 @@
-# == Class: disk_management
-#
-# The disk_management class will create a logical volume above the disks
-# given as parameter and mount the direcory on this volume.
-#
-# === Parameters
-#
-# [*disks*]
-#   The disks to use to create the physical volumes.
-#
-# [*directory*]
-#   The name of the directory that will be mount on created logical volumes.
-#
-# === Examples
-#
-#  class { 'disk_management':
-#    disks     => ['/dev/sdb', '/dev/sdc'],
-#    directory => "/data",
-#  }
-#
-# === Authors
-#
-# Guillaume Thouvenin <gthouvenin@mirantis.com
-#
-# === copyright
-#
-# Copyright 2015 Mirantis Inc, unless otherwise noted.
-#
 class disk_management (
-  $disks,
-  $directory,
-  $lv_name,
-  $vg_name,
-) {
+  $script          = $disk_management::params::script,
+  $puppet_source   = $disk_management::params::puppet_source,
+  $script_location = $disk_management::params::script_location,
+) inherits disk_management::params {
 
-  # CentOS is deployed with a /boot in RAID 1. We create a new partition with
-  # an ID 4. Until we improve this we need to deal with it.
-  $usedisks = $::operatingsystem ? {
-    CentOS => regsubst($disks, '/dev/([a-z]+)', '/dev/\14', 'G'),
-    Ubuntu => $disks
+  package { 'parted':
+    ensure => installed,
   }
 
-  disk_management::partition { $disks:
+  file { $script_location:
+    ensure  => 'file',
+    source  => $puppet_source,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+    require => Package['parted'],
   }
-
-  disk_management::lvm_fs { $directory:
-    disks   => $usedisks,
-    lv_name => $lv_name,
-    vg_name => $vg_name,
-    require => Disk_management::Partition[$disks],
-  }
-
 }
