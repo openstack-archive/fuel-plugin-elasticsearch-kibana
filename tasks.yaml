@@ -16,6 +16,20 @@
 
 - role: ['base-os']
   stage: post_deployment
+  type: reboot
+  parameters:
+    timeout: 600
+
+- role: ['base-os']
+  stage: post_deployment
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/manifests/setup_esdir.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+
+- role: ['base-os']
+  stage: post_deployment
   type: puppet
   parameters:
     puppet_manifest: puppet/manifests/elasticsearch.pp
