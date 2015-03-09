@@ -28,5 +28,8 @@ define disk_management::partition {
         require => File[$script],
       }
     }
+
+    'Debian': {
+    }
   }
 }
