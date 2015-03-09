@@ -8,14 +8,11 @@ attributes:
     type: "text"
 
   dedicated_disks:
-    value: 'sdb'
+    value: ''
     label: 'Dedicated disks'
-    description: 'Comma-separated list of disk devices used to store Elasticsearch data (for instance "sdb,sdc")'
+    description: 'Comma-separated list of disk devices used to store Elasticsearch data (for instance "sda,sdb"). Keep it empty means using "/"'
     weight: 20
     type: "text"
-    regex:
-        source: '\S'
-        error: "Invalid disk name"
 
   # Parameter hidden in the UI on purpose
   data_dir:
