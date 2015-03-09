@@ -1,32 +1,30 @@
 define disk_management::partition {
 
-  $disk = $title
-  $script = "/usr/local/bin/add_partition_on_raid.sh"
-  $cmd  = "${script} ${disk}"
+  $script = $::osfamily ? {
+    RedHat => "add_partition_on_raid.sh",
+    Debian => "add_partition.sh",
+  }
 
-  case $::osfamily {
-    'RedHat': {
-      # CentOS deploys /boot into a RAID on all available disks. So in
-      # this case we need to create a new partition instead of using the whole
-      # disks as we do for Debian family.
+  $disk            = $title
+  $puppet_source   = "puppet:///modules/disk_management/${script}"
+  $script_location = "/usr/local/bin/${script}"
+  $cmd             = "${script_location} ${disk}"
 
-      package { 'parted':
-        ensure => installed,
-      }
+  package { 'parted':
+    ensure => installed,
+  }
 
-      file { $script:
-        ensure  => 'file',
-        source  => 'puppet:///modules/disk_management/add_partition_on_raid.sh',
-        owner   => 'root',
-        group   => 'root',
-        mode    => '0700',
-        require => Package['parted'],
-      }
+  file { $script_location:
+    ensure  => 'file',
+    source  => $puppet_source,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0700',
+    require => Package['parted'],
+  }
 
-      exec { 'run_script':
-        command => $cmd,
-        require => File[$script],
-      }
-    }
+  exec { 'run_script':
+    command => $cmd,
+    require => File[$script_location],
   }
 }
