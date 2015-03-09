@@ -35,5 +35,9 @@ $MDADM $RAID --fail $PARTITION --remove $PARTITION &>/dev/null
 # Create a new partition
 add_new_partition $DISK
 
+# Get the ID of the partition and set flags to LVM
+PARTID=$(${PARTED} ${DISK} p | grep -v "^$" | tail -1 | awk {'print $1'})
+${PARTED} ${DISK} set ${PARTID} lvm on
+
 # Add the partition that belongs to the raid.
 $MDADM --add  $RAID $PARTITION

@@ -37,7 +37,7 @@ class disk_management (
   # an ID 4. Until we improve this we need to deal with it.
   $usedisks = $::operatingsystem ? {
     CentOS => regsubst($disks, '/dev/([a-z]+)', '/dev/\14', 'G'),
-    Ubuntu => $disks
+    Ubuntu => regsubst($disks, '/dev/([a-z]+)', '/dev/\11', 'G'),
   }
 
   disk_management::partition { $disks:
