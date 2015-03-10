@@ -2,6 +2,14 @@
   stage: post_deployment
   type: puppet
   parameters:
+    puppet_manifest: /etc/puppet/modules/osnailyfacter/modular/netconfig/netconfig.pp
+    puppet_modules: /etc/puppet/modules
+    timeout: 720
+
+- role: ['base-os']
+  stage: post_deployment
+  type: puppet
+  parameters:
     puppet_manifest: puppet/manifests/setup_disks.pp
     puppet_modules: puppet/modules
     timeout: 600
