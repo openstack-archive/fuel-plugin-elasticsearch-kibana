@@ -43,14 +43,19 @@ To install the Elasticsearch-Kibana plugin, follow these steps:
 2. Copy the plugin file to the Fuel Master node. Follow the [Quick start
    guide](https://software.mirantis.com/quick-start/) if you don't have a running
    Fuel Master node yet.
+
    ```
    scp elasticsearch-kibana-plugin-6.1.0.fp root@<IP address>:
    ```
+
 3. Install the plugin using the `fuel` command line:
+
    ```
    fuel plugins --install elasticsearch-kibana-plugin-6.1.0.fp
    ```
+
 4. Verify that the plugin is installed correctly:
+
    ```
    fuel plugins --list
    ```
