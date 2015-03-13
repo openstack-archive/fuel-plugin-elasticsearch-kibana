@@ -147,7 +147,7 @@
           "tmode": "terms",
           "tstat": "count",
           "valuefield": "",
-          "title": "Top hosts"
+          "title": "Top 10 hosts"
         },
         {
           "error": false,
@@ -159,7 +159,7 @@
           "exclude": [],
           "missing": false,
           "other": false,
-          "size": 1000000,
+          "size": 10,
           "order": "count",
           "style": {
             "font-size": "10pt"
@@ -180,7 +180,7 @@
           "tmode": "terms",
           "tstat": "count",
           "valuefield": "",
-          "title": "Top sources"
+          "title": "Top 10 sources"
         },
         {
           "error": false,
