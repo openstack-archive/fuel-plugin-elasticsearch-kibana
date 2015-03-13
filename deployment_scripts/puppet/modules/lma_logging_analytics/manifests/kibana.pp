@@ -1,10 +1,12 @@
-class lma_logging_analytics::kibana (
-    $kibana_dir  = $lma_logging_analytics::params::kibana_dir,
-    $kibana_conf = $lma_logging_analytics::params::kibana_config,
-    $kibana_dash = $lma_logging_analytics::params::kibana_dashboard,
-) inherits lma_logging_analytics::params {
+class lma_logging_analytics::kibana {
+ include lma_logging_analytics::params
 
-  # Deploy kibana
+  $kibana_dir    = $lma_logging_analytics::params::kibana_dir
+  $kibana_conf   = $lma_logging_analytics::params::kibana_config
+  $dashboard_dir = $lma_logging_analytics::params::kibana_dashboard_dir
+  $default_route = $lma_logging_analytics::params::kibana_default_route
+
+  # Deploy Kibana
   file { $kibana_dir:
     source  => "puppet:///modules/lma_logging_analytics/kibana/src",
     recurse => true,
@@ -17,9 +19,24 @@ class lma_logging_analytics::kibana (
     require => File[$kibana_dir],
   }
 
-  file { $kibana_dash:
+  file { "${dashboard_dir}/logs.json":
     source  => "puppet:///modules/lma_logging_analytics/kibana_dashboards/logs.json",
     require => File[$kibana_dir],
+  }
+
+  lma_logging_analytics::kibana_dashboard { 'logs':
+    source  => "${dashboard_dir}/logs.json",
+    require => File["${dashboard_dir}/logs.json"],
+  }
+
+  file { "${dashboard_dir}/notifications.json":
+    source  => "puppet:///modules/lma_logging_analytics/kibana_dashboards/notifications.json",
+    require => File[$kibana_dir],
+  }
+
+  lma_logging_analytics::kibana_dashboard { 'notifications':
+    source  => "${dashboard_dir}/notifications.json",
+    require => File["${dashboard_dir}/notifications.json"],
   }
 
   # Install nginx
