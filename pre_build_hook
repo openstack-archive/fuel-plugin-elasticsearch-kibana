@@ -1,6 +1,4 @@
 #!/bin/bash
-
-#!/bin/bash
 set -eux
 
 ROOT="$(dirname `readlink -f $0`)"
