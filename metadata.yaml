@@ -12,7 +12,7 @@ fuel_version: ['6.1']
 licenses: ['Apache License Version 2.0']
 # Specify author or company name
 authors: ['Mirantis Inc.']
-# A link to the plugin homepage
+# A link to the plugin homepage
 homepage: 'https://github.com/stackforge/fuel-plugin-elasticsearch-kibana'
 groups: []
 

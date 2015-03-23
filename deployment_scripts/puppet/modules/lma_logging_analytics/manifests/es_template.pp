@@ -1,3 +1,5 @@
+# Defined type lma_logging_analytics::es_template
+
 define lma_logging_analytics::es_template (
   $number_of_shards = 3
 ) {
