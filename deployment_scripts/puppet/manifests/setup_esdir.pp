@@ -9,13 +9,13 @@ if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_n
 
   if empty($disks) {
     file { $directory:
-      ensure => "directory",
+      ensure => 'directory',
     }
   } else {
     disk_management::lvm_fs { $directory:
       disks   => $disks,
-      lv_name => "es",
-      vg_name => "data",
+      lv_name => 'es',
+      vg_name => 'data',
     }
   }
 }
