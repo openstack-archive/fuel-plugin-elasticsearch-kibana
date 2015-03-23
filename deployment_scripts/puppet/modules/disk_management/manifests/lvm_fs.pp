@@ -1,8 +1,10 @@
+# Define Resource Type: disk_management::lvm_fs
+
 define disk_management::lvm_fs (
   $disks,
   $lv_name,
   $vg_name,
-  $fstype = "ext3",
+  $fstype = 'ext3',
 ) {
 
   $directory = $title
@@ -23,10 +25,10 @@ define disk_management::lvm_fs (
 
   # Mount the directory
   mount { $directory:
-    device  => $device,
     ensure  => mounted,
+    device  => $device,
     fstype  => $fstype,
-    options => "defaults",
+    options => 'defaults',
     require => [File[$directory], Lvm::Volume[$lv_name]],
   }
 }
