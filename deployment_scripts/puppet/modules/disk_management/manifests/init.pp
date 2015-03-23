@@ -1,3 +1,5 @@
+# Class disk_management
+
 class disk_management (
   $script          = $disk_management::params::script,
   $puppet_source   = $disk_management::params::puppet_source,
