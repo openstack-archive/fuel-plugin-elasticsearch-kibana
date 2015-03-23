@@ -4,12 +4,12 @@ if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_n
 
   # Params related to Elasticsearch.
   $es_dir      = $fuel_settings['elasticsearch_kibana']['data_dir']
-  $es_instance = "es-01"
+  $es_instance = 'es-01'
 
   # Java
   $java = $::operatingsystem ? {
-    CentOS => "java-1.8.0-openjdk-headless",
-    Ubuntu => "openjdk-7-jre-headless"
+    CentOS => 'java-1.8.0-openjdk-headless',
+    Ubuntu => 'openjdk-7-jre-headless'
   }
 
   # Ensure that java is installed
@@ -18,7 +18,7 @@ if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_n
   }
 
   # Install elasticsearch
-  class { "elasticsearch":
+  class { 'elasticsearch':
     datadir => ["${es_dir}/elasticsearch_data"],
     require => [Package[$java]],
   }
@@ -26,8 +26,8 @@ if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_n
   # Start an instance of elasticsearch
   elasticsearch::instance { $es_instance:
     config => {
-      "http.cors.allow-origin" => "/.*/",
-      "http.cors.enabled" => "true"
+      'http.cors.allow-origin' => '/.*/',
+      'http.cors.enabled'      => true
     },
   }
 
