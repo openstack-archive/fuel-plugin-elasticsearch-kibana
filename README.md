@@ -60,6 +60,10 @@ To install the Elasticsearch-Kibana plugin, follow these steps:
    fuel plugins --list
    ```
 
+Please refer to the [Fuel Plugins wiki](https://wiki.openstack.org/wiki/Fuel/Plugins)
+if you want to build the plugin by yourself. Version 2.0.0 or higher of the Fuel
+Plugin Builder will be required.
+
 User Guide
 ==========
 
