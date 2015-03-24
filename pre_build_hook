@@ -10,7 +10,7 @@ DEB_REPO="${ROOT}"/repositories/ubuntu/
 ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.9.1.tar.gz"
 NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
 
-# Puppet manifests from fuel-lib
+# Puppet manifests from fuel-lib
 FUEL_LIB_VERSION="6.0"
 FUEL_LIB_TARBALL_URL="https://github.com/stackforge/fuel-library/archive/${FUEL_LIB_VERSION}.tar.gz"
 
@@ -35,8 +35,8 @@ function download {
 # Packages needed to install JRE headless
 download deb http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
              http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.51_all.deb \
-             http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata-java_2015a-0ubuntu0.14.04_all.deb \
-             http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata_2015a-0ubuntu0.14.04_all.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata-java_2015b-0ubuntu0.14.04_all.deb \
+             http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata_2015b-0ubuntu0.14.04_all.deb \
              http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20141019ubuntu0.14.04.1_all.deb \
              http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
              http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u75-2.5.4-1~trusty1_amd64.deb \
@@ -46,7 +46,7 @@ download deb http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1
 download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm \
              https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.noarch.rpm
 
-# Install puppet manifests
+# Install puppet manifests
 # Clean-up first
 rm -rf ${MODULES}/{stdlib,concat,lvm,elasticsearch,nginx}
 mkdir -p ${MODULES}/{elasticsearch,nginx}
