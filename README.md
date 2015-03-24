@@ -16,6 +16,7 @@ Requirements
 | Requirement                    | Version/Comment |
 |--------------------------------|-----------------|
 | Mirantis OpenStack compatility | 6.1 or higher   |
+| Fuel Plugin Builder            | 2.0 or higher   |
 
 Recommendations
 ---------------
@@ -59,6 +60,9 @@ To install the Elasticsearch-Kibana plugin, follow these steps:
    ```
    fuel plugins --list
    ```
+
+If you want to build the plugin by yourself you can find all needed information
+in the [Fuel Plugins wiki](https://wiki.openstack.org/wiki/Fuel/Plugins).
 
 User Guide
 ==========
