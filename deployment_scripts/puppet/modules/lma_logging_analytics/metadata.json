@@ -1,6 +1,6 @@
 {
     "name": "lma_logging_analytics",
-    "version": "6.1.0",
+    "version": "1.0.0",
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
     "summary": "Provides additional resources for the LMA logging analytics"
     "license": "Apache License 2.0",
