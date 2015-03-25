@@ -12,6 +12,14 @@ if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_n
     Ubuntu => 'openjdk-7-jre-headless'
   }
 
+  # Temporary workaround due to https://bugs.launchpad.net/fuel/+bug/1435892
+  if $::osfamily == 'Debian' {
+    package { 'tzdata':
+      ensure => '2015b-0ubuntu0.14.04',
+      before => Package[$java],
+    }
+  }
+
   # Ensure that java is installed
   package { $java:
     ensure => installed,
