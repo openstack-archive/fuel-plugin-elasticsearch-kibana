@@ -1,6 +1,6 @@
 {
     "name": "disk_management",
-    "version": "6.1.0",
+    "version": "1.0.0",
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
     "summary": "Partition and configure disks",
     "license": "Apache License 2.0",
