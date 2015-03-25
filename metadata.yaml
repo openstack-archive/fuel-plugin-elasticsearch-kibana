@@ -5,7 +5,7 @@ title: The Elasticsearch-Kibana Server Plugin
 # Plugin version
 version: '6.1.0'
 # Description
-description: Deploy Elasticsearch server and the Kibana web interface.
+description: Deploy Elasticsearch server and the Kibana web interface (refer to the Elasticsearch-Kibana user guide for instructions).
 # Required fuel version
 fuel_version: ['6.1']
 # Licences
