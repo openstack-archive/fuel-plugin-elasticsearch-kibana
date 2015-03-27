@@ -5,5 +5,5 @@ class lma_logging_analytics::params {
   $kibana_config           = "${kibana_dir}/config.js"
   $kibana_dashboard_dir    = "${kibana_dir}/app/dashboards"
   $kibana_dashboard_prefix = 'Logging, Monitoring and Alerting - '
-  $kibana_default_route    = "/dashboard/elasticsearch/${kibana_dashboard_prefix} Logs"
+  $kibana_default_route    = join(['/dashboard/elasticsearch/', $kibana_dashboard_prefix, 'Logs'], '')
 }
