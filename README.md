@@ -81,6 +81,8 @@ User Guide
 Testing
 -------
 
+### Elasticsearch
+
 Once installed, you can check that ElasticSearch is working using `curl`:
 
 ```
@@ -106,6 +108,15 @@ The expected output is something like this:
   "tagline" : "You Know, for Search"
 }
 ```
+
+### Kibana
+
+The Kibana user interface is available at the following URL:
+
+http://$HOST/
+
+Where `HOST` is the IP address or the name of the node. By default, you will
+be redirected to the logs dashboard.
 
 Known issues
 ------------
