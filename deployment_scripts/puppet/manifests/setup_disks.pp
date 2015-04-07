@@ -1,8 +1,8 @@
-$fuel_settings = parseyaml(file('/etc/astute.yaml'))
+$elasticsearch_kibana = hiera('elasticsearch_kibana')
 
-if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_node_name'] {
+if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
 
-  $disks = regsubst($fuel_settings['elasticsearch_kibana']['dedicated_disks'], '([a-z]+)', '/dev/\1', 'G')
+  $disks = regsubst($elasticsearch_kibana['dedicated_disks'], '([a-z]+)', '/dev/\1', 'G')
   $array_disks = split($disks, ',')
 
   class { 'disk_management': }
