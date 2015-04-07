@@ -1,8 +1,8 @@
-$fuel_settings = parseyaml(file('/etc/astute.yaml'))
+$elasticsearch_kibana = hiera('elasticsearch_kibana')
 
-if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_node_name'] {
+if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
 
-  $directory = $fuel_settings['elasticsearch_kibana']['data_dir']
+  $directory = $elasticsearch_kibana['data_dir']
   $disks = split($::unallocated_pvs, ',')
 
   validate_array($disks)

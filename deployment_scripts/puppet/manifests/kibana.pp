@@ -1,5 +1,5 @@
-$fuel_settings = parseyaml(file('/etc/astute.yaml'))
+$elasticsearch_kibana = hiera('elasticsearch_kibana')
 
-if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_node_name'] {
+if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
   class { 'lma_logging_analytics::kibana': }
 }

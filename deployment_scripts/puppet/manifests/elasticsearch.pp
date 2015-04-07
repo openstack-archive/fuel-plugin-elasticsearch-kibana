@@ -1,9 +1,9 @@
-$fuel_settings = parseyaml(file('/etc/astute.yaml'))
+$elasticsearch_kibana = hiera('elasticsearch_kibana')
 
-if $fuel_settings['elasticsearch_kibana']['node_name'] == $fuel_settings['user_node_name'] {
+if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
 
   # Params related to Elasticsearch.
-  $es_dir      = $fuel_settings['elasticsearch_kibana']['data_dir']
+  $es_dir      = $elasticsearch_kibana['data_dir']
   $es_instance = 'es-01'
 
   # Java
