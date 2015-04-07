@@ -45,13 +45,13 @@ To install the Elasticsearch-Kibana plugin, follow these steps:
    Fuel Master node yet.
 
    ```
-   scp elasticsearch_kibana-1.0-1.0.0-0.noarch.rpm root@<Fuel Master node IP address>:
+   scp elasticsearch_kibana-0.7-0.7.0-0.noarch.rpm root@<Fuel Master node IP address>:
    ```
 
 3. Install the plugin using the `fuel` command line:
 
    ```
-   fuel plugins --install elasticsearch_kibana-1.0-1.0.0-0.noarch.rpm
+   fuel plugins --install elasticsearch_kibana-0.7-0.7.0-0.noarch.rpm
    ```
 
 4. Verify that the plugin is installed correctly:
@@ -126,9 +126,9 @@ None.
 Release Notes
 -------------
 
-**1.0.0**
+**0.7.0**
 
-* Initial release of the plugin
+* Initial release of the plugin. This is a beta version.
 
 Contributors
 ------------
