@@ -78,6 +78,15 @@ User Guide
 5. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" checkbox
    and fill-in the required fields.
 
+You can select up to 3 physical disks that will be mounted as a single logical
+volume to store the Elasticsearch data. If you specify no disk, the data will
+be stored on the root filesystem. In all cases, Elasticsearch data will be
+located in the */opt/es-data* directory.
+
+For each disk, you can also specify the allocated size (in GB). If you don't
+specify a value, the plugin will use all the free space of the disk.
+
+
 Testing
 -------
 
