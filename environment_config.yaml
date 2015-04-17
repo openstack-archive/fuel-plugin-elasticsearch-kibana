@@ -7,20 +7,67 @@ attributes:
     weight: 10
     type: "text"
 
-  dedicated_disks:
+  # Parameter hidden in UI on purpose
+  data_dir:
+    value: '/opt/es-data'
+    label: 'Elasticsearch directory'
+    description: 'Directory used by elasticsearch to store data'
+    weight: 15
+    type: "text"
+    restrictions:
+      - conditions: true
+        action: "disable"
+
+  disk1:
     value: ''
-    label: 'Dedicated disks'
-    description: 'Comma-separated list of disk devices used to store Elasticsearch data (for instance "sda,sdb"). Keep it empty means using "/"'
+    label: 'Disk 1'
+    description: 'Disk device used to store Elasticsearch data (for instance sda). Leave it empty to use "/"'
     weight: 20
     type: "text"
 
-  # Parameter hidden in the UI on purpose
-  data_dir:
-    value: '/es-data'
-    label: 'Elasticsearch directory'
-    description: 'Directory used by elasticsearch to store data'
+  disk1_size:
+    value: ''
+    label: 'Size'
+    description: 'in GB. Leave it empty to use all free space.'
     weight: 30
     type: "text"
+
+  disk2:
+    value: ''
+    label: 'Disk 2'
+    description: 'Disk device used to store Elasticsearch data (for instance sdb).'
+    weight: 40
+    type: "text"
     restrictions:
-      - condition: true
-        action: hide
+        - condition: "settings:elasticsearch_kibana.disk1.value == ''"
+          action: "disable"
+
+  disk2_size:
+    value: ''
+    label: 'Size'
+    description: 'in GB. Leave it empty to use all free space.'
+    weight: 50
+    type: "text"
+    restrictions:
+        - condition: "settings:elasticsearch_kibana.disk1.value == ''"
+          action: "disable"
+
+  disk3:
+    value: ''
+    label: 'Disk 3'
+    description: 'Disk device used to store Elasticsearch data (for instance sdc).'
+    weight: 60
+    type: "text"
+    restrictions:
+        - condition: "settings:elasticsearch_kibana.disk2.value == ''"
+          action: "disable"
+
+  disk3_size:
+    value: ''
+    label: 'Size'
+    description: 'in GB. Leave it empty to use all free space.'
+    weight: 70
+    type: "text"
+    restrictions:
+        - condition: "settings:elasticsearch_kibana.disk2.value == ''"
+          action: "disable"
