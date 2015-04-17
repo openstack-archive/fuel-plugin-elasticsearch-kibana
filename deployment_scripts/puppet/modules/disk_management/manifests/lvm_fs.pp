@@ -5,6 +5,8 @@ define disk_management::lvm_fs (
   $lv_name,
   $vg_name,
   $fstype = 'ext3',
+  $group = 'root',
+  $owner = 'root',
 ) {
 
   $directory = $title
@@ -21,6 +23,8 @@ define disk_management::lvm_fs (
   # create the directory
   file { $directory:
     ensure => directory,
+    group  => $group,
+    owner  => $owner,
   }
 
   # Mount the directory
