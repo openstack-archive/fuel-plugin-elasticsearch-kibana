@@ -78,6 +78,15 @@ User Guide
 5. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" checkbox
    and fill-in the required fields.
 
+You can choose disks that can be used to store the data. The plugin will
+create physical volumes, a volume group and a logical volume. If you don't
+specify the size of the disk that you want to use then all free space will be
+used. The size that you specify must fit in the free space. The logical
+volume will be mounted on */opt/es-data*.
+
+Currently you can select at most three physical disks. If you don't specify any
+disks, the data will be stored on the root filesystem.
+
 Testing
 -------
 
