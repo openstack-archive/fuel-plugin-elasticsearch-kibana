@@ -15,7 +15,7 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
   # Temporary workaround due to https://bugs.launchpad.net/fuel/+bug/1435892
   if $::osfamily == 'Debian' {
     package { 'tzdata':
-      ensure => '2015b-0ubuntu0.14.04',
+      ensure => '2015c-0ubuntu0.14.04',
       before => Package[$java],
     }
   }
