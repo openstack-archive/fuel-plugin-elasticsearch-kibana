@@ -92,7 +92,7 @@ Testing
 
 ### Elasticsearch
 
-Once installed, you can check that ElasticSearch is working using `curl`:
+Once installed, you can check that Elasticsearch is working using `curl`:
 
 ```
 curl http://$HOST:9200/

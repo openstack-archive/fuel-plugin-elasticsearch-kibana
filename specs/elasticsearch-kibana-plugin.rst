@@ -88,7 +88,7 @@ None
 Performance Impact
 ------------------
 
-The amount of resources (RAM, CPU, disk) required for ElasticSearch depends
+The amount of resources (RAM, CPU, disk) required for Elasticsearch depends
 on the number of clients but a typical setup would have at least 8GB of RAM
 and fast disks (ideally SSD drives). As a consequence, it is highly recommended
 to use a dedicated node for deploying the plugin. Good insights are given by
