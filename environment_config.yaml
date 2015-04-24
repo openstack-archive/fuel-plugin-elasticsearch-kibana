@@ -15,7 +15,7 @@ attributes:
     weight: 15
     type: "text"
     restrictions:
-      - condition: true
+      - condition: "true"
         action: hide
 
   disk1:
