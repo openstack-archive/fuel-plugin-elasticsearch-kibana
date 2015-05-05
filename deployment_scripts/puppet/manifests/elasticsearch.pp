@@ -26,14 +26,6 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
     Ubuntu => 'openjdk-7-jre-headless'
   }
 
-  # Temporary workaround due to https://bugs.launchpad.net/fuel/+bug/1435892
-  if $::osfamily == 'Debian' {
-    package { 'tzdata':
-      ensure => '2015d-0ubuntu0.14.04',
-      before => Package[$java],
-    }
-  }
-
   # Ensure that java is installed
   package { $java:
     ensure => installed,
