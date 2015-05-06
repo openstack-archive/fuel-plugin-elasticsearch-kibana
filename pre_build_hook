@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-ROOT="$(dirname `readlink -f $0`)"
+ROOT="$(dirname "$(readlink -f "$0")")"
 MODULES="${ROOT}"/deployment_scripts/puppet/modules
 RPM_REPO="${ROOT}"/repositories/centos/
 DEB_REPO="${ROOT}"/repositories/ubuntu/
@@ -26,8 +26,8 @@ function download {
     shift
 
     while [ $# -gt 0 ]; do
-        FILE=$(basename $1)
-        wget -qO - $1 > $REPO/$FILE
+        FILE=$(basename "$1")
+        wget -qO - "$1" > "$REPO/$FILE"
         shift
     done
 }
@@ -48,8 +48,8 @@ download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.
 
 # Install puppet manifests
 # Clean-up first
-rm -rf ${MODULES}/{stdlib,concat,lvm,elasticsearch,nginx}
-mkdir -p ${MODULES}/{elasticsearch,nginx}
+rm -rf "${MODULES:?}"/{stdlib,concat,lvm,elasticsearch,nginx}
+mkdir -p "${MODULES}"/{elasticsearch,nginx}
 
 # Include elasticsearch and nginx manifests from puppetlabs
 wget -qO- "${ELASTICSEARCH_TARBALL_URL}" | tar -C "${MODULES}/elasticsearch" --strip-components=1 -xz
@@ -62,5 +62,5 @@ wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
 
 # Untar kibana
 KIBANA_FOLDER="${MODULES}/lma_logging_analytics/files/kibana/src"
-mkdir -p ${KIBANA_FOLDER}
+mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
