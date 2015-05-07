@@ -139,6 +139,30 @@ Release Notes
 
 * Initial release of the plugin. This is a beta version.
 
+
+Development
+===========
+
+Contributions
+-------------
+
+If you would like to contribute to the development of this Fuel plugin you must
+follow the workflow documented at:
+
+   [OpenStack development workflow](http://docs.openstack.org/infra/manual/developers.html#development-workflow)
+
+Bugs should be filled on Launchpad (not GitHub) with the tag `lma`:
+
+   [Launchpad fuel-plugins project](https://bugs.launchpad.net/fuel-plugins)
+
+Patch reviews take place here:
+
+   [Elasticsearch/Kibana reviews](https://review.openstack.org/#/q/status:open+project:stackforge/fuel-plugin-elasticsearch-kibana,n,z)
+
+The *OpenStack Development Mailing List* is the prefered way to communicate:
+
+   Send an email to `openstack-dev@lists.openstack.org` with the subject prefixed by `[fuel][plugins][lma]`
+
 Contributors
 ------------
 
