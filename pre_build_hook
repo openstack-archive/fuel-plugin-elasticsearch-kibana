@@ -36,6 +36,8 @@ download deb https://download.elasticsearch.org/elasticsearch/elasticsearch/elas
 
 # For redhat only java 1.8 headless is needed
 download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm \
+             http://mirror.centos.org/centos/6/os/x86_64/Packages/jpackage-utils-1.7.5-3.12.el6.noarch.rpm \
+             http://mirror.centos.org/centos/6/updates/x86_64/Packages/tzdata-java-2015d-1.el6.noarch.rpm \
              https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.noarch.rpm
 
 # Install puppet manifests
