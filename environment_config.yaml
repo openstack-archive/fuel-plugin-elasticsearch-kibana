@@ -3,7 +3,7 @@ attributes:
   node_name:
     value: 'elasticsearch'
     label: 'Node name'
-    description: 'The name of the node where the plugin will be deployed'
+    description: 'The name of the node where the plugin will be deployed.'
     weight: 10
     type: "text"
 
@@ -11,12 +11,22 @@ attributes:
   data_dir:
     value: '/opt/es-data'
     label: 'Elasticsearch directory'
-    description: 'Directory used by elasticsearch to store data'
+    description: 'Directory used by elasticsearch to store data.'
     weight: 15
     type: "text"
     restrictions:
       - condition: "true"
         action: hide
+
+  jvm_heap_size:
+    value: '1'
+    label: 'JVM heap memory'
+    description: 'in GBi (between 1 and 32). The amount of memory reserved for the JVM.'
+    weight: 18
+    type: "text"
+    regex:
+      source: '^([1-9]|[12][0-9]|3[0-2])$'
+      error: 'Enter a value between 1 and 32'
 
   disk1:
     value: ''
