@@ -45,9 +45,10 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
   # Start an instance of elasticsearch
   elasticsearch::instance { $es_instance:
     config => {
-      'bootstrap.mlockall'     => true,
-      'http.cors.allow-origin' => '/.*/',
-      'http.cors.enabled'      => true
+      'threadpool.bulk.queue_size' => '1000',
+      'bootstrap.mlockall'         => true,
+      'http.cors.allow-origin'     => '/.*/',
+      'http.cors.enabled'          => true
     },
   }
 
