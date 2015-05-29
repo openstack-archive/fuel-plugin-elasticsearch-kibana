@@ -17,8 +17,9 @@ $elasticsearch_kibana = hiera('elasticsearch_kibana')
 if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
 
   # Params related to Elasticsearch.
-  $es_dir      = $elasticsearch_kibana['data_dir']
-  $es_instance = 'es-01'
+  $es_dir       = $elasticsearch_kibana['data_dir']
+  $es_instance  = 'es-01'
+  $es_heap_size = $elasticsearch_kibana['jvm_heap_size']
 
   # Java
   $java = $::operatingsystem ? {
@@ -33,13 +34,18 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
 
   # Install elasticsearch
   class { 'elasticsearch':
-    datadir => ["${es_dir}/elasticsearch_data"],
-    require => [Package[$java]],
+    datadir       => ["${es_dir}/elasticsearch_data"],
+    init_defaults => {
+        'MAX_LOCKED_MEMORY' => 'unlimited',
+        'ES_HEAP_SIZE'      => "${es_heap_size}g"
+    },
+    require       => Package[$java],
   }
 
   # Start an instance of elasticsearch
   elasticsearch::instance { $es_instance:
     config => {
+      'bootstrap.mlockall'     => true,
       'http.cors.allow-origin' => '/.*/',
       'http.cors.enabled'      => true
     },
