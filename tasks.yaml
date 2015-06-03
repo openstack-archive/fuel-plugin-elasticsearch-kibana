@@ -1,4 +1,12 @@
 - role: ['base-os']
+  stage: pre_deployment
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/manifests/check_environment_configuration.pp
+    puppet_modules: puppet/modules
+    timeout: 300
+
+- role: ['base-os']
   stage: post_deployment
   type: puppet
   parameters:
