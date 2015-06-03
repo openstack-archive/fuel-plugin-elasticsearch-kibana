@@ -78,6 +78,15 @@ User Guide
 5. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" checkbox
    and fill-in the required fields.
 
+### Heap sizing
+The default installation of Elasticsearch is configured with a 1GB heap. In
+many cases this number will be too small. You can modify this value up to
+32GB. The recommendation is to give 50% of the available memory to
+Elasticsearch. If you set a value that is greater than the memory size of
+the node, Elasticsearch won't start.
+
+
+### Disks partitionning
 You can select up to 3 physical disks that will be mounted as a single logical
 volume to store the Elasticsearch data. If you specify no disk, the data will
 be stored on the root filesystem. In all cases, Elasticsearch data will be
