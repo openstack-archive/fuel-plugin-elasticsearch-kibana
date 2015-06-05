@@ -14,7 +14,7 @@ licenses: ['Apache License Version 2.0']
 authors: ['Mirantis Inc.']
 # A link to the plugin homepage
 homepage: 'https://github.com/stackforge/fuel-plugin-elasticsearch-kibana'
-groups: []
+groups: ['monitoring']
 
 # The plugin is compatible with releases in the list
 releases:
