@@ -1,0 +1,9 @@
+Verified+2: Jenkins
+Code-Review+2: Simon Pasquier <spasquier@mirantis.com>
+Workflow+1: Simon Pasquier <spasquier@mirantis.com>
+Code-Review+2: Swann Croiset <scroiset@mirantis.com>
+Submitted-by: Jenkins
+Submitted-at: Fri, 12 Jun 2015 08:55:28 +0000
+Reviewed-on: https://review.openstack.org/188813
+Project: stackforge/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/master
