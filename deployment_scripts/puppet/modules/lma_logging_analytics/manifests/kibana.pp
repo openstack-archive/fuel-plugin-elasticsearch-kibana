@@ -23,7 +23,7 @@ class lma_logging_analytics::kibana {
   $dashboard_dir = $lma_logging_analytics::params::kibana_dashboard_dir
   $default_route = $lma_logging_analytics::params::kibana_default_route
 
-  # Deploy Kibana
+  # Deploy Kibana
   file { $kibana_dir:
     source  => 'puppet:///modules/lma_logging_analytics/kibana/src',
     recurse => true,
