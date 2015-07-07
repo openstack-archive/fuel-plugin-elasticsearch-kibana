@@ -52,7 +52,11 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
     },
   }
 
+  elasticsearch::template { 'templatename':
+    content => '{"template":"kibana-*", "settings": {"number_of_replicas":0}}'
+  }
+
   lma_logging_analytics::es_template { ['log', 'notification']:
-    require => Elasticsearch::Instance[$es_instance],
+    require            => Elasticsearch::Instance[$es_instance],
   }
 }
