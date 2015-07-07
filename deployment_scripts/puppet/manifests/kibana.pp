@@ -16,4 +16,9 @@ $elasticsearch_kibana = hiera('elasticsearch_kibana')
 
 if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
   class { 'lma_logging_analytics::kibana': }
+
+  exec { 'set_replicas_to_0':
+    command => "/usr/bin/curl -XPUT 'localhost:9200/_settings' -d '{ \"index\" : { \"number_of_replicas\" : 0 } }' > /dev/null",
+    require => Class['lma_logging_analytics::kibana'],
+  }
 }

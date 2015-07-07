@@ -54,7 +54,8 @@
         }
     },
     "settings": {
-        "number_of_shards": <%= @number_of_shards %>
+        "number_of_shards": <%= @number_of_shards %>,
+        "number_of_replicas": 0
     },
     "template": "<%= @index_prefix %>-*"
 }
