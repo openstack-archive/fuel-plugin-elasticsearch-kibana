@@ -15,7 +15,8 @@
 # Defined type lma_logging_analytics::es_template
 
 define lma_logging_analytics::es_template (
-  $number_of_shards = 3
+  $number_of_shards = 3,
+  $number_of_replicas = 0,
 ) {
   $index_prefix = $title
 
