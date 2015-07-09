@@ -41,13 +41,13 @@ download deb http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1
              http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
              http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u79-2.5.5-0ubuntu0.14.04.2_amd64.deb \
              http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
-             https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.deb
+             https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.deb
 
 # For redhat only java 1.8 headless is needed
 download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.31-1.b13.el6_6.x86_64.rpm \
              http://mirror.centos.org/centos/6/os/x86_64/Packages/jpackage-utils-1.7.5-3.12.el6.noarch.rpm \
              http://mirror.centos.org/centos/6/updates/x86_64/Packages/tzdata-java-2015d-1.el6.noarch.rpm \
-             https://download.elasticsearch.org/elasticsearch/elasticsearch/elasticsearch-1.4.4.noarch.rpm
+             https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.noarch.rpm
 
 # Install puppet manifests
 # Clean-up first
