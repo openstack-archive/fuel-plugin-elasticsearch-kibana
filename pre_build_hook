@@ -11,8 +11,9 @@ ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearc
 NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
 
 # Puppet manifests from fuel-lib
-FUEL_LIB_VERSION="6.0"
-FUEL_LIB_TARBALL_URL="https://github.com/stackforge/fuel-library/archive/${FUEL_LIB_VERSION}.tar.gz"
+# This is the commit id for the current stable/6.1 branch
+FUEL_LIB_COMMIT="be44e9ea792fe4314ac8c1b7596742ceb5163f61"
+FUEL_LIB_TARBALL_URL="https://github.com/stackforge/fuel-library/archive/${FUEL_LIB_COMMIT}.tar.gz"
 
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
@@ -61,7 +62,7 @@ wget -qO- "${NGINX_TARBALL_URL}" | tar -C "${MODULES}/nginx" --strip-components=
 # Include dependent manifests from fuel-library
 wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
     tar -C "${MODULES}" --strip-components=3 -zxvf - \
-    fuel-library-${FUEL_LIB_VERSION}/deployment/puppet/{stdlib,concat,lvm}
+    fuel-library-${FUEL_LIB_COMMIT}/deployment/puppet/{stdlib,concat,lvm}
 
 # Untar kibana
 KIBANA_FOLDER="${MODULES}/lma_logging_analytics/files/kibana/src"
