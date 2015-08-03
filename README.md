@@ -144,6 +144,10 @@ None.
 Release Notes
 -------------
 
+**0.7.2**
+
+* Fix the version of openjdk-7-jre-headless package (bug #1480397).
+
 **0.7.0**
 
 * Initial release of the plugin. This is a beta version.
