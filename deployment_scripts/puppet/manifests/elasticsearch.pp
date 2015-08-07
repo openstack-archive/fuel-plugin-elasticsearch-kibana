@@ -53,10 +53,12 @@ if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
   }
 
   lma_logging_analytics::es_template { ['log', 'notification']:
-    require => Elasticsearch::Instance[$es_instance],
+    number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+    require            => Elasticsearch::Instance[$es_instance],
   }
 
-  package { 'python-elasticsearch-curator':
-    ensure => installed,
+  class { 'lma_logging_analytics::curator':
+    retention_period => $elasticsearch_kibana['retention_period'],
+    prefixes         => ['log', 'notification'],
   }
 }
