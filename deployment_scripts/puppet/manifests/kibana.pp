@@ -15,5 +15,7 @@
 $elasticsearch_kibana = hiera('elasticsearch_kibana')
 
 if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
-  class { 'lma_logging_analytics::kibana': }
+  class { 'lma_logging_analytics::kibana':
+    number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas']
+  }
 }
