@@ -15,8 +15,11 @@
 # Class lma_logging_analytics::kibana
 
 
-class lma_logging_analytics::kibana {
-  include lma_logging_analytics::params
+class lma_logging_analytics::kibana (
+  $number_of_replicas = $lma_logging_analytics::params::kibana_replicas,
+) inherits lma_logging_analytics::params {
+
+  validate_integer($number_of_replicas)
 
   $kibana_dir    = $lma_logging_analytics::params::kibana_dir
   $kibana_conf   = $lma_logging_analytics::params::kibana_config
@@ -42,7 +45,7 @@ class lma_logging_analytics::kibana {
   }
 
   elasticsearch::template { 'kibana':
-    content => '{"template":"kibana-*", "settings": {"number_of_replicas":0}}'
+    content => "{\"template\":\"kibana-*\", \"settings\": {\"number_of_replicas\":${number_of_replicas}}}"
   }
 
   # Note that the dashboards are stored in templates/ because it is the only way

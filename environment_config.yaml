@@ -1,5 +1,27 @@
 attributes:
 
+  retention_period:
+    value: '30'
+    label: 'Retention period'
+    description: 'The number of days after which data is automatically deleted within the Elasticsearch system (0 to never delete data).'
+    weight: 5
+    type: "text"
+    regex: &number_validation
+        source: '^\d+$'
+        error: "You must provide a number"
+
+  number_of_replicas:
+    value: '0'
+    label: 'Replication factor'
+    description: 'The number of replicas'
+    weight: 6
+    type: "text"
+    regex: *number_validation
+    # Don't expose the replication factor until clustering is supported
+    restrictions:
+      - condition: "true"
+        action: hide
+
   node_name:
     value: 'elasticsearch'
     label: 'Node name'
