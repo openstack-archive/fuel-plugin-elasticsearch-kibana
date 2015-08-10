@@ -1,70 +1,43 @@
 #!/bin/bash
 set -eux
 
-ROOT="$(dirname "$(readlink -f "$0")")"
-MODULES="${ROOT}"/deployment_scripts/puppet/modules
-RPM_REPO="${ROOT}"/repositories/centos/
-DEB_REPO="${ROOT}"/repositories/ubuntu/
+. "$(dirname "$(readlink -f "$0")")"/functions.sh
 
 # Puppet manifests
-ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.9.1.tar.gz"
+CONCAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-stdlib-4.7.0.tar.gz"
+STDLIB_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-stdlib-4.7.0.tar.gz"
+LVM_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-lvm-0.5.0.tar.gz"
 NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
-
-# Puppet manifests from fuel-lib
-# This is the commit id for the current stable/6.1 branch
-FUEL_LIB_COMMIT="be44e9ea792fe4314ac8c1b7596742ceb5163f61"
-FUEL_LIB_TARBALL_URL="https://github.com/stackforge/fuel-library/archive/${FUEL_LIB_COMMIT}.tar.gz"
+ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.9.1.tar.gz"
 
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
 
-# Downloads needed RPM or DEB packages
-function download {
-    case "$1" in
-        deb) REPO=$DEB_REPO;;
-        rpm) REPO=$RPM_REPO;;
-    esac
-    shift
-
-    while [ $# -gt 0 ]; do
-        FILE=$(basename "$1")
-        wget -qO - "$1" > "$REPO/$FILE"
-        shift
-    done
-}
-
 # Packages needed to install JRE headless
-download deb http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
-             http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.51_all.deb \
-             http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata-java_2015d-0ubuntu0.14.04_all.deb \
-             http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata_2015d-0ubuntu0.14.04_all.deb \
-             http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20141019ubuntu0.14.04.1_all.deb \
-             http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
-             http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u79-2.5.6-0ubuntu1.14.04.1_amd64.deb \
-             http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
-             https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.deb
+download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
+    http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.51_all.deb \
+    http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata-java_2015d-0ubuntu0.14.04_all.deb \
+    http://mirrors.kernel.org/ubuntu/pool/main/t/tzdata/tzdata_2015d-0ubuntu0.14.04_all.deb \
+    http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20141019ubuntu0.14.04.1_all.deb \
+    http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
+    http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u79-2.5.6-0ubuntu1.14.04.1_amd64.deb \
+    http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
+    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.deb
 
 # For redhat only java 1.8 headless is needed
-download rpm http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.51-1.b16.el6_7.x86_64.rpm \
-             http://mirror.centos.org/centos/6/os/x86_64/Packages/jpackage-utils-1.7.5-3.14.el6.noarch.rpm \
-             http://mirror.centos.org/centos/6/os/x86_64/Packages/tzdata-java-2015e-1.el6.noarch.rpm \
-             https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.noarch.rpm
+download_package http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.51-1.b16.el6_7.x86_64.rpm \
+    http://mirror.centos.org/centos/6/os/x86_64/Packages/jpackage-utils-1.7.5-3.14.el6.noarch.rpm \
+    http://mirror.centos.org/centos/6/os/x86_64/Packages/tzdata-java-2015e-1.el6.noarch.rpm \
+    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.noarch.rpm
 
 # Install puppet manifests
-# Clean-up first
-rm -rf "${MODULES:?}"/{stdlib,concat,lvm,elasticsearch,nginx}
-mkdir -p "${MODULES}"/{elasticsearch,nginx}
-
-# Include elasticsearch and nginx manifests from puppetlabs
-wget -qO- "${ELASTICSEARCH_TARBALL_URL}" | tar -C "${MODULES}/elasticsearch" --strip-components=1 -xz
-wget -qO- "${NGINX_TARBALL_URL}" | tar -C "${MODULES}/nginx" --strip-components=1 -xz
-
-# Include dependent manifests from fuel-library
-wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
-    tar -C "${MODULES}" --strip-components=3 -zxvf - \
-    fuel-library-${FUEL_LIB_COMMIT}/deployment/puppet/{stdlib,concat,lvm}
+download_puppet_module "concat" "$CONCAT_TARBALL_URL"
+download_puppet_module "stdlib" "$STDLIB_TARBALL_URL"
+download_puppet_module "lvm" "$LVM_TARBALL_URL"
+download_puppet_module "nginx" "$NGINX_TARBALL_URL"
+download_puppet_module "elasticsearch" "$ELASTICSEARCH_TARBALL_URL"
 
 # Untar kibana
-KIBANA_FOLDER="${MODULES}/lma_logging_analytics/files/kibana/src"
+KIBANA_FOLDER="${MODULES_DIR}/lma_logging_analytics/files/kibana/src"
 mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
