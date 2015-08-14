@@ -1,0 +1,16 @@
+fixtures:
+  repositories:
+    stdlib:
+      repo: "git://github.com/puppetlabs/puppetlabs-stdlib"
+      ref: "4.7.0"
+    elasticsearch:
+      repo: "git://github.com/elastic/puppet-elasticsearch"
+      ref: "0.9.1"
+    nginx:
+      repo: "git://github.com/jfryman/puppet-nginx"
+      ref: "v0.2.2"
+    concat:
+      repo: "git://github.com/puppetlabs/puppetlabs-concat"
+      ref: "1.2.4"
+  symlinks:
+    lma_logging_analytics: "#{source_dir}"
