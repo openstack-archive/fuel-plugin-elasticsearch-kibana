@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
     "summary": "Partition and configure disks",
-    "license": "Apache License 2.0",
+    "license": "Apache-2.0",
     "source": "git://git.openstack.org/cgit/stackforge/fuel-plugin-elasticsearch-kibana.git",
     "project_page": "none",
     "issues_url": "none",
