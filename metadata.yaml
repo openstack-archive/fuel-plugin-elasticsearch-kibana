@@ -3,7 +3,7 @@ name: elasticsearch_kibana
 # Human-readable name for your plugin
 title: The Elasticsearch-Kibana Server Plugin
 # Plugin version
-version: '0.7.0'
+version: '0.7.3'
 # Description
 description: Deploy Elasticsearch server and the Kibana web interface (refer to the Elasticsearch-Kibana user guide for instructions).
 # Required fuel version
