@@ -7,7 +7,7 @@ version: '0.7.3'
 # Description
 description: Deploy Elasticsearch server and the Kibana web interface (refer to the Elasticsearch-Kibana user guide for instructions).
 # Required fuel version
-fuel_version: ['6.1']
+fuel_version: ['6.1', '7.0']
 # Licences
 licenses: ['Apache License Version 2.0']
 # Specify author or company name
@@ -18,6 +18,11 @@ groups: ['monitoring']
 
 # The plugin is compatible with releases in the list
 releases:
+  - os: ubuntu
+    version: 2015.1.0-7.0
+    mode: ['ha', 'multinode']
+    deployment_scripts_path: deployment_scripts/
+    repository_path: repositories/ubuntu
   - os: ubuntu
     version: 2014.2-6.1
     mode: ['ha', 'multinode']
