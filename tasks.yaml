@@ -12,7 +12,7 @@
   stage: post_deployment/8100
   type: puppet
   parameters:
-    puppet_manifest: /etc/puppet/modules/osnailyfacter/modular/netconfig/netconfig.pp
+    puppet_manifest: puppet/manifests/netconfig.pp
     puppet_modules: /etc/puppet/modules
     timeout: 720
 
