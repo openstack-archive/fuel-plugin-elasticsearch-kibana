@@ -15,7 +15,7 @@ Requirements
 
 | Requirement                    | Version/Comment |
 |--------------------------------|-----------------|
-| Mirantis OpenStack compatility | 6.1 or higher   |
+| Mirantis OpenStack compatility | 7.0 or higher   |
 
 Recommendations
 ---------------
@@ -61,7 +61,7 @@ To install the Elasticsearch-Kibana plugin, follow these steps:
    ```
 
 Please refer to the [Fuel Plugins wiki](https://wiki.openstack.org/wiki/Fuel/Plugins)
-if you want to build the plugin by yourself. Version 2.0.0 (or higher) of the Fuel
+if you want to build the plugin by yourself. Version 3.0.0 (or higher) of the Fuel
 Plugin Builder is required.
 
 User Guide
@@ -71,12 +71,10 @@ User Guide
 ---------------------------------------------
 
 1. Create a new environment with the Fuel UI wizard.
-2. Add a node with the "Operating System" role.
-3. Before applying changes or once changes applied, edit the name of the node by
-   clicking on "Untitled (xx:yy)" and modify it for "elasticsearch".
-4. Click on the Settings tab of the Fuel web UI.
-5. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" checkbox
-   and fill-in the required fields.
+2. Click on the Settings tab of the Fuel web UI.
+3. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" tab,
+   enable the plugin and fill-in the required fields.
+4. Add a node with the "Elasticsearch Kibana" role.
 
 ### Heap sizing
 By default, 1G of heap memory is allocated to the Elasticsearch process. In
@@ -87,14 +85,12 @@ the node, Elasticsearch won't start.
 
 
 ### Disks partitionning
-You can select up to 3 physical disks that will be mounted as a single logical
-volume to store the Elasticsearch data. If you specify no disk, the data will
-be stored on the root filesystem. In all cases, Elasticsearch data will be
-located in the */opt/es-data* directory.
+The plugin uses:
 
-For each disk, you can also specify the allocated size (in GB). If you don't
-specify a value, the plugin will use all the free space of the disk.
-
+- 20% of the first disk for the operating system by honoring the range of
+  15Gb minimum and 50Gb maximum.
+- 10Gb for /var/log.
+- at least 30Gb for the Elasticsearch data (/opt/es-data).
 
 Testing
 -------
@@ -146,7 +142,10 @@ Release Notes
 
 **0.8.0**
 
-* 
+* Add the "elasticsearch_kibana" role (instead of leveraging on the
+  "base-os" role)
+* Add support for data curation
+* Upgrade Elasticsearch to 1.4.5
 
 **0.7.0**
 

@@ -30,6 +30,7 @@ attributes:
     type: "text"
 
   # Parameter hidden in the UI on purpose
+  # this directory must match the mount point set in volumes.yaml
   data_dir:
     value: '/opt/es-data'
     label: 'Elasticsearch directory'
@@ -49,57 +50,3 @@ attributes:
     regex:
       source: '^([1-9]|[12][0-9]|3[0-2])$'
       error: 'Enter a value between 1 and 32'
-
-  disk1:
-    value: ''
-    label: 'Disk 1'
-    description: 'Disk device used to store Elasticsearch data (for instance sda). Leave it empty to use "/".'
-    weight: 20
-    type: "text"
-
-  disk1_size:
-    value: ''
-    label: 'Size'
-    description: 'in GB. Leave it empty to use all free space.'
-    weight: 30
-    type: "text"
-
-  disk2:
-    value: ''
-    label: 'Disk 2'
-    description: 'Disk device used to store Elasticsearch data (for instance sdb).'
-    weight: 40
-    type: "text"
-    restrictions:
-        - condition: "settings:elasticsearch_kibana.disk1.value == ''"
-          action: "disable"
-
-  disk2_size:
-    value: ''
-    label: 'Size'
-    description: 'in GB. Leave it empty to use all free space.'
-    weight: 50
-    type: "text"
-    restrictions:
-        - condition: "settings:elasticsearch_kibana.disk1.value == ''"
-          action: "disable"
-
-  disk3:
-    value: ''
-    label: 'Disk 3'
-    description: 'Disk device used to store Elasticsearch data (for instance sdc).'
-    weight: 60
-    type: "text"
-    restrictions:
-        - condition: "settings:elasticsearch_kibana.disk2.value == ''"
-          action: "disable"
-
-  disk3_size:
-    value: ''
-    label: 'Size'
-    description: 'in GB. Leave it empty to use all free space.'
-    weight: 70
-    type: "text"
-    restrictions:
-        - condition: "settings:elasticsearch_kibana.disk2.value == ''"
-          action: "disable"
