@@ -1,0 +1,15 @@
+- id: elasticsearch_kibana
+  type: group
+  role: [elasticsearch_kibana]
+  tasks:
+    - hiera
+    - globals
+    - tools
+    - logging
+    - netconfig
+  required_for: [deploy_end]
+  requires: [deploy_start]
+  parameters:
+    strategy:
+      type: parallel
+
