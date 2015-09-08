@@ -1,5 +1,5 @@
 # This task is executed before any real deployment task
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8000
   type: puppet
   parameters:
@@ -8,15 +8,7 @@
     timeout: 300
 
 # The following tasks are executed in the order they are declared
-- role: ['base-os']
-  stage: post_deployment/8100
-  type: puppet
-  parameters:
-    puppet_manifest: puppet/manifests/netconfig.pp
-    puppet_modules: /etc/puppet/modules
-    timeout: 720
-
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: puppet
   parameters:
@@ -24,21 +16,13 @@
     puppet_modules: /etc/puppet/modules
     timeout: 300
 
-- role: ['base-os']
-  stage: post_deployment/8100
-  type: puppet
-  parameters:
-    puppet_manifest: puppet/manifests/setup_disks.pp
-    puppet_modules: puppet/modules
-    timeout: 600
-
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: reboot
   parameters:
     timeout: 600
 
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: puppet
   parameters:
@@ -46,7 +30,7 @@
     puppet_modules: puppet/modules
     timeout: 600
 
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: puppet
   parameters:
@@ -54,7 +38,7 @@
     puppet_modules: puppet/modules
     timeout: 600
 
-- role: ['base-os']
+- role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: puppet
   parameters:
