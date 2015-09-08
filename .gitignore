@@ -1,1 +1,9 @@
+elasticsearch_kibana-*.noarch.rpm
 .bundled_gems/
+.build/
+repositories/centos/*rpm
+repositories/ubuntu/*deb
+deployment_scripts/puppet/modules/
+!deployment_scripts/puppet/modules/lma_logging_analytics
+!deployment_scripts/puppet/modules/disk_management
+deployment_scripts/puppet/modules/lma_logging_analytics/files/kibana
