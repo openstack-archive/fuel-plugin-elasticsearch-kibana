@@ -1,7 +1,0 @@
-fixtures:
-  repositories:
-    stdlib:
-      repo: "git://github.com/puppetlabs/puppetlabs-stdlib"
-      ref: "4.7.0"
-  symlinks:
-    disk_management: "#{source_dir}"

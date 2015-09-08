@@ -1,0 +1,22 @@
+volumes:
+  - id: "elasticsearch"
+    type: "vg"
+    min_size:
+      generator: "calc_gb_to_mb"
+      generator_args: [30]
+    label: "Elasticsearch database"
+    volumes:
+        - mount: "/opt/es-data"
+          type: "lv"
+          name: "elasticsearch"
+          file_system: "ext4"
+          size:
+            generator: "calc_total_vg"
+            generator_args: ["elasticsearch"]
+
+volumes_roles_mapping:
+  elasticsearch_kibana:
+    - {allocate_size: "min", id: "os"}
+    - {allocate_size: "min", id: "logs"}
+    - {allocate_size: "all", id: "elasticsearch"}
+
