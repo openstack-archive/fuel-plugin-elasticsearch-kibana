@@ -1,1 +1,3 @@
+elasticsearch_kibana-*.noarch.rpm
 .bundled_gems/
+.build/
