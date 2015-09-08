@@ -14,51 +14,52 @@
 #
 $elasticsearch_kibana = hiera('elasticsearch_kibana')
 
-if $elasticsearch_kibana['node_name'] == hiera('user_node_name') {
+# Params related to Elasticsearch.
+$es_dir       = $elasticsearch_kibana['data_dir']
+$es_instance  = 'es-01'
+$es_heap_size = $elasticsearch_kibana['jvm_heap_size']
 
-  # Params related to Elasticsearch.
-  $es_dir       = $elasticsearch_kibana['data_dir']
-  $es_instance  = 'es-01'
-  $es_heap_size = $elasticsearch_kibana['jvm_heap_size']
+# Java
+$java = $::operatingsystem ? {
+  CentOS => 'java-1.8.0-openjdk-headless',
+  Ubuntu => 'openjdk-7-jre-headless'
+}
 
-  # Java
-  $java = $::operatingsystem ? {
-    CentOS => 'java-1.8.0-openjdk-headless',
-    Ubuntu => 'openjdk-7-jre-headless'
-  }
+# Ensure that java is installed
+package { $java:
+  ensure => installed,
+}
 
-  # Ensure that java is installed
-  package { $java:
-    ensure => installed,
-  }
+file { $es_dir:
+  ensure => 'directory',
+}
 
-  # Install elasticsearch
-  class { 'elasticsearch':
-    datadir       => ["${es_dir}/elasticsearch_data"],
-    init_defaults => {
-        'MAX_LOCKED_MEMORY' => 'unlimited',
-        'ES_HEAP_SIZE'      => "${es_heap_size}g"
-    },
-    require       => Package[$java],
-  }
+# Install elasticsearch
+class { 'elasticsearch':
+  datadir       => ["${es_dir}/elasticsearch_data"],
+  init_defaults => {
+      'MAX_LOCKED_MEMORY' => 'unlimited',
+      'ES_HEAP_SIZE'      => "${es_heap_size}g"
+  },
+  require       => [File[$es_dir], Package[$java]],
+}
 
-  # Start an instance of elasticsearch
-  elasticsearch::instance { $es_instance:
-    config => {
-      'threadpool.bulk.queue_size' => '1000',
-      'bootstrap.mlockall'         => true,
-      'http.cors.allow-origin'     => '/.*/',
-      'http.cors.enabled'          => true
-    },
-  }
+# Start an instance of elasticsearch
+elasticsearch::instance { $es_instance:
+  config => {
+    'threadpool.bulk.queue_size' => '1000',
+    'bootstrap.mlockall'         => true,
+    'http.cors.allow-origin'     => '/.*/',
+    'http.cors.enabled'          => true
+  },
+}
 
-  lma_logging_analytics::es_template { ['log', 'notification']:
-    number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
-    require            => Elasticsearch::Instance[$es_instance],
-  }
+lma_logging_analytics::es_template { ['log', 'notification']:
+  number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+  require            => Elasticsearch::Instance[$es_instance],
+}
 
-  class { 'lma_logging_analytics::curator':
-    retention_period => $elasticsearch_kibana['retention_period'],
-    prefixes         => ['log', 'notification'],
-  }
+class { 'lma_logging_analytics::curator':
+  retention_period => $elasticsearch_kibana['retention_period'],
+  prefixes         => ['log', 'notification'],
 }
