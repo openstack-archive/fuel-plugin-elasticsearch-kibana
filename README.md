@@ -144,9 +144,14 @@ None.
 Release Notes
 -------------
 
+**0.7.3**
+
+* Support for MOS 7.0.
+* Execute the network configuration task only on the Elasticsearch-Kibana node ([LP#1489885](https://bugs.launchpad.net/fuel-plugins/+bug/1489885)).
+
 **0.7.2**
 
-* Fix the version of openjdk-7-jre-headless package (bug #1480397).
+* Fix the version of openjdk-7-jre-headless package ([LP#1480397](https://bugs.launchpad.net/fuel-plugins/+bug/1480397)).
 
 **0.7.0**
 
