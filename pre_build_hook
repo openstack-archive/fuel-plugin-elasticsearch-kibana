@@ -24,21 +24,11 @@ download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcscl
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
     https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.deb
 
-# For redhat only java 1.8 headless is needed
-download_package http://mirror.centos.org/centos/6/updates/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.51-1.b16.el6_7.x86_64.rpm \
-    http://mirror.centos.org/centos/6/os/x86_64/Packages/jpackage-utils-1.7.5-3.14.el6.noarch.rpm \
-    http://mirror.centos.org/centos/6/os/x86_64/Packages/tzdata-java-2015e-1.el6.noarch.rpm \
-    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.noarch.rpm
-
 # Download curator and dependencies
 download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch-curator_3.2.3_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch_1.6.0_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-click_4.0_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-urllib3_1.10.4_all.deb
-
-download_package http://packages.elasticsearch.org/curator/3/centos/6/Packages/python-elasticsearch-curator-3.2.3-1.noarch.rpm \
-    http://packages.elasticsearch.org/curator/3/centos/6/Packages/python-elasticsearch-1.6.0-1.noarch.rpm \
-    http://packages.elasticsearch.org/curator/3/centos/6/Packages/python-click-4.0-1.noarch.rpm
 
 # Install puppet manifests
 download_puppet_module "concat" "$CONCAT_TARBALL_URL"
