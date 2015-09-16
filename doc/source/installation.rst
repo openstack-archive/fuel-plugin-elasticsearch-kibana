@@ -1,6 +1,6 @@
 .. _user_installation:
 
-Installation
-============
+Installation Guide
+==================
 
 TBD
