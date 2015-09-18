@@ -9,8 +9,9 @@ User documentation
    :maxdepth: 2
 
    overview
+   news
    installation
-   guide
+   user
    licenses
    appendix
 
