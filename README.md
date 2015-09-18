@@ -153,6 +153,10 @@ Release Notes
 
 * Fix the version of openjdk-7-jre-headless package ([LP#1480397](https://bugs.launchpad.net/fuel-plugins/+bug/1480397)).
 
+**0.7.1**
+
+* Fix issues with licence.
+
 **0.7.0**
 
 * Initial release of the plugin. This is a beta version.
