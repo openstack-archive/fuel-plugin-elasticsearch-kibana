@@ -7,8 +7,20 @@ Elasticsearch-Kibana plugin
 Overview
 --------
 
-Elasticsearch and Kibana provide a full-text search engine with a flexible web
-interface for exploring and visualizing data.
+The Elasticsearch-Kibana Fuel Plugin is used to install and configure
+Elasticsearch combined with Kibana for logs and notifications analytics
+visualization.
+The logs analytics are used to search and correlate service-affecting
+events obtained from the OpenStack environment logs.
+Elasticsearch is a powerful application based on the Lucene search engine
+that makes data like log messages easy to explore and correlate.
+This is an indispensable tool of the LMA Toolchan for troubleshooting problems.
+Kibana is installed with two dashboards. One for the logs and one for the
+OpenStack notifications.
+Each dashboard provides a single pane of glass and search capabilities
+for all the logs and all the notifications. It is possible to tag the logs
+by environment name so that one can use one Elasticsearch server instance
+for multiple environments.
 
 Requirements
 ------------
@@ -17,52 +29,23 @@ Requirements
 |--------------------------------|-----------------|
 | Mirantis OpenStack compatility | 7.0 or higher   |
 
+
 Recommendations
 ---------------
 
-It is highly recommended to use dedicated disk(s) for data storage. Otherwise
+It is highly recommended to use a dedicated disk(s) for data storage. Otherwise
 Elasticsearch will store its data on the root filesystem.
 
 Limitations
 -----------
 
-None so far.
+No known limitations.
 
 Installation Guide
 ==================
 
-**Elasticsearch-Kibana** plugin installation
---------------------------------------------
-
-
-To install the Elasticsearch-Kibana plugin, follow these steps:
-
-1. Download the plugin from the [Fuel Plugins
-   Catalog](https://software.mirantis.com/download-mirantis-openstack-fuel-plug-ins/).
-
-2. Copy the plugin file to the Fuel Master node. Follow the [Quick start
-   guide](https://software.mirantis.com/quick-start/) if you don't have a running
-   Fuel Master node yet.
-
-   ```
-   scp elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm root@<Fuel Master node IP address>:
-   ```
-
-3. Install the plugin using the `fuel` command line:
-
-   ```
-   fuel plugins --install elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm
-   ```
-
-4. Verify that the plugin is installed correctly:
-
-   ```
-   fuel plugins --list
-   ```
-
-Please refer to the [Fuel Plugins wiki](https://wiki.openstack.org/wiki/Fuel/Plugins)
-if you want to build the plugin by yourself. Version 3.0.0 (or higher) of the Fuel
-Plugin Builder is required.
+Please refer to the [Elasticsearch-Kibana Fuel Plugins Installation Guide]
+(https://github.com/stackforge/fuel-plugin-elasticsearch-kibana/blob/master/doc/source/installation.rst)
 
 User Guide
 ==========
