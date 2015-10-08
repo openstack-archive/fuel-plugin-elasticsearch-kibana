@@ -1,160 +1,81 @@
 Elasticsearch-Kibana Plugin for Fuel
 ====================================
 
-Elasticsearch-Kibana plugin
----------------------------
-
-Overview
---------
-
-Elasticsearch and Kibana provide a full-text search engine with a flexible web
-interface for exploring and visualizing data.
-
-Requirements
-------------
-
-| Requirement                    | Version/Comment |
-|--------------------------------|-----------------|
-| Mirantis OpenStack compatility | 7.0 or higher   |
-
-Recommendations
----------------
-
-It is highly recommended to use dedicated disk(s) for data storage. Otherwise
-Elasticsearch will store its data on the root filesystem.
-
-Limitations
------------
-
-None so far.
-
-Installation Guide
-==================
-
-**Elasticsearch-Kibana** plugin installation
---------------------------------------------
-
-
-To install the Elasticsearch-Kibana plugin, follow these steps:
-
-1. Download the plugin from the [Fuel Plugins
-   Catalog](https://software.mirantis.com/download-mirantis-openstack-fuel-plug-ins/).
-
-2. Copy the plugin file to the Fuel Master node. Follow the [Quick start
-   guide](https://software.mirantis.com/quick-start/) if you don't have a running
-   Fuel Master node yet.
-
-   ```
-   scp elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm root@<Fuel Master node IP address>:
-   ```
-
-3. Install the plugin using the `fuel` command line:
-
-   ```
-   fuel plugins --install elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm
-   ```
-
-4. Verify that the plugin is installed correctly:
-
-   ```
-   fuel plugins --list
-   ```
-
-Please refer to the [Fuel Plugins wiki](https://wiki.openstack.org/wiki/Fuel/Plugins)
-if you want to build the plugin by yourself. Version 3.0.0 (or higher) of the Fuel
-Plugin Builder is required.
-
-User Guide
-==========
-
-**Elasticsearch-Kibana** plugin configuration
----------------------------------------------
-
-1. Create a new environment with the Fuel UI wizard.
-2. Click on the Settings tab of the Fuel web UI.
-3. Scroll down the page, select the "Elasticsearch-Kibana Server plugin" tab,
-   enable the plugin and fill-in the required fields.
-4. Add a node with the "Elasticsearch Kibana" role.
-
-### Heap sizing
-By default, 1G of heap memory is allocated to the Elasticsearch process. In
-many cases this number will be too small. You can modify this value up to
-32GB. The recommendation is to give 50% of the available memory to
-Elasticsearch. If you set a value that is greater than the memory size of
-the node, Elasticsearch won't start.
-
-### Disks partitioning
-The plugin uses:
-
-- 20% of the first disk for the operating system by honoring the range of
-  15GB minimum and 50GB maximum.
-- 10GB for /var/log.
-- at least 30GB for the Elasticsearch data (/opt/es-data).
-
-Testing
--------
-
-### Elasticsearch
-
-Once installed, you can check that Elasticsearch is working using `curl`:
-
-```
-curl http://$HOST:9200/
-```
-
-Where `HOST` is the IP address or the name of the node that runs the server.
-
-The expected output is something like this:
-
-```
-{
-  "status" : 200,
-  "name" : "node-23-es-01",
-  "cluster_name" : "elasticsearch",
-  "version" : {
-    "number" : "1.4.4",
-    "build_hash" : "c88f77ffc81301dfa9dfd81ca2232f09588bd512",
-    "build_timestamp" : "2015-02-19T13:05:36Z",
-    "build_snapshot" : false,
-    "lucene_version" : "4.10.3"
-  },
-  "tagline" : "You Know, for Search"
-}
-```
-
-### Kibana
-
-The Kibana user interface is available at the following URL:
-
-http://$HOST/
-
-Where `HOST` is the IP address or the name of the node. By default, you will
-be redirected to the logs dashboard.
-
-Known issues
-------------
-
-None.
+The **Elasticsearch-Kibana Fuel Plugin** is used to install and configure
+Elasticsearch and Kibana which collectively provide access to the OpenStack
+logs and notifications analytics.
+Those analytics can be used to search and correlate the service-affecting
+events which occurred in your OpenStack environment. It is an indispensable
+tool to troubleshooting problems.
+The Elasticsearch-Kibana Plugin is a key component of the
+**Logging, Monitoring and Alerting (LMA) Toolchain** of Mirantis OpenStack.
 
 Release Notes
 -------------
 
 **0.8.0**
 
-* Add the "elasticsearch_kibana" role (instead of leveraging on the
-  "base-os" role)
-* Add support for data curation
-* Upgrade Elasticsearch to 1.4.5
+* Add support for the "elasticsearch_kibana" Fuel Plugin role instead of
+  of the "base-os" role which had several limitations.
+* Add support for a retention policy configuration thanks to the integration
+  of [Elastic Curator](https://github.com/elastic/curator)
+* Upgrade to Elasticsearch 1.4.5
 
 **0.7.0**
 
 * Initial release of the plugin. This is a beta version.
 
-Development
-===========
+Requirements
+------------
 
-The *OpenStack Development Mailing List* is the preferred way to communicate,
-emails should be sent to `openstack-dev@lists.openstack.org` with the subject
+| Requirement            | Version/Comment                             |
+|------------------------|---------------------------------------------|
+| Fuel                   | Mirantis OpenStack 7.0 or higher            |
+| Hardware configuration | The hardware configuration (RAM, CPU, disk) |
+|                        | required by this plugin depends on the size |
+|                        | of your cloud and other parameters like the |
+|                        | log level being used, but a typical setup   |
+|                        | would at least require a quad-core server   |
+|                        | with 8GB of RAM and fast disks (ideally     |
+|                        | SSDs). It is also highly recommended to use |
+|                        | dedicated disk(s) for your data storage.    |
+|                        | Otherwise, Elasticsearch will use the root  |
+|                        | filesystem by default.                      |
+
+Known issues
+------------
+
+No known issues.
+
+Limitations
+-----------
+
+A current limitation of this plugin is that it not possible to
+display in the Fuel web UI the URL where the Kibana interface
+can be reached when the deployment has completed.
+Instructions are provided in the *Installation Guide* about how you can
+obtain this URL using the `fuel` command line.
+
+Installation
+------------
+
+Please follow the installation instructions in the [Elasticsearch-Kibana Fuel
+Plugin Installation Guide](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/installation.html)
+
+User Guide
+----------
+
+How to configure and use the Elasticsearch-Kibana Fuel Plugin is detailed in
+in the [Elasticsearch-Kibana Fuel Plugin User Guide](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/user.html)
+
+Communication
+-------------
+
+The *OpenStack Development Mailing List* is the preferred way to communicate
+with the members of the project.
+Emails should be sent to `openstack-dev@lists.openstack.org` with the subject
 prefixed by `[fuel][plugins][lma]`.
 
 Reporting Bugs
@@ -179,5 +100,6 @@ Contributors
 ------------
 
 * Guillaume Thouvenin <gthouvenin@mirantis.com>
+* Patrick Petit <ppetit@mirantis.com>
 * Simon Pasquier <spasquier@mirantis.com>
 * Swann Croiset <scroiset@mirantis.com>
