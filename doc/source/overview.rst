@@ -43,7 +43,7 @@ Key terms, acronyms and abbreviations
 | **Terms & acronyms**       | **Definition**                                                                             |
 +============================+============================================================================================+
 | LMA Collector              | Logging, Monitoring and Alerting (LMA) Collector. A service running on each node which     |
-|                            | collects all the logs and the OpenStak notifications.                                |
+|                            | collects all the logs and the OpenStak notifications.                                      |
 +----------------------------+--------------------------------------------------------------------------------------------+
 | Elasticsearch              | An open source (Apache Licensed) application based on the  Lucene™ search engine that makes|
 |                            | data like log messages easy to explore and correlate.                                      |
