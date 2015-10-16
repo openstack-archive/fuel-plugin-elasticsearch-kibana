@@ -9,7 +9,7 @@ User documentation
    :maxdepth: 2
 
    overview
-   news
+   releases
    installation
    user
    licenses
