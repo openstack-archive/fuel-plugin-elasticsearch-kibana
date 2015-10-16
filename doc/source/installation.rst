@@ -26,7 +26,6 @@ Catalog, you need to follow these steps:
     ---|----------------------|---------|----------------
     1  | elasticsearch_kibana | 0.8.0   | 3.0.0
 
-
 Elasticsearch-Kibana Fuel Plugin install from source
 ----------------------------------------------------
 
@@ -74,3 +73,15 @@ if you need further instructions about how to build the Fuel Plugin Builder.
 7. Now that you have created the RPM file, you can install the plugin using the `fuel plugins --install` command::
 
     [root@fuel ~] fuel plugins --install ./fuel-plugin-elasticsearch-kibana/elasticsearch_kibana-0.8-0.8.0-1.noarch.rpm
+
+
+Elasticsearch-Kibana Fuel Plugin software components
+----------------------------------------------------
+
+List of software components installed by the plugin::
+
+    Components          | Version
+    --------------------|--------------------------------------------------------
+    Elasticsearch       | v1.4.5 for Ubuntu (64-bit)
+    Kibana              | v3.1.2 for Ubuntu
+    Nginx               | Version coming by default with the Ubuntu distribution
