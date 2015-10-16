@@ -28,19 +28,9 @@ Release Notes
 Requirements
 ------------
 
-| Requirement            | Version/Comment                             |
-|------------------------|---------------------------------------------|
-| Fuel                   | Mirantis OpenStack 7.0 or higher            |
-| Hardware configuration | The hardware configuration (RAM, CPU, disk) |
-|                        | required by this plugin depends on the size |
-|                        | of your cloud and other parameters like the |
-|                        | log level being used, but a typical setup   |
-|                        | would at least require a quad-core server   |
-|                        | with 8GB of RAM and fast disks (ideally     |
-|                        | SSDs). It is also highly recommended to use |
-|                        | dedicated disk(s) for your data storage.    |
-|                        | Otherwise, Elasticsearch will use the root  |
-|                        | filesystem by default.                      |
+Please check what are the plugin's requirements in the [Elasticsearch-Kibana Fuel
+Plugin Documentation](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#requirements)
 
 Known issues
 ------------
@@ -60,14 +50,14 @@ Installation
 ------------
 
 Please follow the installation instructions in the [Elasticsearch-Kibana Fuel
-Plugin Installation Guide](
+Plugin Documentation](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/installation.html)
 
 User Guide
 ----------
 
 How to configure and use the Elasticsearch-Kibana Fuel Plugin is detailed in
-in the [Elasticsearch-Kibana Fuel Plugin User Guide](
+in the [Elasticsearch-Kibana Fuel Plugin Documentation](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/user.html)
 
 Communication
