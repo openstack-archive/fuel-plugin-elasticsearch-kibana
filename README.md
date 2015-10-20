@@ -28,7 +28,7 @@ Release Notes
 Requirements
 ------------
 
-Please check what are the plugin's requirements in the [Elasticsearch-Kibana Fuel
+The plugin's requirements are defined in the [Elasticsearch-Kibana Fuel
 Plugin Documentation](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#requirements)
 
@@ -83,7 +83,7 @@ follow the [OpenStack development workflow](
 http://docs.openstack.org/infra/manual/developers.html#development-workflow).
 
 Patch reviews take place on the [OpenStack gerrit](
-https://review.openstack.org/#/q/status:open+project:stackforge/fuel-plugin-elasticsearch-kibana,n,z)
+https://review.openstack.org/#/q/status:open+project:openstack/fuel-plugin-elasticsearch-kibana,n,z)
 system.
 
 Contributors
