@@ -19,7 +19,7 @@ To configure your plugin, you need to follow the folling steps:
    The Elasticsearch-Kibana Plugin settings screen should appear as shown below.
 
 .. image:: ../images/elastic_kibana_settings.png
-   :width: 340
+   :width: 800
    :align: center
 
 4. Select the Elasticsearch-Kibana Plugin checkbox and fill-in the required fields.
@@ -52,7 +52,7 @@ To configure your plugin, you need to follow the folling steps:
   if you would like to change the default configuration of the disks partitioning.
 
 .. image:: ../images/elastic_kibana_role.png
-   :width: 340
+   :width: 800
    :align: center
 
 7. `Verify the networks <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#verify-networks>`_ on the Networks tab of the Fuel web UI.
@@ -71,7 +71,7 @@ you should see a notification that looks the following:
 
 .. image:: ../images/deploy_notif.png
    :align: center
-   :width: 340
+   :width: 800
 
 **Elasticsearch**
 
@@ -140,13 +140,13 @@ icon in the toolbar to select the requested dashboard from the list, as shown be
 
 .. image:: ../images/kibana_dash.png
    :align: center
-   :width: 340
+   :width: 800
 
 Pointing your browser to the URL *http://10.20.0.4:80/* you should see the Logs Dashboard:
 
 .. image:: ../images/kibana_logs_dash.png
    :align: center
-   :width: 340
+   :width: 800
 
 As you can see, the Kibana dashboard for logs is divided into four main sections:
 
@@ -165,7 +165,7 @@ As you can see, the Kibana dashboard for logs is divided into four main sections
 
   d. The number of log messages grouped by severity.
 
-4. A table of log messages sorted in chronological order.
+4. A table of log messages sorted in reverse chronological order.
 
 Filters and queries
 -------------------
@@ -182,13 +182,13 @@ on the magnifying glass icon as shown below.
 
 .. image:: ../images/kibana_logs_filter1.png
    :align: center
-   :width: 340
+   :width: 800
 
 This will apply a new filter in the dashboard.
 
 .. image:: ../images/kibana_logs_filter2.png
    :align: center
-   :width: 340
+   :width: 800
 
 Filtering will work for any field that has been indexed for the log entries that
 are displayed in the dashboard.
@@ -205,7 +205,7 @@ in the query textbox like shown below.
 
 .. image:: ../images/kibana_logs_query1.png
    :align: center
-   :width: 340
+   :width: 800
 
 You can also specify multiple queries to compare different data sets.
 
@@ -217,7 +217,7 @@ in *ERROR* versus those that are not as shown below.
 
 .. image:: ../images/kibana_logs_query2.png
    :align: center
-   :width: 340
+   :width: 800
 
 Troubleshooting
 ---------------
