@@ -148,7 +148,7 @@
           "tmode": "terms",
           "tstat": "count",
           "valuefield": "",
-          "title": "Event type repartition"
+          "title": "Event type breakdown"
         },
         {
           "error": false,
@@ -214,7 +214,7 @@
           "tmode": "terms",
           "tstat": "count",
           "valuefield": "",
-          "title": "Source repartition"
+          "title": "Source breakdown"
         },
         {
           "error": false,
@@ -247,7 +247,7 @@
           "tmode": "terms",
           "tstat": "count",
           "valuefield": "",
-          "title": "Host repartition"
+          "title": "Host breakdown"
         }
       ],
       "notice": false
