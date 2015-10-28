@@ -17,17 +17,20 @@ The Elasticsearch-Kibana Plugin is a key component of the
 Requirements
 ------------
 
-+----------------------------+--------------------------------------------------------------------------------------------+
-| **Requirement**            | **Version/Comment**                                                                        |
-+============================+============================================================================================+
-| Fuel                       | Mirantis OpenStack 7.0                                                                     |
-+----------------------------+--------------------------------------------------------------------------------------------+
-| Hardware configuration     | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size    |
-|                            | of your cloud and other parameters like the log level being used, but a typical setup      |
-|                            | would at least require a quad-core server with 8GB of RAM and fast disks (ideally, SSDs)   |
-|                            | It is also highly recommended to use dedicated disk(s) for your data storage. Otherwise,   |
-|                            | Elasticsearch will use the root filesystem by default.                                     |
-+----------------------------+--------------------------------------------------------------------------------------------+
++------------------------+------------------------------------------------------------------------------------------------+
+| **Requirement**        | **Version/Comment**                                                                            |
++========================+================================================================================================+
+| Fuel                   | Mirantis OpenStack 7.0                                                                         |
++------------------------+------------------------------------------------------------------------------------------------+
+| Hardware configuration | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size        |
+|                        | of your cloud and other parameters like the log level being used.                              |
+|                        |                                                                                                |
+|                        | A typical setup would at least require a quad-core server with 8GB of RAM and fast disks       |
+|                        | (ideally, SSDs).                                                                               |
+|                        |                                                                                                |
+|                        | It is also highly recommended to use dedicated disk(s) for your data storage. Otherwise,       |
+|                        | Elasticsearch will use the root filesystem by default.                                         |
++------------------------+------------------------------------------------------------------------------------------------+
 
 Limitations
 -----------
@@ -47,6 +50,7 @@ Key terms, acronyms and abbreviations
 +----------------------------+--------------------------------------------------------------------------------------------+
 | Elasticsearch              | An open source (Apache Licensed) application based on the  Lucene™ search engine that makes|
 |                            | data like log messages easy to explore and correlate.                                      |
+|                            |                                                                                            |
 |                            | Elasticsearch is written in Java and uses Lucene internally for all of its indexing and    |
 |                            | searching, but it aims to make full-text search easy by hiding the complexities of Lucene  |
 |                            | behind a simple, coherent, RESTful API.                                                    |
