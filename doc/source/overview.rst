@@ -36,7 +36,7 @@ Limitations
 -----------
 
 A current limitation of this plugin is that it not possible to display in the Fuel web UI the URL where the Kibana interface
-can be reached when the deployment has completed. Instructions are provided in the *Installation Guide* about how you can
+can be reached when the deployment has completed. Instructions are provided in the :ref:`user_guide` about how you can
 obtain this URL using the `fuel` command line.
 
 Key terms, acronyms and abbreviations
