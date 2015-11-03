@@ -78,10 +78,14 @@ if you need further instructions about how to build the Fuel Plugin Builder.
 Elasticsearch-Kibana Fuel Plugin software components
 ----------------------------------------------------
 
-List of software components installed by the plugin::
+List of software components installed by the plugin
 
-    Components          | Version
-    --------------------|--------------------------------------------------------
-    Elasticsearch       | v1.4.5 for Ubuntu (64-bit)
-    Kibana              | v3.1.2
-    Nginx               | Version coming by default with the Ubuntu distribution
++---------------+--------------------------------------------------------+
+| Components    | Version                                                |
++---------------+--------------------------------------------------------+
+| Elasticsearch | v1.4.5 for Ubuntu (64-bit)                             |
++---------------+--------------------------------------------------------+
+| Kibana        | v3.1.2                                                 |
++---------------+--------------------------------------------------------+
+| Nginx         | Version coming by default with the Ubuntu distribution |
++---------------+--------------------------------------------------------+
