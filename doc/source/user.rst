@@ -29,11 +29,12 @@ To configure your plugin, you need to follow these steps:
 
   **Heap sizing**
 
-  By default, 1 GB of heap memory is allocated to the Elasticsearch process.
+  By default, 1GB of heap memory is allocated to the Elasticsearch process.
   This value is too small to run Elasticsearch for anything else than local testing.
   To run Elasticsearch in production you need to allocate at least 4 GB of memory
   but it is recommended to allocate 50% of the available memory up to 32 GB maximum.
   If you set a value that is greater than the memory size, Elasticsearch won't start.
+  Keep in mind also to reserve enough memory for the operating system and the other services.
 
 5. `Configure your environment <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#configure-your-environment>`_
    as needed.
