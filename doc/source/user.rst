@@ -13,9 +13,9 @@ To configure your plugin, you need to follow these steps:
 1. `Create a new environment <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#launch-wizard-to-create-new-environment>`_
    with the Fuel web user interface.
 
-2. Click on the Settings tab of the Fuel web UI.
+#. Click on the Settings tab of the Fuel web UI.
 
-3. Scroll down the page and select the Elasticsearch-Kibana Plugin in the left column.
+#. Scroll down the page and select the Elasticsearch-Kibana Plugin in the left column.
    The Elasticsearch-Kibana Plugin settings screen should appear as shown below.
 
 .. image:: ../images/elastic_kibana_settings.png
@@ -27,38 +27,43 @@ To configure your plugin, you need to follow these steps:
   a. Specify the data retention period in number of days.
   b. Specify the JVM heap size for Elastisearch. See configuration recommendations below.
 
-  **Heap sizing**
+.. note:: By default, 1GB of heap memory is allocated to the Elasticsearch process.
+   This value is too small to run Elasticsearch for anything else than local testing.
+   To run Elasticsearch in production you need to allocate at least 4 GB of memory
+   but it is recommended to allocate 50% of the available memory up to 32 GB maximum.
 
-  By default, 1GB of heap memory is allocated to the Elasticsearch process.
-  This value is too small to run Elasticsearch for anything else than local testing.
-  To run Elasticsearch in production you need to allocate at least 4 GB of memory
-  but it is recommended to allocate 50% of the available memory up to 32 GB maximum.
-  If you set a value that is greater than the memory size, Elasticsearch won't start.
-  Keep in mind also to reserve enough memory for the operating system and the other services.
+   If you set a value that is greater than the memory size, Elasticsearch won't start.
+   Keep in mind also to reserve enough memory for the operating system and the other services.
 
-5. `Configure your environment <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#configure-your-environment>`_
-   as needed.
-
-6. Assign the *Elasticsearch Kibana* role to a node as shown in the figure below.
-
-  **Disks partitioning**
-
-  By default, the Elasticsearch-Kibana Plugin allocates:
-
-  - 20% of the first available disk for the operating system by honoring a range of 15GB minimum and 50GB maximum.
-  - 10GB for */var/log*.
-  - At least 30 GB for the Elasticsearch database in */opt/es-data*.
-
-  Please check the `Fuel User Guide <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#assign-a-role-or-roles-to-each-node-server>`_
-  if you would like to change the default configuration of the disks partitioning.
+5. Assign the *Elasticsearch Kibana* role to a node as shown in the figure below.
 
 .. image:: ../images/elastic_kibana_role.png
    :width: 800
    :align: center
 
-7. `Verify the networks <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#verify-networks>`_ on the Networks tab of the Fuel web UI.
+.. note:: Because of a bug with Fuel 7.0 (see bug `#1496328
+   <https://bugs.launchpad.net/fuel-plugins/+bug/1496328>`_), the UI won't let
+   you assign the *Elasticsearch Kibana* role if at least one node is already
+   assigned with one of the built-in roles.
 
-8. `Deploy <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#deploy-changes>`_ your changes.
+   To workaround this problem, you should either remove the already assigned built-in roles or use the Fuel CLI::
+
+       $ fuel --env <environment id> node set --node-id <node_id> --role=elasticsearch_kibana
+
+6. Adjust the disk configuration if necessary (see the `Fuel User Guide
+   <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#disk-partitioning>`_
+   for details). By default, the Elasticsearch-Kibana Plugin allocates:
+
+  - 20% of the first available disk for the operating system by honoring a range of 15GB minimum and 50GB maximum.
+  - 10GB for */var/log*.
+  - At least 30 GB for the Elasticsearch database in */opt/es-data*.
+
+7. `Configure your environment <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#configure-your-environment>`_
+   as needed.
+
+#. `Verify the networks <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#verify-networks>`_ on the Networks tab of the Fuel web UI.
+
+#. `Deploy <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#deploy-changes>`_ your changes.
 
 .. _plugin_install_verification:
 
