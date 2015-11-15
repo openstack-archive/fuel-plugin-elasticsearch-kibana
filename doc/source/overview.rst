@@ -12,29 +12,10 @@ tool to troubleshooting problems.
 
 Elasticsearch and Kibana are key components
 of the `LMA Toolchain project <https://launchpad.net/lma-toolchain>`_
-as shown in the figure below::
+as shown in the figure below.
 
-
-                             ...................................................
-                            |               LMA Collector Plugin                |
-                            |                                                   |
-                            | measurement / collection / analysis / persistence |
-                            '...................................................'
-                                           |          |          |
-                                           |          |          |
-                                           |          |          |
-    ...................................    |          |          |   +==================================+
-   |      InfluxDB Grafana Plugin      |   |          |          |   ||  Elasticsearch Kibana Plugin   ||
-   |                                   |<--'          |          '-->||                                ||
-   |  metrics / annotations analytics  |              |              || logs / notifications analytics ||
-   '...................................'              |              +==================================+
-                                                      v
-                                      ................................
-                                     | Infrastructure Alerting Plugin |
-                                     |                                |
-                                     |     alerting / escalation      |
-                                     '................................'
-
+.. image:: ../images/toolchain_map.png
+   :align: center
 
 .. _plugin_requirements:
 
