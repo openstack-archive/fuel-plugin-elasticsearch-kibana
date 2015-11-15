@@ -6,11 +6,35 @@ Overview
 The **Elasticsearch-Kibana Fuel Plugin** is used to install and configure
 Elasticsearch and Kibana which collectively provide access to the OpenStack
 logs and notifications analytics.
-Those analytics can be used to search and correlate the service-affecting
+Those analytics can be used to search and correlate service-affecting
 events which occurred in your OpenStack environment. It is an indispensable
 tool to troubleshooting problems.
-The Elasticsearch-Kibana Plugin is a key component of the
-**Logging, Monitoring and Alerting (LMA) Toolchain** of Mirantis OpenStack.
+
+Elasticsearch and Kibana are key components
+of the `LMA Toolchain project <https://launchpad.net/lma-toolchain>`_
+as shown in the figure below::
+
+
+                             ...................................................
+                            |               LMA Collector Plugin                |
+                            |                                                   |
+                            | measurement / collection / analysis / persistence |
+                            '...................................................'
+                                           |          |          |
+                                           |          |          |
+                                           |          |          |
+    ...................................    |          |          |   +==================================+
+   |      InfluxDB Grafana Plugin      |   |          |          |   ||  Elasticsearch Kibana Plugin   ||
+   |                                   |<--'          |          '-->||                                ||
+   |  metrics / annotations analytics  |              |              || logs / notifications analytics ||
+   '...................................'              |              +==================================+
+                                                      v
+                                      ................................
+                                     | Infrastructure Alerting Plugin |
+                                     |                                |
+                                     |     alerting / escalation      |
+                                     '................................'
+
 
 .. _plugin_requirements:
 

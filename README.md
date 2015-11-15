@@ -1,64 +1,61 @@
-Elasticsearch-Kibana Plugin for Fuel
-====================================
+The Elasticsearch-Kibana Plugin for Fuel
+========================================
 
-The **Elasticsearch-Kibana Fuel Plugin** is used to install and configure
-Elasticsearch and Kibana which collectively provide access to the OpenStack
-logs and notifications analytics.
-Those analytics can be used to search and correlate the service-affecting
-events which occurred in your OpenStack environment. It is an indispensable
-tool to troubleshooting problems.
-The Elasticsearch-Kibana Plugin is a key component of the
-**Logging, Monitoring and Alerting (LMA) Toolchain** of Mirantis OpenStack.
+The Elasticsearch-Kibana Plugin for Fuel is used to install and configure
+[Elasticsearch](https://www.elastic.co/products/elasticsearch) and
+[Kibana](https://www.elastic.co/products/kibana) which collectively
+provide access to OpenStack analytics for the logs and the notifications collected
+and processed by the [LMA Collector](
+http://fuel-plugin-lma-collector.readthedocs.org/en/latest/index.html)
+Plugin.
+
+Please check the [Elasticsearch-Kibana Plugin Overview](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#overview)
+section of the plugin documentation for additional details.
 
 Release Notes
 -------------
 
-**0.8.0**
-
-* Add support for the "elasticsearch_kibana" Fuel Plugin role instead of
-  of the "base-os" role which had several limitations.
-* Add support for a retention policy configuration thanks to the integration
-  of [Elastic Curator](https://github.com/elastic/curator)
-* Upgrade to Elasticsearch 1.4.5
-
-**0.7.0**
-
-* Initial release of the plugin. This is a beta version.
+The release notes of the Elasticsearch-Kibana Plugin are provided in the
+[Release Notes](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/releases.html)
+section of the plugin documentation.
 
 Requirements
 ------------
 
-The plugin's requirements are defined in the [Elasticsearch-Kibana Fuel
-Plugin Documentation](
+The Elasticsearch-Kibana Plugin requirements are defined in the [Requirements](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#requirements)
+section of the plugin documentation.
 
 Known issues
 ------------
 
-No known issues so far.
+The LMA Toolchain's related issues are available on [Launchpad](
+https://bugs.launchpad.net/lma-toolchain).
 
 Limitations
 -----------
 
-A current limitation of this plugin is that it not possible to
-display in the Fuel web UI the URL where the Kibana interface
-can be reached when the deployment has completed.
-Instructions are provided in the *Installation Guide* about how you can
-obtain this URL using the `fuel` command line.
+The Elasticsearch-Kibana Plugin limitations are described in the [Limitations](
+http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#limitations)
+section of the plugin documentation.
 
 Installation
 ------------
 
-Please follow the installation instructions in the [Elasticsearch-Kibana Fuel
-Plugin Documentation](
+The installation instructions of the Elasticsearch-Kibana Plugin are provided
+in the [Installation](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/installation.html)
+section of the plugin documentation.
 
 User Guide
 ----------
 
-How to configure and use the Elasticsearch-Kibana Fuel Plugin is detailed in
-in the [Elasticsearch-Kibana Fuel Plugin Documentation](
+Instructions for how to configure and use the Elasticsearch-Kibana Plugin
+are provided in the [User Guide](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/user.html)
+section of the plugin documentation.
 
 Communication
 -------------
@@ -71,18 +68,18 @@ prefixed by `[fuel][plugins][lma]`.
 Reporting Bugs
 --------------
 
-Bugs should be filled on the [Launchpad fuel-plugins project](
-https://bugs.launchpad.net/fuel-plugins) (not GitHub) with the tag `lma`.
-
+Bugs should be filed against the [LMA Toolchain project](
+https://launchpad.net/lma-toolchain) on Launchpad (not Github!).
 
 Contributing
 ------------
 
-If you would like to contribute to the development of this Fuel plugin you must
+If you would like to contribute to the development of this plugin you must
 follow the [OpenStack development workflow](
-http://docs.openstack.org/infra/manual/developers.html#development-workflow).
+http://docs.openstack.org/infra/manual/developers.html#development-workflow)
+instructions.
 
-Patch reviews take place on the [OpenStack gerrit](
+Patch reviews take place within [OpenStack Gerrit](
 https://review.openstack.org/#/q/status:open+project:openstack/fuel-plugin-elasticsearch-kibana,n,z)
 system.
 
