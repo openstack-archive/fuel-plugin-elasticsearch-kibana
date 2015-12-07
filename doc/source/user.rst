@@ -108,10 +108,10 @@ The expected output should look like something like this::
 the `fuel` command line::
 
     [root@fuel ~]# fuel nodes
-    id | status   | name             | cluster | ip        | mac               | roles                | pending_roles | online | group_id
-    ---|----------|------------------|---------|-----------|-------------------|----------------------|---------------|--------|---------
-    14 | ready    | Untitled (20:0c) | 8       | 10.20.0.8 | 08:00:27:29:20:0c | controller           |               | True   | 8
-    13 | ready    | Untitled (47:b7) | 8       | 10.20.0.4 | 08:00:27:54:47:b7 | elasticsearch_kibana |               | True   | 8
+    id | status   | name | cluster | ip        | ... | roles                | ...
+    ---|----------|----------------|-----------|-----|----------------------|----
+    14 | ready    | ctrl | 8       | 10.20.0.8 | ... | controller           | ...
+    13 | ready    | lma  | 8       | 10.20.0.4 | ... | elasticsearch_kibana | ...
 
 **Kibana**
 
