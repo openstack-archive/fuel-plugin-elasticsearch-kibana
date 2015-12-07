@@ -13,7 +13,8 @@ Catalog, you need to follow these steps:
 
 2. Copy the RPM file to the Fuel Master node::
 
-    [root@home ~]# scp elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm root@<Fuel Master node IP address>:
+    [root@home ~]# scp elasticsearch_kibana-0.8-0.8.0-0.noarch.rpm \
+    root@<Fuel Master node IP address>:
 
 3. Install the plugin using the `Fuel CLI <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#using-fuel-cli>`_::
 
@@ -61,7 +62,8 @@ if you need further instructions about how to build the Fuel Plugin Builder.
 
 4. Clone the plugin git repository::
 
-    [root@home ~] git clone git@github.com:stackforge/fuel-plugin-elasticsearch-kibana.git
+    [root@home ~] git clone \
+      git@github.com:openstack/fuel-plugin-elasticsearch-kibana.git
 
 5. Check that the plugin is valid::
 
@@ -73,7 +75,8 @@ if you need further instructions about how to build the Fuel Plugin Builder.
 
 7. Now that you have created the RPM file, you can install the plugin using the `fuel plugins --install` command::
 
-    [root@fuel ~] fuel plugins --install ./fuel-plugin-elasticsearch-kibana/elasticsearch_kibana-0.8-0.8.0-1.noarch.rpm
+    [root@fuel ~] fuel plugins --install \
+      ./fuel-plugin-elasticsearch-kibana/*.noarch.rpm
 
 
 Elasticsearch-Kibana Fuel Plugin software components

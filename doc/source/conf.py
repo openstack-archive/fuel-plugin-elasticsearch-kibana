@@ -25,3 +25,8 @@ latex_documents = [
   ('index', 'ElasticsearchKibana.tex', u'The Elasticsearch-Kibana plugin for Fuel Documentation',
    u'Mirantis Inc.', 'manual'),
 ]
+
+# make latex stop printing blank pages between sections
+# http://stackoverflow.com/questions/5422997/sphinx-docs-remove-blank-pages-from-generated-pdfs
+latex_elements = {'classoptions': ',openany,oneside', 'babel':
+                  '\\usepackage[english]{babel}'}
