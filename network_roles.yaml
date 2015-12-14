@@ -1,0 +1,11 @@
+- id: "elasticsearch"
+  default_mapping: "management"
+  properties:
+    subnet: true
+    gateway: false
+    vip:
+       - name: "es_vip_mgmt"
+         namespace: "haproxy"
+         alias: "elasticsearch"
+         node_roles:
+           - "elasticsearch_kibana"
