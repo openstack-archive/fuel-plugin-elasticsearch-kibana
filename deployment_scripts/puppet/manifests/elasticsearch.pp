@@ -12,7 +12,15 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 #
+prepare_network_config(hiera('network_scheme', {}))
+$mgmt_address = get_network_role_property('management', 'ipaddr')
 $elasticsearch_kibana = hiera('elasticsearch_kibana')
+$network_metadata = hiera('network_metadata')
+$es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
+$es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'management')
+$es_nodes_ips = values($es_address_map)
+
+include lma_logging_analytics::params
 
 # Params related to Elasticsearch.
 $es_dir       = $elasticsearch_kibana['data_dir']
@@ -47,16 +55,25 @@ class { 'elasticsearch':
 # Start an instance of elasticsearch
 elasticsearch::instance { $es_instance:
   config => {
-    'threadpool.bulk.queue_size' => '1000',
-    'bootstrap.mlockall'         => true,
-    'http.cors.allow-origin'     => '/.*/',
-    'http.cors.enabled'          => true
-  },
+    'threadpool.bulk.queue_size'       => '1000',
+    'bootstrap.mlockall'               => true,
+    'http.cors.allow-origin'           => '/.*/',
+    'http.cors.enabled'                => true,
+    'cluster.name'                     => $lma_logging_analytics::params::es_cluster_name,
+    'node.name'                        => "${::fqdn}_${es_instance}",
+    'node.master'                      => true,
+    'node.data'                        => true,
+    'discovery.zen.ping.multicast'     => {'enabled' => false},
+    'discovery.zen.ping.unicast.hosts' => $es_nodes_ips,
+    'http.bind_host'                   => $mgmt_address,
+    'transport.bind_host'              => $mgmt_address,
+  }
 }
 
 lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
   require            => Elasticsearch::Instance[$es_instance],
+  host               => $mgmt_address,
 }
 
 class { 'lma_logging_analytics::curator':
