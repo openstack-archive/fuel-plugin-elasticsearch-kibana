@@ -15,6 +15,7 @@
 # Class lma_logging_analytics::params
 
 class lma_logging_analytics::params {
+  $es_cluster_name         = 'lma'
   $retention_period        = 30
   $indexes_prefixes        = []
 

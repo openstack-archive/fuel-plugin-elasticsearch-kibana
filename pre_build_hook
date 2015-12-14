@@ -8,6 +8,8 @@ CONCAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-concat-1
 STDLIB_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-stdlib-4.7.0.tar.gz"
 NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
 ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.9.1.tar.gz"
+FUEL_LIB_COMMIT="7.0"
+FUEL_LIB_TARBALL_URL="https://github.com/openstack/fuel-library/archive/${FUEL_LIB_COMMIT}.tar.gz"
 
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
@@ -39,3 +41,9 @@ download_puppet_module "elasticsearch" "$ELASTICSEARCH_TARBALL_URL"
 KIBANA_FOLDER="${MODULES_DIR}/lma_logging_analytics/files/kibana/src"
 mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
+
+# Extract dependent manifests from fuel-library
+rm -rf "${MODULES_DIR:?}"/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack}
+wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
+    tar -C "${MODULES_DIR}" --strip-components=3 -zxvf - \
+    fuel-library-${FUEL_LIB_COMMIT}/deployment/puppet/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack}

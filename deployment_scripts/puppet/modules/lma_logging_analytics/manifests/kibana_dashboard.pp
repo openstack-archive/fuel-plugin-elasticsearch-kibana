@@ -13,11 +13,13 @@
 #    under the License.
 #
 define lma_logging_analytics::kibana_dashboard (
-  $es_url = 'http://localhost:9200',
+  $host = 'localhost',
+  $port = '9200',
   $content = undef,
 ) {
   include lma_logging_analytics::params
 
+  $es_url = "http://${host}:${port}"
   $dashboard_title = join([$lma_logging_analytics::params::kibana_dashboard_prefix, capitalize($title)], '')
   $dashboard_id = uriescape($dashboard_title)
 
