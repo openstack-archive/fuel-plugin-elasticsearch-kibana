@@ -10,18 +10,6 @@ attributes:
         source: '^\d+$'
         error: "You must provide a number"
 
-  number_of_replicas:
-    value: '0'
-    label: 'Replication factor'
-    description: 'The number of replicas'
-    weight: 6
-    type: "text"
-    regex: *number_validation
-    # Don't expose the replication factor until clustering is supported
-    restrictions:
-      - condition: "true"
-        action: hide
-
   # Parameter hidden in the UI on purpose
   # this directory must match the mount point set in volumes.yaml
   data_dir:
@@ -43,3 +31,62 @@ attributes:
     regex:
       source: '^([1-9]|[12][0-9]|3[0-2])$'
       error: 'Enter a value between 1 and 32'
+
+  advanced_settings:
+    label: "Advanced settings"
+    value: false
+    description: "The plugin determines the best settings if not set"
+    weight: 19
+    type: checkbox
+
+  number_of_replicas:
+    value: ''
+    label: 'Replication factor'
+    description: "The number of replicas must be inferior of the total number of elasticsearch instance and must be set to 0 if only one instance is deployed."
+    weight: 20
+    type: "text"
+    regex:
+      source: '^\d?$'
+      error: "You must provide either a number or lets it empty"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
+        action: hide
+
+  minimum_master_nodes:
+    value: ''
+    label: 'Minimum number of master eligible nodes'
+    description: "It must be set to a quorum of your master eligible nodes. It is recommended to avoid having only two master eligible nodes. If empty, the plugin will calculate the value with the formulas if the number of node is > 2: '(number of nodes / 2) + 1', else the value is set to 1"
+    weight: 21
+    type: "text"
+    regex:
+      source: '^\d?$'
+      error: "You must provide either a number or lets it empty"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
+        action: hide
+
+  recover_after_nodes:
+    value: ''
+    label: 'Recover after nodes'
+    description: "The number of nodes to wait before starting a recovery after a cluster restart, the plugin sets it to 2/3 of the total number of nodes. This must be equal or inferior of the total number of nodes in the cluster."
+    weight: 22
+    type: "text"
+    regex:
+      source: '^\d?$'
+      error: "You must provide either a number or lets it empty"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
+        action: hide
+
+  recover_after_time:
+    value: '5'
+    label: 'Recover after time'
+    description: "Begin recover after X minutes after a cluster restart."
+    weight: 23
+    type: "text"
+    regex:
+      source: '^\d+$'
+      error: "You must provide a number"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
+        action: hide
