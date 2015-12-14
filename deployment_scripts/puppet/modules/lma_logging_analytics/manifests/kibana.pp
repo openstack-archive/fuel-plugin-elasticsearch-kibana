@@ -17,6 +17,7 @@
 
 class lma_logging_analytics::kibana (
   $number_of_replicas = $lma_logging_analytics::params::kibana_replicas,
+  $es_host = 'localhost',
 ) inherits lma_logging_analytics::params {
 
   validate_integer($number_of_replicas)
@@ -45,7 +46,8 @@ class lma_logging_analytics::kibana (
   }
 
   elasticsearch::template { 'kibana':
-    content => "{\"template\":\"kibana-*\", \"settings\": {\"number_of_replicas\":${number_of_replicas}}}"
+    content => "{\"template\":\"kibana-*\", \"settings\": {\"number_of_replicas\":${number_of_replicas}}}",
+    host    => $es_host,
   }
 
   # Note that the dashboards are stored in templates/ because it is the only way
@@ -55,6 +57,7 @@ class lma_logging_analytics::kibana (
   # for details
   lma_logging_analytics::kibana_dashboard { 'logs':
     content => template('lma_logging_analytics/kibana_dashboards/logs.json'),
+    es_host => $es_host,
     require => [File["${dashboard_dir}/logs.json"], Elasticsearch::Template['kibana']],
   }
 
