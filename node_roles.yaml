@@ -5,7 +5,7 @@ elasticsearch_kibana:
   public_ip_required: false
   weight: 100
   limits:
-    max: 1
+    max: 5
   conflicts:
     - controller
     - compute

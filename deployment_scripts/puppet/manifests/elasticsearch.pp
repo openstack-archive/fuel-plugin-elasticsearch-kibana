@@ -60,13 +60,14 @@ elasticsearch::instance { $es_instance:
     'http.cors.allow-origin'           => '/.*/',
     'http.cors.enabled'                => true,
     'cluster.name'                     => $lma_logging_analytics::params::es_cluster_name,
-    'node.name'                        => "${::fqdn}_${es_instance}",
+    'node.name'                        => "${::hostname}_${es_instance}",
     'node.master'                      => true,
     'node.data'                        => true,
     'discovery.zen.ping.multicast'     => {'enabled' => false},
     'discovery.zen.ping.unicast.hosts' => $es_nodes_ips,
     'http.bind_host'                   => $mgmt_address,
     'transport.bind_host'              => $mgmt_address,
+    'transport.publish_host'           => $mgmt_address,
   }
 }
 
