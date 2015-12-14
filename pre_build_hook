@@ -6,7 +6,6 @@ set -eux
 # Puppet manifests
 CONCAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-concat-1.2.4.tar.gz"
 STDLIB_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-stdlib-4.7.0.tar.gz"
-LVM_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-lvm-0.5.0.tar.gz"
 NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
 ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.9.1.tar.gz"
 
@@ -33,7 +32,6 @@ download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/
 # Install puppet manifests
 download_puppet_module "concat" "$CONCAT_TARBALL_URL"
 download_puppet_module "stdlib" "$STDLIB_TARBALL_URL"
-download_puppet_module "lvm" "$LVM_TARBALL_URL"
 download_puppet_module "nginx" "$NGINX_TARBALL_URL"
 download_puppet_module "elasticsearch" "$ELASTICSEARCH_TARBALL_URL"
 
