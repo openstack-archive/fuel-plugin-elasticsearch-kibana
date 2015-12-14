@@ -21,10 +21,10 @@ download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcscl
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
     http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u91-2.6.3-0ubuntu0.14.04.1_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
-    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.4.5.deb
+    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.3.deb
 
 # Download curator and dependencies
-download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch-curator_3.2.3_all.deb \
+download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch-curator_3.3.0_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch_1.6.0_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-click_4.0_all.deb \
     http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-urllib3_1.10.4_all.deb
