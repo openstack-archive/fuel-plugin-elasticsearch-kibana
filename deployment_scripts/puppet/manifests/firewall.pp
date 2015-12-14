@@ -38,8 +38,14 @@ firewall {'020 ssh':
   action => 'accept',
 }
 
-firewall { '100 elasticsearch':
+firewall { '100 elasticsearch REST':
   port   => 9200,
+  proto  => 'tcp',
+  action => 'accept',
+}
+
+firewall { '110 elasticsearch clustering':
+  port   => 9300,
   proto  => 'tcp',
   action => 'accept',
 }
