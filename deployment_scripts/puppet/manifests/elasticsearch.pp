@@ -14,7 +14,7 @@
 #
 prepare_network_config(hiera('network_scheme', {}))
 $mgmt_address = get_network_role_property('management', 'ipaddr')
-$elasticsearch_kibana = hiera('elasticsearch_kibana')
+$elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 $network_metadata = hiera('network_metadata')
 $es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'management')
@@ -55,23 +55,27 @@ class { 'elasticsearch':
 # Start an instance of elasticsearch
 elasticsearch::instance { $es_instance:
   config => {
-    'threadpool.bulk.queue_size'       => '1000',
-    'bootstrap.mlockall'               => true,
-    'http.cors.allow-origin'           => '/.*/',
-    'http.cors.enabled'                => true,
-    'cluster.name'                     => $lma_logging_analytics::params::es_cluster_name,
-    'node.name'                        => "${::fqdn}_${es_instance}",
-    'node.master'                      => true,
-    'node.data'                        => true,
-    'discovery.zen.ping.multicast'     => {'enabled' => false},
-    'discovery.zen.ping.unicast.hosts' => $es_nodes_ips,
-    'http.bind_host'                   => $mgmt_address,
-    'transport.bind_host'              => $mgmt_address,
+    'threadpool.bulk.queue_size'         => '1000',
+    'bootstrap.mlockall'                 => true,
+    'http.cors.allow-origin'             => '/.*/',
+    'http.cors.enabled'                  => true,
+    'cluster.name'                       => $lma_logging_analytics::params::es_cluster_name,
+    'node.name'                          => "${::fqdn}_${es_instance}",
+    'node.master'                        => true,
+    'node.data'                          => true,
+    'discovery.zen.ping.multicast'       => {'enabled' => false},
+    'discovery.zen.ping.unicast.hosts'   => $es_nodes_ips,
+    'discovery.zen.minimum_master_nodes' => $elasticsearch_kibana['minimum_master_nodes'],
+    'gateway.recover_after_time'         => $elasticsearch_kibana['recover_after_time'],
+    'gateway.recover_after_nodes'        => $elasticsearch_kibana['recover_after_nodes'],
+
+    'http.bind_host'                     => $mgmt_address,
+    'transport.bind_host'                => $mgmt_address,
   }
 }
 
 lma_logging_analytics::es_template { ['log', 'notification']:
-  number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+  number_of_replicas => $elasticsearch_kibana['number_of_replicas'],
   require            => Elasticsearch::Instance[$es_instance],
   host               => $mgmt_address,
 }

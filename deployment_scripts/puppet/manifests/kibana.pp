@@ -14,9 +14,9 @@
 #
 prepare_network_config(hiera('network_scheme', {}))
 $mgmt_address = get_network_role_property('management', 'ipaddr')
-$elasticsearch_kibana = hiera('elasticsearch_kibana')
+$elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 
 class { 'lma_logging_analytics::kibana':
-  number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+  number_of_replicas => $elasticsearch_kibana['number_of_replicas'],
   es_host            => $mgmt_address,
 }
