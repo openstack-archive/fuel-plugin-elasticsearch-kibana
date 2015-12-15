@@ -36,5 +36,5 @@
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
     puppet_modules: puppet/modules
-    timeout: 600
+    timeout: 1200
 
