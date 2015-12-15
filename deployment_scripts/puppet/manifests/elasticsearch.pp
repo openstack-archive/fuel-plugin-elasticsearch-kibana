@@ -70,8 +70,15 @@ elasticsearch::instance { $es_instance:
   }
 }
 
+if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < count($es_nodes) {
+  $number_of_replicas = 0 + $elasticsearch_kibana['number_of_replicas']
+}else{
+  # Override the replication number otherwise this will lead to a stale cluster health
+  $number_of_replicas = count($es_nodes) - 1
+}
+
 lma_logging_analytics::es_template { ['log', 'notification']:
-  number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+  number_of_replicas => $number_of_replicas,
   require            => Elasticsearch::Instance[$es_instance],
   host               => $mgmt_address,
 }

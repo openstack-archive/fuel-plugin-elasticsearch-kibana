@@ -15,8 +15,17 @@
 prepare_network_config(hiera('network_scheme', {}))
 $mgmt_address = get_network_role_property('management', 'ipaddr')
 $elasticsearch_kibana = hiera('elasticsearch_kibana')
+$network_metadata = hiera('network_metadata')
+$es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
+
+if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < count($es_nodes) {
+  $number_of_replicas = 0 + $elasticsearch_kibana['number_of_replicas']
+}else{
+  # Override the replication number otherwise this will lead to a stale cluster health
+  $number_of_replicas = count($es_nodes) - 1
+}
 
 class { 'lma_logging_analytics::kibana':
-  number_of_replicas => 0 + $elasticsearch_kibana['number_of_replicas'],
+  number_of_replicas => $number_of_replicas,
   es_host            => $mgmt_address,
 }
