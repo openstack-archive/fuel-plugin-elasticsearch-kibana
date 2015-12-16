@@ -40,3 +40,12 @@
     puppet_modules: "puppet/modules"
     timeout: 120
 
+- id: es_kibana_haproxy
+  type: puppet
+  groups: [elasticsearch_kibana]
+  requires: [cluster-haproxy]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/haproxy.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 120

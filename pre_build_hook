@@ -43,7 +43,7 @@ mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
 
 # Extract dependent manifests from fuel-library
-rm -rf "${MODULES_DIR:?}"/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack}
+rm -rf "${MODULES_DIR:?}"/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack,haproxy}
 wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
     tar -C "${MODULES_DIR}" --strip-components=3 -zxvf - \
-    fuel-library-${FUEL_LIB_COMMIT}/deployment/puppet/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack}
+    fuel-library-${FUEL_LIB_COMMIT}/deployment/puppet/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack,haproxy}
