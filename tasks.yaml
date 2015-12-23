@@ -18,12 +18,6 @@
 
 - role: ['elasticsearch_kibana']
   stage: post_deployment/8100
-  type: reboot
-  parameters:
-    timeout: 600
-
-- role: ['elasticsearch_kibana']
-  stage: post_deployment/8100
   type: puppet
   parameters:
     puppet_manifest: puppet/manifests/elasticsearch.pp
