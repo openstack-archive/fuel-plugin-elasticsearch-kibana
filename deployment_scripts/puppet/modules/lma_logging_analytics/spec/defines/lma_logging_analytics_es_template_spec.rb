@@ -14,13 +14,13 @@
 require 'spec_helper'
 
 describe 'lma_logging_analytics::es_template' do
-    let(:title) { 'foo' }
+    let(:title) { 'log' }
     let(:facts) do
         {:kernel => 'Linux', :operatingsystem => 'Ubuntu',
          :concat_basedir => '/foo'}
     end
 
     describe 'with defaults' do
-        it { is_expected.to contain_elasticsearch__template('foo') }
+        it { is_expected.to contain_elasticsearch__template('log') }
     end
 end
