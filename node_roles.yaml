@@ -11,3 +11,5 @@ elasticsearch_kibana:
     - compute
     - cinder
     - ceph-osd
+  update_required:
+    - elasticsearch_kibana
