@@ -22,7 +22,7 @@ define lma_logging_analytics::es_template (
   $index_prefix = $title
 
   elasticsearch::template { $title:
-    content => template('lma_logging_analytics/es_template.json.erb'),
+    content => template("lma_logging_analytics/es_template_${title}.json.erb"),
     host    => $host,
   }
 }
