@@ -6,6 +6,7 @@ elasticsearch_kibana:
   weight: 100
   limits:
     max: 5
+    recommended: 3
   conflicts:
     - controller
     - compute
