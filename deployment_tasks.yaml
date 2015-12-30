@@ -49,3 +49,14 @@
     puppet_manifest: "puppet/manifests/haproxy.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+
+- id: enable_quorum-elasticsearch_kibana
+  type: shell
+  role: [elasticsearch_kibana]
+  required_for: [post_deployment_end]
+  requires: [post_deployment_start]
+  parameters:
+    cmd: ruby /etc/puppet/modules/osnailyfacter/modular/astute/enable_quorum.rb
+    timeout: 180
+    strategy:
+      type: one_by_one
