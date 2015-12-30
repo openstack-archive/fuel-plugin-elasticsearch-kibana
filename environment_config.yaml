@@ -1,5 +1,6 @@
 attributes:
-
+  metadata:
+    group: 'Monitoring'
   retention_period:
     value: '30'
     label: 'Retention period'
