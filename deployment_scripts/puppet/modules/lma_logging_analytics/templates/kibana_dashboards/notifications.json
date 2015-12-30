@@ -283,7 +283,7 @@
             "old_task_state",
             "state",
             "new_task_state",
-            "fuel_environment"
+            "environment_label"
           ],
           "highlight": [],
           "sortable": true,

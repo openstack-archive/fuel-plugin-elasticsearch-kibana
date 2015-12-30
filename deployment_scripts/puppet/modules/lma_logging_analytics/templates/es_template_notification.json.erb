@@ -2,6 +2,13 @@
     "mappings": {
         "message": {
             "properties": {
+                "event_type": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "Payload": {
+                    "type": "string"
+                },
                 "Logger": {
                     "index": "not_analyzed",
                     "type": "string"
@@ -10,11 +17,11 @@
                     "index": "not_analyzed",
                     "type": "string"
                 },
-                "python_module": {
+                "Hostname": {
                     "index": "not_analyzed",
                     "type": "string"
                 },
-                "Hostname": {
+                "hostname": {
                     "index": "not_analyzed",
                     "type": "string"
                 },
@@ -38,7 +45,7 @@
                     "index": "not_analyzed",
                     "type": "string"
                 },
-                "fuel_environment": {
+                "environment_label": {
                     "index": "not_analyzed",
                     "type": "string"
                 },
@@ -54,10 +61,6 @@
                     "index": "not_analyzed",
                     "type": "string"
                 },
-                "deployment_mode": {
-                    "index": "not_analyzed",
-                    "type": "string"
-                },
                 "request_id": {
                     "index": "not_analyzed",
                     "type": "string"
@@ -69,6 +72,14 @@
                 "user_id": {
                     "index": "not_analyzed",
                     "type": "string"
+                },
+                "launched_at": {
+                    "type": "date",
+                    "format": "dateOptionalTime"
+                },
+                "created_at": {
+                    "type": "date",
+                    "format": "dateOptionalTime"
                 }
             }
         }
