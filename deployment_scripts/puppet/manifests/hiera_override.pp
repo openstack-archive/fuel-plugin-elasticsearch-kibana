@@ -43,7 +43,11 @@ $recover_after_time = 0 + $elasticsearch_kibana['recover_after_time']
 if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_kibana['recover_after_nodes'] <= $es_nodes_count {
   $recover_after_nodes = $elasticsearch_kibana['recover_after_nodes']
 } else {
-  $recover_after_nodes = floor($es_nodes_count * 2 / 3)
+  if $es_nodes_count <= 1 {
+    $recover_after_nodes = 1
+  } else {
+    $recover_after_nodes = floor($es_nodes_count * 2 / 3)
+  }
   notice("Set recover_after_nodes to ${recover_after_nodes}")
 }
 
