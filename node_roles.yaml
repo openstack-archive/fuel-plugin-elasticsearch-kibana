@@ -1,7 +1,7 @@
 elasticsearch_kibana:
   name: 'Elasticsearch Kibana'
   description: 'Install Elasticsearch and Kibana'
-  has_primary: false
+  has_primary: true
   public_ip_required: false
   weight: 100
   limits:
