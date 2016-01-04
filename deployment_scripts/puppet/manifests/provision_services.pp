@@ -1,4 +1,4 @@
-#    Copyright 2015 Mirantis, Inc.
+#    Copyright 2016 Mirantis, Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -13,6 +13,15 @@
 #    under the License.
 #
 
-class { 'lma_logging_analytics::kibana':
-  es_host => hiera('lma::elasticsearch::vip'),
+$vip = hiera('lma::elasticsearch::vip')
+$number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
+
+lma_logging_analytics::es_template { ['log', 'notification', 'kibana']:
+  number_of_replicas => $number_of_replicas,
+  host               => $vip,
+}
+
+lma_logging_analytics::kibana_dashboard { ['logs', 'notifications']:
+  host    => $vip,
+  require => Lma_logging_analytics::Es_template['kibana'],
 }
