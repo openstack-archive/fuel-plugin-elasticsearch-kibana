@@ -14,13 +14,13 @@
 require 'spec_helper'
 
 describe 'lma_logging_analytics::kibana_dashboard' do
-    let(:title) { 'foo' }
+    let(:title) { 'logs' }
     let(:facts) do
         {:kernel => 'Linux', :operatingsystem => 'Ubuntu',
          :concat_basedir => '/foo'}
     end
 
     describe 'with defaults' do
-        it { is_expected.to contain_exec('foo') }
+        it { is_expected.to contain_exec('logs') }
     end
 end

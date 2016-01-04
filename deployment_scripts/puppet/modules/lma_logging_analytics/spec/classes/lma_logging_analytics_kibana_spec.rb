@@ -23,8 +23,5 @@ describe 'lma_logging_analytics::kibana' do
     it { should create_file('/opt/kibana/config.js')}
     it { should create_file('/opt/kibana/app/dashboards/logs.json')}
     it { should create_file('/opt/kibana/app/dashboards/notifications.json')}
-    it { should create_elasticsearch__template('kibana')}
-    it { should create_lma_logging_analytics__kibana_dashboard('logs')}
-    it { should create_lma_logging_analytics__kibana_dashboard('notifications')}
     it { should create_class('nginx')}
 end
