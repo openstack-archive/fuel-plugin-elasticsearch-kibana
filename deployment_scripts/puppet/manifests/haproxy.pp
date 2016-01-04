@@ -12,19 +12,12 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 #
-$plugin_name = 'elasticsearch_kibana'
+$role_name = 'elasticsearch_kibana'
 $es_port = '9200'
 $nginx_port = '80'
-$vip_name = 'es_vip_mgmt'
-
-$network_metadata = hiera_hash('network_metadata')
-if ! $network_metadata['vips'][$vip_name] {
-  fail('Elasticsearch VIP is not defined')
-}
-$vip = $network_metadata['vips'][$vip_name]['ipaddr']
-notice($vip)
-$roles = [ $plugin_name ]
-$es_nodes = get_nodes_hash_by_roles($network_metadata, $roles)
+$vip = hiera('lma::elasticsearch::vip')
+$roles = [ $role_name , "primary-${role_name}"]
+$es_nodes = get_nodes_hash_by_roles(hiera_hash('network_metadata'), $roles)
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
 $es_nodes_ips = values($es_address_map)
 $es_nodes_names = keys($es_address_map)
