@@ -37,6 +37,17 @@ firewall {'020 ssh':
   proto  => 'tcp',
   action => 'accept',
 }
+firewall { '113 corosync-input':
+  port   => 5405,
+  proto  => 'udp',
+  action => 'accept',
+}
+
+firewall { '114 corosync-output':
+  port   => 5404,
+  proto  => 'udp',
+  action => 'accept',
+}
 
 firewall { '100 elasticsearch REST':
   port   => 9200,

@@ -1,3 +1,21 @@
+- id: primary-elasticsearch_kibana
+  type: group
+  role: [primary-elasticsearch_kibana]
+  tasks:
+    - fuel_pkgs
+    - hiera
+    - globals
+    - tools
+    - logging
+    - netconfig
+    - hosts
+    - cluster-haproxy
+  required_for: [deploy_end]
+  requires: [deploy_start]
+  parameters:
+    strategy:
+      type: one_by_one
+
 - id: elasticsearch_kibana
   type: group
   role: [elasticsearch_kibana]
@@ -9,30 +27,46 @@
     - logging
     - netconfig
     - hosts
-    - firewall
-    - deploy_start
-    - cluster
     - cluster-haproxy
-    - openstack-haproxy-stats
   required_for: [deploy_end]
-  requires: [deploy_start]
+  requires: [deploy_start, primary-elasticsearch_kibana]
   parameters:
     strategy:
-      type: one_by_one
+      type: parallel
 
-- id: es-virtual-ip
+- id: lma-es-firewall
   type: puppet
-  groups: [elasticsearch_kibana]
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   required_for: [deploy_end]
-  requires: [cluster]
+  requires: [netconfig]
+  parameters:
+    puppet_manifest: "puppet/manifests/firewall.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 3600
+
+- id: lma-es-cluster
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  required_for: [cluster-haproxy]
+  requires: [lma-es-firewall]
+  parameters:
+    puppet_manifest: "puppet/manifests/cluster.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 3600
+
+- id: lma-es-virtual-ip
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  required_for: [deploy_end]
+  requires: [lma-es-cluster]
   parameters:
     puppet_manifest: "puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
     puppet_modules: "puppet/modules"
     timeout: 3600
 
-- id: es-hiera-override
+- id: lma-es-hiera
   type: puppet
-  groups: [elasticsearch_kibana]
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [globals]
   required_for: [logging]
   parameters:
@@ -40,10 +74,10 @@
     puppet_modules: "puppet/modules"
     timeout: 120
 
-- id: es-kibana-haproxy
+- id: lma-es-kibana-haproxy
   type: puppet
-  groups: [elasticsearch_kibana]
-  requires: [cluster-haproxy, es-virtual-ip]
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [cluster-haproxy, lma-es-virtual-ip]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/haproxy.pp"

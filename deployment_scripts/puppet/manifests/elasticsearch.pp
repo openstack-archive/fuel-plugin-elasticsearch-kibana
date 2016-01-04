@@ -16,7 +16,7 @@ prepare_network_config(hiera('network_scheme', {}))
 $mgmt_address = get_network_role_property('management', 'ipaddr')
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 $network_metadata = hiera('network_metadata')
-$es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
+$es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'management')
 $es_nodes_ips = values($es_address_map)
 

@@ -15,11 +15,16 @@
 $hiera_dir            = '/etc/hiera/plugins'
 $plugin_name          = 'elasticsearch_kibana'
 $plugin_yaml          = "${plugin_name}.yaml"
-$corosync_roles       = [$plugin_name]
+$corosync_roles       = [$plugin_name, "primary-${plugin_name}"]
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 $network_metadata     = hiera('network_metadata')
-$es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
+$es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
 $es_nodes_count       = count($es_nodes)
+$vip_name             = 'es_vip_mgmt'
+if ! $network_metadata['vips'][$vip_name] {
+  fail('Elasticsearch VIP is not defined')
+}
+$vip = $network_metadata['vips'][$vip_name]['ipaddr']
 
 if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < $es_nodes_count {
   $number_of_replicas = 0 + $elasticsearch_kibana['number_of_replicas']
@@ -52,12 +57,13 @@ if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_k
 }
 
 $calculated_content = inline_template('
-corosync_roles:
+lma::corosync_roles:
 <%
 @corosync_roles.each do |crole|
 %>  - <%= crole %>
 <% end -%>
 
+lma::elasticsearch::vip: <%= @vip%>
 lma::elasticsearch::number_of_replicas: <%= @number_of_replicas %>
 lma::elasticsearch::minimum_master_nodes: <%= @minimum_master_nodes %>
 lma::elasticsearch::recover_after_time: <%= @recover_after_time %>
