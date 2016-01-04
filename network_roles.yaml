@@ -9,3 +9,4 @@
          alias: "elasticsearch"
          node_roles:
            - "elasticsearch_kibana"
+           - "primary-elasticsearch_kibana"

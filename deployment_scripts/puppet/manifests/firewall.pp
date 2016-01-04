@@ -15,26 +15,15 @@
 
 class {'::firewall':}
 
-firewall { '000 accept all icmp requests':
-  proto  => 'icmp',
+firewall { '113 corosync-input':
+  port   => 5405,
+  proto  => 'udp',
   action => 'accept',
 }
 
-firewall { '001 accept all to lo interface':
-  proto   => 'all',
-  iniface => 'lo',
-  action  => 'accept',
-}
-
-firewall { '002 accept related established rules':
-  proto  => 'all',
-  state  => ['RELATED', 'ESTABLISHED'],
-  action => 'accept',
-}
-
-firewall {'020 ssh':
-  port   => 22,
-  proto  => 'tcp',
+firewall { '114 corosync-output':
+  port   => 5404,
+  proto  => 'udp',
   action => 'accept',
 }
 

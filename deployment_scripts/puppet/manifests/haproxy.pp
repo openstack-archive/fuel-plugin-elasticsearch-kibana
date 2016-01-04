@@ -23,7 +23,7 @@ if ! $network_metadata['vips'][$vip_name] {
 }
 $vip = $network_metadata['vips'][$vip_name]['ipaddr']
 notice($vip)
-$roles = [ $plugin_name ]
+$roles = [ $plugin_name , "primary-${plugin_name}"]
 $es_nodes = get_nodes_hash_by_roles($network_metadata, $roles)
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
 $es_nodes_ips = values($es_address_map)

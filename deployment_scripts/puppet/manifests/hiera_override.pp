@@ -15,10 +15,10 @@
 $hiera_dir            = '/etc/hiera/plugins'
 $plugin_name          = 'elasticsearch_kibana'
 $plugin_yaml          = "${plugin_name}.yaml"
-$corosync_roles       = [$plugin_name]
+$corosync_roles       = [$plugin_name, "primary-${plugin_name}"]
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 $network_metadata     = hiera('network_metadata')
-$es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana'])
+$es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
 $es_nodes_count       = count($es_nodes)
 
 if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < $es_nodes_count {
@@ -52,7 +52,7 @@ if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_k
 }
 
 $calculated_content = inline_template('
-corosync_roles:
+lma::corosync_roles:
 <%
 @corosync_roles.each do |crole|
 %>  - <%= crole %>
