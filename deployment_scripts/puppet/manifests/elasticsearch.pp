@@ -75,12 +75,6 @@ elasticsearch::instance { $es_instance:
   }
 }
 
-lma_logging_analytics::es_template { ['log', 'notification']:
-  number_of_replicas => hiera('lma::elasticsearch::number_of_replicas'),
-  require            => Elasticsearch::Instance[$es_instance],
-  host               => $mgmt_address,
-}
-
 class { 'lma_logging_analytics::curator':
   retention_period => $elasticsearch_kibana['retention_period'],
   prefixes         => ['log', 'notification'],
