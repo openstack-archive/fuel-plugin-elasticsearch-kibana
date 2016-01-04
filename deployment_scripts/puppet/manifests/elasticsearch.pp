@@ -68,7 +68,7 @@ elasticsearch::instance { $es_instance:
     'discovery.zen.minimum_master_nodes' => hiera('lma::elasticsearch::minimum_master_nodes'),
     'gateway.recover_after_time'         => hiera('lma::elasticsearch::recover_after_time'),
     'gateway.recover_after_nodes'        => hiera('lma::elasticsearch::recover_after_nodes'),
-    'gateway.expected_nodes'             => size($es_nodes),
+    'gateway.expected_nodes'             => size($es_nodes_ips),
     'http.bind_host'                     => $mgmt_address,
     'transport.bind_host'                => $mgmt_address,
     'transport.publish_host'             => $mgmt_address,
