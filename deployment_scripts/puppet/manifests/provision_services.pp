@@ -1,4 +1,4 @@
-#    Copyright 2015 Mirantis, Inc.
+#    Copyright 2016 Mirantis, Inc.
 #
 #    Licensed under the Apache License, Version 2.0 (the "License"); you may
 #    not use this file except in compliance with the License. You may obtain
@@ -11,16 +11,18 @@
 #    WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
 #    License for the specific language governing permissions and limitations
 #    under the License.
-require 'spec_helper'
+#
 
-describe 'lma_logging_analytics::kibana_dashboard' do
-    let(:title) { 'logs' }
-    let(:facts) do
-        {:kernel => 'Linux', :operatingsystem => 'Ubuntu',
-         :concat_basedir => '/foo'}
-    end
+prepare_network_config(hiera('network_scheme', {}))
+$mgmt_address = get_network_role_property('management', 'ipaddr')
+$number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
 
-    describe 'with defaults' do
-        it { is_expected.to contain_exec('logs') }
-    end
-end
+lma_logging_analytics::es_template { ['log', 'notification', 'kibana']:
+  number_of_replicas => $number_of_replicas,
+  host               => $mgmt_address,
+}
+
+lma_logging_analytics::kibana_dashboard { ['logs', 'notifications']:
+  host    => $mgmt_address,
+  require => Lma_logging_analytics::Es_template['kibana'],
+}
