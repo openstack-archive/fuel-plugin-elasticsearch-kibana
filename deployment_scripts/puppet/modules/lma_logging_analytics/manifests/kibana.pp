@@ -45,31 +45,9 @@ class lma_logging_analytics::kibana (
     require => File[$kibana_dir],
   }
 
-  elasticsearch::template { 'kibana':
-    content => "{\"template\":\"kibana-*\", \"settings\": {\"number_of_replicas\":${number_of_replicas}}}",
-    host    => $es_host,
-  }
-
-  # Note that the dashboards are stored in templates/ because it is the only way
-  # for us to read the content of the file. Ideally we would have used the
-  # file() function but until Puppet 3.7 it works only with absolute paths.
-  # See http://www.unixdaemon.net/tools/puppet/puppet-3.7-file-function.html
-  # for details
-  lma_logging_analytics::kibana_dashboard { 'logs':
-    content => template('lma_logging_analytics/kibana_dashboards/logs.json'),
-    host    => $es_host,
-    require => [File["${dashboard_dir}/logs.json"], Elasticsearch::Template['kibana']],
-  }
-
   file { "${dashboard_dir}/notifications.json":
     content => template('lma_logging_analytics/kibana_dashboards/notifications.json'),
     require => File[$kibana_dir],
-  }
-
-  lma_logging_analytics::kibana_dashboard { 'notifications':
-    content => template('lma_logging_analytics/kibana_dashboards/notifications.json'),
-    host    => $es_host,
-    require => [File["${dashboard_dir}/notifications.json"], Elasticsearch::Template['kibana']],
   }
 
   # Install nginx
