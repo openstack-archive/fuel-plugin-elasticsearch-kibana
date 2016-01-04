@@ -15,13 +15,19 @@
 define lma_logging_analytics::kibana_dashboard (
   $host = 'localhost',
   $port = '9200',
-  $content = undef,
 ) {
   include lma_logging_analytics::params
 
   $es_url = "http://${host}:${port}"
   $dashboard_title = join([$lma_logging_analytics::params::kibana_dashboard_prefix, capitalize($title)], '')
   $dashboard_id = uriescape($dashboard_title)
+
+  # Note that the dashboards are stored in templates/ because it is the only way
+  # for us to read the content of the file. Ideally we would have used the
+  # file() function but until Puppet 3.7 it works only with absolute paths.
+  # See http://www.unixdaemon.net/tools/puppet/puppet-3.7-file-function.html
+  # for details
+  $content = template("lma_logging_analytics/kibana_dashboards/${title}.json")
 
   $dashboard_source = encode_kibana_dashboard('guest', 'guest', $dashboard_title, $content)
 
