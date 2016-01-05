@@ -12,7 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 #
-$hiera_dir            = '/etc/hiera/override'
+$hiera_dir            = '/etc/hiera/plugins'
 $plugin_name          = 'elasticsearch_kibana'
 $plugin_yaml          = "${plugin_name}.yaml"
 $corosync_roles       = [$plugin_name]
@@ -64,20 +64,7 @@ lma::elasticsearch::recover_after_time: <%= @recover_after_time %>
 lma::elasticsearch::recover_after_nodes: <%= @recover_after_nodes %>
 ')
 
-file {$hiera_dir:
-  ensure  => directory,
-} ->
 file { "${hiera_dir}/${plugin_yaml}":
   ensure  => file,
   content => "${calculated_content}\n",
-}
-
-package {'ruby-deep-merge':
-  ensure  => 'installed',
-}
-
-file_line {"${plugin_name}_hiera_override":
-  path  => '/etc/hiera.yaml',
-  line  => "    - override/${plugin_name}",
-  after => '    - "override/module/%{calling_module}"',
 }
