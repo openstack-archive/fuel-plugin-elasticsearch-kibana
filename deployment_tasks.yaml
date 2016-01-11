@@ -53,6 +53,8 @@
     puppet_manifest: "puppet/manifests/cluster.pp"
     puppet_modules: "puppet/modules"
     timeout: 3600
+  reexecute_on:
+    - deploy_changes
 
 - id: lma-es-virtual-ip
   type: puppet
@@ -64,16 +66,21 @@
     puppet_modules: "puppet/modules"
     timeout: 3600
 
+# This task needs to be reexecuted to adapt configuration variables depending
+# on the number of nodes in the cluster
 - id: lma-es-hiera
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [globals]
-  required_for: [logging]
+  required_for: [logging, lma-es-cluster, lma-es-kibana-haproxy]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+  reexecute_on:
+    - deploy_changes
 
+# This task needs to be reexecuted to reconfigure HAProxy backends
 - id: lma-es-kibana-haproxy
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
@@ -83,3 +90,55 @@
     puppet_manifest: "puppet/manifests/haproxy.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+  reexecute_on:
+    - deploy_changes
+
+# This task needs to be reexecuted to recheck configuration
+- id: lma-es-check-configuration
+  type: puppet
+  groups: [primary-elasticsearch_kibana]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: puppet/manifests/check_environment_configuration.pp
+    puppet_modules: puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
+
+# This task needs to be reexecuted to reconfigure Elasticsearch instances
+- id: lma-install-elasticsearch
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [lma-es-check-configuration]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: puppet/manifests/elasticsearch.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+  reexecute_on:
+    - deploy_changes
+
+- id: lma-install-kibana
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [lma-install-elasticsearch]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: puppet/manifests/kibana.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+
+# This task needs to be reexecuted to reconfigure index templates with an
+# appropriate number_of_replicas
+- id: lma-provision-services
+  type: puppet
+  groups: [primary-elasticsearch_kibana]
+  requires: [lma-install-kibana]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: puppet/manifests/provision_services.pp
+    puppet_modules: puppet/modules
+    timeout: 600
+  reexecute_on:
+    - deploy_changes
