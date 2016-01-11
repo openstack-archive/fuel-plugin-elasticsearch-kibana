@@ -53,6 +53,8 @@
     puppet_manifest: "puppet/manifests/cluster.pp"
     puppet_modules: "puppet/modules"
     timeout: 3600
+  reexecute_on:
+    - deploy_changes
 
 - id: lma-es-virtual-ip
   type: puppet
@@ -68,11 +70,13 @@
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [globals]
-  required_for: [logging]
+  required_for: [logging, lma-es-cluster, lma-es-kibana-haproxy]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+  reexecute_on:
+    - deploy_changes
 
 - id: lma-es-kibana-haproxy
   type: puppet
@@ -83,3 +87,22 @@
     puppet_manifest: "puppet/manifests/haproxy.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+  reexecute_on:
+    - deploy_changes
+
+# This task is defined in tasks.yaml because there we control the
+# deployment order across all LMA plugins by setting priorities.
+# But we need also to defined it here because we leverage the reexecute_on
+# feature to reconfigure the Elasticsearch instance when a redeployment is
+# made, typically when adding/removing a node.
+- id: lma-install-elasticsearch
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/elasticsearch.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 600
+  reexecute_on:
+    - deploy_changes
