@@ -142,3 +142,17 @@
     timeout: 600
   reexecute_on:
     - deploy_changes
+
+# This task needs to be reexecuted to reconfigure the no-quorum-policy each 
+# time the cluster is scaled.
+- id: lma-enable-quorum
+  type: puppet
+  groups: [primary-elasticsearch_kibana]
+  requires: [post_deployment_start, lma-provision-services]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/enable_quorum.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
