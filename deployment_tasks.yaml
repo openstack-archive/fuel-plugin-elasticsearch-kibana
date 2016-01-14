@@ -83,3 +83,15 @@
     puppet_manifest: "puppet/manifests/haproxy.pp"
     puppet_modules: "puppet/modules"
     timeout: 120
+
+# This task is executed on all Elasticsearch nodes to reconfigure the
+# no-quorum-policy each time the cluster is scaled.
+- id: lma-enable-quorum
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/enable_quorum.pp"
+    puppet_modules: "puppet/modules"
+    timeout: 120
