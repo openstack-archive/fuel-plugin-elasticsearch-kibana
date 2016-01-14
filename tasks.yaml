@@ -30,3 +30,11 @@
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules
     timeout: 600
+
+- role: ['primary-elasticsearch_kibana']
+  stage: post_deployment/8100
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/manifests/enable_quorum.pp
+    puppet_modules: puppet/modules
+    timeout: 600
