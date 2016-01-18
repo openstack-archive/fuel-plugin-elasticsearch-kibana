@@ -13,15 +13,27 @@
 #    under the License.
 #
 
+$deployment_id = hiera('deployment_id')
+$master_ip = hiera('master_ip')
 $vip = hiera('lma::elasticsearch::vip')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
+$kibana_link_data = "{\"title\":\"Kibana\",\
+\"description\":\"Dashboard for visualizing logs and notifications\",\
+\"url\":\"http://${vip}/\"}"
+$kibana_link_created_file = '/var/cache/kibana_link_created'
+
 
 lma_logging_analytics::es_template { ['log', 'notification', 'kibana']:
   number_of_replicas => $number_of_replicas,
   host               => $vip,
-}
-
+} ->
 lma_logging_analytics::kibana_dashboard { ['logs', 'notifications']:
   host    => $vip,
-  require => Lma_logging_analytics::Es_template['kibana'],
+} ->
+exec { 'notify_kibana_url':
+  creates => $kibana_link_created_file,
+  command => "/usr/bin/curl -sL -w \"%{http_code}\" \
+-H 'Content-Type: application/json' -X POST -d '${kibana_link_data}' \
+http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
+-o /dev/null | /bin/grep 201 && touch ${kibana_link_created_file}",
 }
