@@ -1,0 +1,9 @@
+Code-Review+2: Swann Croiset <scroiset@mirantis.com>
+Verified+1: Plugins CI <plugins.ci@mirantis.com>
+Workflow+1: Simon Pasquier <spasquier@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Mon, 18 Jan 2016 13:22:59 +0000
+Reviewed-on: https://review.openstack.org/265335
+Project: openstack/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/master
