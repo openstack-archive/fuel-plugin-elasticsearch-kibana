@@ -15,10 +15,14 @@
 class lma_logging_analytics::curator (
   $host = 'localhost',
   $port = '9200',
+  $hour = '2',
+  $minute = '0',
   $retention_period = $lma_logging_analytics::params::retention_period,
   $prefixes = $lma_logging_analytics::params::indexes_prefixes,
 ) inherits lma_logging_analytics::params {
 
+  validate_integer($hour)
+  validate_integer($minute)
   validate_integer($retention_period)
   validate_array($prefixes)
 
@@ -35,8 +39,8 @@ class lma_logging_analytics::curator (
     cron { 'es-curator':
       ensure   => present,
       command  => "/usr/local/bin/curator --host ${host} --port ${port} --debug delete indices --regex '^(${regex})-.*$' --time-unit days --older-than ${real_retention_period} --timestring \"%Y.%m.%d\"",
-      minute   => '0',
-      hour     => '2',
+      minute   => $minute,
+      hour     => $hour,
       month    => '*',
       monthday => '*',
     }
