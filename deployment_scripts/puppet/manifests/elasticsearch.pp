@@ -20,6 +20,16 @@ $es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'management')
 $es_nodes_ips = values($es_address_map)
 
+# Shift by one hour the run of the curator depending of the node id
+$es_kibana_nodes = concat(
+  filter_nodes(hiera('nodes'), 'role', 'primary-elasticsearch_kibana'),
+  filter_nodes(hiera('nodes'), 'role', 'elasticsearch_kibana')
+)
+$uids = sort(filter_hash($es_kibana_nodes, 'uid'))
+$uid = hiera('uid')
+$shift_hour = inline_template('<%= @uids.each_with_index  {|u, i| return i if @uid.to_s == u.to_s} %>')
+$curator_hour = 2 + $shift_hour
+
 include lma_logging_analytics::params
 
 # Params related to Elasticsearch.
@@ -77,6 +87,7 @@ elasticsearch::instance { $es_instance:
 
 class { 'lma_logging_analytics::curator':
   host             => hiera('lma::elasticsearch::vip'),
+  hour             => $curator_hour,
   retention_period => $elasticsearch_kibana['retention_period'],
   prefixes         => ['log', 'notification'],
 }

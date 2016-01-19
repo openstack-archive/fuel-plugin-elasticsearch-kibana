@@ -45,4 +45,12 @@ describe 'lma_logging_analytics::curator', :type => :class do
 
         it { is_expected.to contain_cron('es-curator').with_command(/--host foo.org/) }
     end
+
+    describe 'with index prefixes and retention period > 0 and hour/minute' do
+        let(:params) do
+            {:retention_period => 10, :prefixes => ['foo'], :hour=> 1, :minute => '10' }
+        end
+
+        it { is_expected.to contain_cron('es-curator').with_hour(1).with_minute(10) }
+    end
 end
