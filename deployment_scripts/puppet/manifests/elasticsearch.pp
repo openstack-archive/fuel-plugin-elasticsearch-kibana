@@ -76,6 +76,7 @@ elasticsearch::instance { $es_instance:
 }
 
 class { 'lma_logging_analytics::curator':
+  host             => hiera('lma::elasticsearch::vip'),
   retention_period => $elasticsearch_kibana['retention_period'],
   prefixes         => ['log', 'notification'],
 }
