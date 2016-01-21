@@ -16,6 +16,16 @@
     strategy:
       type: one_by_one
 
+- id: elasticsearch_kibana-cluster
+  type: group
+  role: [primary-elasticsearch_kibana]
+  tasks: []
+  required_for: [deploy_end]
+  requires: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  parameters:
+    strategy:
+      type: one_by_one
+
 - id: elasticsearch_kibana
   type: group
   role: [elasticsearch_kibana]
@@ -34,7 +44,7 @@
     strategy:
       type: parallel
 
-# This task needs to be reexecuted to recheck configuration
+# This task needs to be reexecuted to recheck the configuration
 - id: lma-es-check-configuration
   type: puppet
   groups: [primary-elasticsearch_kibana]
@@ -144,12 +154,12 @@
   reexecute_on:
     - deploy_changes
 
-# This task needs to be reexecuted to reconfigure the no-quorum-policy each
-# time the cluster is scaled.
-- id: lma-enable-quorum
+# This task needs to be reexecuted to reconfigure the no-quorum-policy every
+# time the cluster is scaled up or down. In case of scale up, it should happen
+# after the new nodes have added themselves to the Pacemaker cluster.
+- id: lma-es-kibana-enable-quorum
   type: puppet
-  groups: [primary-elasticsearch_kibana]
-  requires: [lma-es-kibana-haproxy]
+  groups: [elasticsearch_kibana-cluster]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
