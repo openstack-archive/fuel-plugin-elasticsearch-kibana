@@ -18,10 +18,6 @@ $corosync_roles = hiera_array('lma::corosync_roles')
 $network_metadata = hiera('network_metadata')
 $nodes = get_nodes_hash_by_roles($network_metadata, $corosync_roles)
 
-Cs_property {
-  provider => 'crm',
-}
-
 if count($nodes) > 2 {
   $policy = 'stop'
 } else {
