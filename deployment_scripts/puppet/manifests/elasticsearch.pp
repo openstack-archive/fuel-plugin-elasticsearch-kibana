@@ -74,9 +74,3 @@ elasticsearch::instance { $es_instance:
     'transport.publish_host'             => $mgmt_address,
   }
 }
-
-class { 'lma_logging_analytics::curator':
-  host             => hiera('lma::elasticsearch::vip'),
-  retention_period => $elasticsearch_kibana['retention_period'],
-  prefixes         => ['log', 'notification'],
-}
