@@ -13,7 +13,7 @@ FUEL_LIB_COMMIT="stable/8.0"
 FUEL_LIB_TARBALL_URL="https://github.com/openstack/fuel-library/archive/${FUEL_LIB_COMMIT}.tar.gz"
 
 # Kibana 3 sources
-KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
+KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.3.tar.gz"
 
 # Packages needed to install JRE headless
 download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
