@@ -1,9 +1,10 @@
 - id: primary-elasticsearch_kibana
   type: group
   role: [primary-elasticsearch_kibana]
-  tasks:
-    - fuel_pkgs
+  tasks: &common_tasks
     - hiera
+    - setup_repositories
+    - fuel_pkgs
     - globals
     - tools
     - logging
@@ -19,15 +20,7 @@
 - id: elasticsearch_kibana
   type: group
   role: [elasticsearch_kibana]
-  tasks:
-    - fuel_pkgs
-    - hiera
-    - globals
-    - tools
-    - logging
-    - netconfig
-    - hosts
-    - cluster-haproxy
+  tasks: *common_tasks
   required_for: [deploy_end]
   requires: [deploy_start, primary-elasticsearch_kibana]
   parameters:
