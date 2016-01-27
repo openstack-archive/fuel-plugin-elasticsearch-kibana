@@ -39,7 +39,7 @@ openstack::ha::haproxy_service { 'elasticsearch-rest':
   balancermember_port    => $es_port,
   balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
   haproxy_config_options => {
-    'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server'],
+    'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
     'balance' => 'roundrobin',
     'mode'    => 'http',
   }
@@ -51,7 +51,7 @@ openstack::ha::haproxy_service { 'kibana':
   balancermember_port    => $nginx_port,
   balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
   haproxy_config_options => {
-    'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server'],
+    'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
     'balance' => 'roundrobin',
     'mode'    => 'http',
   }
