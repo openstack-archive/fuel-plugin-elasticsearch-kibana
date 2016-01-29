@@ -15,7 +15,7 @@ To configure your plugin, you need to follow these steps:
 
 #. Click on the Settings tab of the Fuel web UI.
 
-#. Scroll down the page and select the Elasticsearch-Kibana Plugin in the left column.
+#. Select the 'Other' section in the left column.
    The Elasticsearch-Kibana Plugin settings screen should appear as shown below.
 
 .. image:: ../images/elastic_kibana_settings.png
@@ -35,35 +35,26 @@ To configure your plugin, you need to follow these steps:
    If you set a value that is greater than the memory size, Elasticsearch won't start.
    Keep in mind also to reserve enough memory for the operating system and the other services.
 
-5. Assign the *Elasticsearch Kibana* role to a node as shown in the figure below.
+5. Assign the *Elasticsearch Kibana* role to 1 node (up to 5 nodes) as shown in the figure below.
 
 .. image:: ../images/elastic_kibana_role.png
    :width: 800
    :align: center
 
-.. note:: Because of a bug with Fuel 7.0 (see bug `#1496328
-   <https://bugs.launchpad.net/fuel-plugins/+bug/1496328>`_), the UI won't let
-   you assign the *Elasticsearch Kibana* role if at least one node is already
-   assigned with one of the built-in roles.
-
-   To workaround this problem, you should either remove the already assigned built-in roles or use the Fuel CLI::
-
-       $ fuel --env <environment id> node set --node-id <node_id> --role=elasticsearch_kibana
-
 6. Adjust the disk configuration if necessary (see the `Fuel User Guide
-   <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#disk-partitioning>`_
+   <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#disk-partitioning>`_
    for details). By default, the Elasticsearch-Kibana Plugin allocates:
 
   - 20% of the first available disk for the operating system by honoring a range of 15GB minimum and 50GB maximum.
   - 10GB for */var/log*.
   - At least 30 GB for the Elasticsearch database in */opt/es-data*.
 
-7. `Configure your environment <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#configure-your-environment>`_
+7. `Configure your environment <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#configure-your-environment>`_
    as needed.
 
-#. `Verify the networks <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#verify-networks>`_ on the Networks tab of the Fuel web UI.
+#. `Verify the networks <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#verify-networks>`_ on the Networks tab of the Fuel web UI.
 
-#. `Deploy <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#deploy-changes>`_ your changes.
+#. `Deploy <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#deploy-changes>`_ your changes.
 
 .. _plugin_install_verification:
 
@@ -73,64 +64,12 @@ Plugin verification
 Be aware, that depending on the number of nodes and deployment setup,
 deploying a Mirantis OpenStack environment can typically take anything
 from 30 minutes to several hours. But once your deployment is complete,
-you should see a notification that looks the following:
+you should see the following success message and the link of the Kibana
+dashboard:
 
 .. image:: ../images/deploy_notif.png
    :align: center
    :width: 800
-
-**Elasticsearch**
-
-Once your deployment has completed, you should verify that Elasticsearch is
-installed properly using `curl`::
-
-    curl http://$HOST:9200/
-
-Where *HOST* is the IP address of the node which runs the Elasticsearch server.
-
-The expected output should look like something like this::
-
-    {
-      "status" : 200,
-      "name" : "node-23-es-01",
-      "cluster_name" : "elasticsearch",
-      "version" : {
-          "number" : "1.4.5",
-          "build_hash" : "c88f77ffc81301dfa9dfd81ca2232f09588bd512",
-          "build_timestamp" : "2015-04-19T13:05:36Z",
-          "build_snapshot" : false,
-          "lucene_version" : "4.10.4"
-      },
-      "tagline" : "You Know, for Search"
-    }
-
-**Note:** You can retrieve the IP address where Elasticsearch-Kibana is installed using
-the `fuel` command line::
-
-    [root@fuel ~]# fuel nodes
-    id | status   | name | cluster | ip        | ... | roles                | ...
-    ---|----------|----------------|-----------|-----|----------------------|----
-    14 | ready    | ctrl | 8       | 10.20.0.8 | ... | controller           | ...
-    13 | ready    | lma  | 8       | 10.20.0.4 | ... | elasticsearch_kibana | ...
-
-**Kibana**
-
-Kibana is installed with two dashboards. One for the logs and one for the
-OpenStack notifications.
-
-Each dashboard provides a single pane of glass and search capabilities
-for all the logs and all the notifications. Note that in the LMA Collector
-settings, it is possible to tag the logs by environment name
-so that you can distiguish which logs (and notifications) where created
-by environment name.
-
-As for Elasticsearch, you should verify that Kibana is properly
-installed through checking its URL::
-
-    http://$HOST:80/
-
-Where *HOST* is the IP address of the node where Kibana has been installed.
-By default, you will be redirected to the *Logs Dashboard*.
 
 Dashboards management
 ---------------------
@@ -140,6 +79,14 @@ The Elasticsearch-Kibana plugin comes with two pre-configured dashboards:
   - The *Logs Dashboard* that is the Kibana Home Dashboard for viewing the log messages.
   - The *Notifications Dashboard* for viewing the OpenStack notifications if you enabled
     this option in the LMA Collector settings.
+
+By default, you will be redirected to the *Logs Dashboard*.
+
+Each dashboard provides a single pane of glass and search capabilities
+for all the logs and all the notifications. Note that in the LMA Collector
+settings, it is possible to tag the logs by environment name
+so that you can distiguish which logs (and notifications) where created
+by environment name.
 
 You can switch from one dashboard to another by clicking on the top-right *Load*
 icon in the toolbar to select the requested dashboard from the list, as shown below.
@@ -228,30 +175,68 @@ in *ERROR* versus those that are not as shown below.
 Troubleshooting
 ---------------
 
-If you get no data in the Kibana dashboards, follow these troubleshoot tips.
+If you cannot access to Kibana interface or you get no data in dashboards,
+follow these troubleshoot tips.
 
-1. First, check that the LMA Collector is running properly by following the
-   troubleshooting instructions of the
-   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.org/en/latest/user/guide.html/>`_.
+1. First, check that the Elasticsearch is running properly using *curl*::
 
-2. Check if the nodes are able to connect to the Elasticsearch server on port *9200*.
+    curl http://$HOST:9200/
 
-3. Check that the Elasticsearch server is up and running::
+   Where *HOST* is the same IP address as the Kibana dashboard.
+   The expected output should look like something like this::
 
-    # On both CentOS and Ubuntu
-    [root@node-13 ~]# /etc/init.d/elasticsearch-es-01 status
+    {
+      "status" : 200,
+      "name" : "node-10.test.domain.local_es-01",
+      "cluster_name" : "lma",
+      "version" : {
+        "number" : "1.7.4",
+        "build_hash" : "0d3159b9fc8bc8e367c5c40c09c2a57c0032b32e",
+        "build_timestamp" : "2015-12-15T11:25:18Z",
+        "build_snapshot" : false,
+        "lucene_version" : "4.10.4"
+      },
+      "tagline" : "You Know, for Search"
+    }
 
-4. If Elasticsearch is down, start it::
+2. Check the status of the VIP and HAProxy resources in the Pacemaker cluster::
 
-    # On both CentOS and Ubuntu
-    [root@node-13 ~]# /etc/init.d/elasticsearch-es-01 start
+    # On one of the elasticsearch-kibana node
+    root@node-10:~# crm resource status vip__es_vip_mgmt
+    resource vip__es_vip_mgmt is running on: node-10.test.domain.local
 
-5. Check if nginx is up and running::
+    root@node-10:~# crm resource status p_haproxy
+    resource p_haproxy is running on: node-10.test.domain.local
+
+3. If the VIP or HAProxy resources are down, restart them::
+
+    # On one of the elasticsearch-kibana node
+    root@node-10:~# crm resource start vip__es_vip_mgmt
+    root@node-10:~# crm resource start p_haproxy
+
+4. Check that the Elasticsearch server is up and running::
+
+     # On both CentOS and Ubuntu
+     [root@node-13 ~]# /etc/init.d/elasticsearch-es-01 status
+
+5. If Elasticsearch is down, start it::
+
+     # On both CentOS and Ubuntu
+     [root@node-13 ~]# /etc/init.d/elasticsearch-es-01 start
+
+6. Check if nginx is up and running::
 
     # On both CentOS and Ubuntu
     [root@node-13 ~]# /etc/init.d/nginx status
 
-6. If nginx is down, start it::
+7. If nginx is down, start it::
 
     # On both CentOS and Ubuntu
     [root@node-13 ~]# /etc/init.d/nginx start
+
+8. Check that the LMA Collector is running properly on nodes by following the
+   troubleshooting instructions of the
+   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.org/en/latest/user/configuration.html#troubleshooting>`_.
+
+9. Check if the nodes are able to connect to the Elasticsearch cluster through
+   the VIP address on port *9200*.
