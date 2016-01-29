@@ -6,7 +6,11 @@ Release Notes
 Version 0.9.0
 -------------
 
-*
+* Support Elasticsearch clustering up to 5 nodes
+
+* Upgrade to Elasticsearch 1.7.4
+
+* Upgrade to Kibana 3.1.3
 
 Version 0.8.0
 -------------
