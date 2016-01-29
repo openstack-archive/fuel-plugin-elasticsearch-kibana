@@ -25,7 +25,7 @@ Catalog, you need to follow these steps:
     [root@fuel ~]# fuel plugins --list
     id | name                 | version | package_version
     ---|----------------------|---------|----------------
-    1  | elasticsearch_kibana | 0.9.0   | 3.0.0
+    1  | elasticsearch_kibana | 0.9.0   | 4.0.0
 
 Elasticsearch-Kibana Fuel Plugin install from source
 ----------------------------------------------------
@@ -87,9 +87,9 @@ List of software components installed by the plugin
 +---------------+--------------------------------------------------------+
 | Components    | Version                                                |
 +===============+========================================================+
-| Elasticsearch | v1.4.5 for Ubuntu (64-bit)                             |
+| Elasticsearch | v1.7.4 for Ubuntu (64-bit)                             |
 +---------------+--------------------------------------------------------+
-| Kibana        | v3.1.2                                                 |
+| Kibana        | v3.1.3                                                 |
 +---------------+--------------------------------------------------------+
 | Nginx         | Version coming by default with the Ubuntu distribution |
 +---------------+--------------------------------------------------------+
