@@ -6,7 +6,12 @@ Release Notes
 Version 0.9.0
 -------------
 
-*
+* Support Elasticsearch and Kibana clustering for scale-out and high
+  availability of those services.
+
+* Upgrade to Elasticsearch 1.7.4.
+
+* Upgrade to Kibana 3.1.3.
 
 Version 0.8.0
 -------------
