@@ -27,7 +27,7 @@ Requirements
 +========================+==========================================================================================+
 | Disk space             | At least 55GB                                                                            |
 +------------------------+------------------------------------------------------------------------------------------+
-| Fuel                   | Mirantis OpenStack 7.0                                                                   |
+| Fuel                   | Mirantis OpenStack 8.0                                                                   |
 +------------------------+------------------------------------------------------------------------------------------+
 | Hardware configuration | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size  |
 |                        | of your cloud and other parameters like the log level being used.                        |
@@ -38,13 +38,6 @@ Requirements
 |                        | It is also highly recommended to use dedicated disk(s) for your data storage. Otherwise, |
 |                        | Elasticsearch will use the root filesystem by default.                                   |
 +------------------------+------------------------------------------------------------------------------------------+
-
-Limitations
------------
-
-A current limitation of this plugin is that it not possible to display in the Fuel web UI the URL where the Kibana interface
-can be reached when the deployment has completed. Instructions are provided in the :ref:`user_guide` about how you can
-obtain this URL using the `fuel` command line.
 
 Key terms, acronyms and abbreviations
 -------------------------------------
