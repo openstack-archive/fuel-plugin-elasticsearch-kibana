@@ -23,7 +23,6 @@ class lma_logging_analytics::kibana (
 
   $kibana_dir    = $lma_logging_analytics::params::kibana_dir
   $kibana_conf   = $lma_logging_analytics::params::kibana_config
-  $dashboard_dir = $lma_logging_analytics::params::kibana_dashboard_dir
   $default_route = $lma_logging_analytics::params::kibana_default_route
 
   # Deploy Kibana
@@ -36,16 +35,6 @@ class lma_logging_analytics::kibana (
   file { $kibana_conf:
     ensure  => file,
     content => template('lma_logging_analytics/config.js.erb'),
-    require => File[$kibana_dir],
-  }
-
-  file { "${dashboard_dir}/logs.json":
-    content => template('lma_logging_analytics/kibana_dashboards/logs.json'),
-    require => File[$kibana_dir],
-  }
-
-  file { "${dashboard_dir}/notifications.json":
-    content => template('lma_logging_analytics/kibana_dashboards/notifications.json'),
     require => File[$kibana_dir],
   }
 
