@@ -32,8 +32,7 @@ define lma_logging_analytics::kibana_dashboard (
   $dashboard_source = encode_kibana_dashboard('guest', 'guest', $dashboard_title, $content)
 
   exec { $title:
-    onlyif  => ["/usr/bin/curl -sL -w \"%{http_code}\\n\" -XGET ${es_url}/_cluster/health?wait_for_status=green | grep 200 > /dev/null",
-                "/usr/bin/curl -sL -w \"%{http_code}\\n\" -XHEAD ${es_url}/kibana-int/dashboard/${dashboard_id} | grep 404 > /dev/null"],
+    onlyif  => "/usr/bin/curl -sL -w \"%{http_code}\\n\" -XHEAD ${es_url}/kibana-int/dashboard/${dashboard_id} | grep 404 > /dev/null",
     command => "/usr/bin/curl -sL -w \"%{http_code}\\n\" -XPUT ${es_url}/kibana-int/dashboard/${dashboard_id} -d '${dashboard_source}' -o /dev/null | egrep \"(200|201)\" > /dev/null",
   }
 }
