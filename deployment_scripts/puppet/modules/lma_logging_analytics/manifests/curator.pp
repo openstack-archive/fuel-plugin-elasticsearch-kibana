@@ -32,7 +32,7 @@ class lma_logging_analytics::curator (
     $regex = join($prefixes, '|')
     cron { 'es-curator':
       ensure   => present,
-      command  => "/usr/local/bin/curator --host localhost --port 9200 --debug delete indices --regex '^(${regex})-.*$' --time-unit days --older-than ${real_retention_period} --timestring \"%Y.%m.%d\"",
+      command  => "/usr/local/bin/curator --host localhost --port 9200 --debug delete indices --regex '^(${regex})-.*$' --time-unit days --older-than ${real_retention_period} --timestring \"\\%Y.\\%m.\\%d\"",
       minute   => '0',
       hour     => '2',
       month    => '*',
