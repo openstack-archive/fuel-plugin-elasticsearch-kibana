@@ -15,7 +15,7 @@ authors: ['Mirantis Inc.']
 # A link to the plugin homepage
 homepage: 'https://github.com/openstack/fuel-plugin-elasticsearch-kibana'
 groups: ['monitoring']
-is_hotpluggable: false
+is_hotpluggable: true
 
 # The plugin is compatible with releases in the list
 releases:
