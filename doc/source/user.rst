@@ -119,6 +119,10 @@ As you can see, the Kibana dashboard for logs is divided into four main sections
 
   d. The number of log messages grouped by severity.
 
+  e. The top 10 programs.
+
+  d. The number of log messages grouped by role.
+
 4. A table of log messages sorted in reverse chronological order.
 
 Filters and queries
