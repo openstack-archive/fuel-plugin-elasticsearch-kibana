@@ -261,7 +261,7 @@
       "panels": [
         {
           "error": false,
-          "span": 11,
+          "span": 12,
           "editable": true,
           "type": "table",
           "loadingEditor": false,
