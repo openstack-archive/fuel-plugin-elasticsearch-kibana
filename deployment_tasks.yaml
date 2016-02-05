@@ -124,12 +124,13 @@
     timeout: 600
 
 # This task needs to be reexecuted to reconfigure index templates with an
-# appropriate number_of_replicas
+# appropriate number_of_replicas. This is done at post_deployment time to
+# ensure that the cluster is ready (the number of expected master nodes is reached)
 - id: lma-provision-services
   type: puppet
   groups: [primary-elasticsearch_kibana]
-  requires: [lma-install-elasticsearch, lma-install-kibana]
-  required_for: [deploy_end]
+  requires: [post_deployment_start]
+  required_for: [lma-es-kibana-enable-quorum, post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules
