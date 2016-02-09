@@ -20,6 +20,7 @@ class lma_logging_analytics::kibana (
 ) {
 
   include lma_logging_analytics::params
+  include nginx::params
 
   $kibana_dir    = $lma_logging_analytics::params::kibana_dir
   $kibana_conf   = $lma_logging_analytics::params::kibana_config
@@ -49,6 +50,7 @@ class lma_logging_analytics::kibana (
     nginx_vhosts_defaults => {
       'listen_options' => 'default_server'
     },
+    conf_template         => $nginx::params::conf_template,
     require               => File[$kibana_conf],
   }
 }
