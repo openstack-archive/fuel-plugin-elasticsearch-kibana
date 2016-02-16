@@ -25,15 +25,20 @@ Requirements
 +------------------------+------------------------------------------------------------------------------------------+
 | **Requirement**        | **Version/Comment**                                                                      |
 +========================+==========================================================================================+
-| Disk space             | At least 55GB                                                                            |
+| Disk space             | The plugin's specification requires to provision at least 15GB of disk space for the     |
+|                        | system, 10GB for the logs and 30GB for the database. As a result, the installation       |
+|                        | of the plugin will fail if there is less than 55GB of disk space avaialble on the node.  |
 +------------------------+------------------------------------------------------------------------------------------+
 | Fuel                   | Mirantis OpenStack 8.0                                                                   |
 +------------------------+------------------------------------------------------------------------------------------+
 | Hardware configuration | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size  |
-|                        | of your cloud and other parameters like the log level being used.                        |
+|                        | of your cloud environment and other parameters like the retention period and log level.  |
 |                        |                                                                                          |
 |                        | A typical setup would at least require a quad-core server with 8GB of RAM and fast disks |
-|                        | (ideally, SSDs).                                                                         |
+|                        | (ideally, SSDs). The actual disk space you need to run the plugin depends on several     |
+|                        | factors including the size of your OpenStack environment, the retention period, the      |
+|                        | logging level and workload. The more of the above, the more disk space you will need to  |
+|                        | run the Elaticsearch-Kibana Plugin.                                                      |
 |                        |                                                                                          |
 |                        | It is also highly recommended to use dedicated disk(s) for your data storage. Otherwise, |
 |                        | Elasticsearch will use the root filesystem by default.                                   |
