@@ -25,36 +25,48 @@ Requirements
 +------------------------+------------------------------------------------------------------------------------------+
 | **Requirement**        | **Version/Comment**                                                                      |
 +========================+==========================================================================================+
-| Disk space             | At least 55GB                                                                            |
+| Disk space             | The plugin's specification requires to provision at least 15GB of disk space for the     |
+|                        | system, 10GB for the logs and 30GB for the database. As a result, the installation       |
+|                        | of the plugin will fail if there is less than 55GB of disk space available on the node.  |
 +------------------------+------------------------------------------------------------------------------------------+
 | Fuel                   | Mirantis OpenStack 8.0                                                                   |
 +------------------------+------------------------------------------------------------------------------------------+
 | Hardware configuration | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size  |
-|                        | of your cloud and other parameters like the log level being used.                        |
+|                        | of your cloud environment and other parameters like the retention period and log level.  |
 |                        |                                                                                          |
 |                        | A typical setup would at least require a quad-core server with 8GB of RAM and fast disks |
-|                        | (ideally, SSDs).                                                                         |
+|                        | (ideally, SSDs). The actual disk space you need to run the plugin depends on several     |
+|                        | factors including the size of your OpenStack environment, the retention period, the      |
+|                        | logging level and workload. The more of the above, the more disk space you will need to  |
+|                        | run the Elaticsearch-Kibana Plugin.                                                      |
 |                        |                                                                                          |
 |                        | It is also highly recommended to use dedicated disk(s) for your data storage. Otherwise, |
 |                        | Elasticsearch will use the root filesystem by default.                                   |
 +------------------------+------------------------------------------------------------------------------------------+
 
+Limitations
+-----------
+
+Currently, the maximum size of an Elasticsearch cluster that can be installed by Fuel is limited to five nodes.
+Each node of an Elasticsearch cluster is configured as *master-eligible node* and *data node*.
+This means, that each node of the Elasticsearch cluster can be elected as a master and all nodes will store data.
+
 Key terms, acronyms and abbreviations
 -------------------------------------
 
-+----------------------------+--------------------------------------------------------------------------------------------+
-| **Terms & acronyms**       | **Definition**                                                                             |
-+============================+============================================================================================+
-| LMA Collector              | Logging, Monitoring and Alerting (LMA) Collector. A service running on each node which     |
-|                            | collects all the logs and the OpenStak notifications.                                      |
-+----------------------------+--------------------------------------------------------------------------------------------+
-| Elasticsearch              | An open source (Apache Licensed) application based on the  Lucene™ search engine that makes|
-|                            | data like log messages easy to explore and correlate.                                      |
-|                            |                                                                                            |
-|                            | Elasticsearch is written in Java and uses Lucene internally for all of its indexing and    |
-|                            | searching, but it aims to make full-text search easy by hiding the complexities of Lucene  |
-|                            | behind a simple, coherent, RESTful API.                                                    |
-+----------------------------+--------------------------------------------------------------------------------------------+
-| Kibana                     | An open source (Apache Licensed), browser based analytics and search dashboard for         |
-|                            | Elasticsearch. Kibana is easry to setup and start using.                                   |
-+----------------------------+--------------------------------------------------------------------------------------------+
++----------------------------+--------------------------------------------------------------------------------------+
+| **Terms & acronyms**       | **Definition**                                                                       |
++============================+======================================================================================+
+| LMA Collector              | Logging, Monitoring and Alerting (LMA) Collector. A service running on each node     |
+|                            | which collects all the logs and the OpenStak notifications.                          |
++----------------------------+--------------------------------------------------------------------------------------+
+| Elasticsearch              | An open source (Apache Licensed) application based on the  Lucene™ search engine     |
+|                            | that makes data like log messages easy to explore and correlate.                     |
+|                            |                                                                                      |
+|                            | Elasticsearch is written in Java and uses Lucene internally for all of its indexing  |
+|                            | and searching, but it aims to make full-text search easy by hiding the complexities  |
+|                            | of Lucene behind a simple, coherent, RESTful API.                                    |
++----------------------------+--------------------------------------------------------------------------------------+
+| Kibana                     | An open source (Apache Licensed), browser based analytics and search dashboard for   |
+|                            | Elasticsearch. Kibana is easry to setup and start using.                             |
++----------------------------+--------------------------------------------------------------------------------------+
