@@ -1,6 +1,3 @@
-# Always use the default theme for Readthedocs
-RTD_NEW_THEME = True
-
 extensions = []
 templates_path = ['_templates']
 
@@ -18,7 +15,7 @@ exclude_patterns = []
 
 pygments_style = 'sphinx'
 
-html_theme = 'classic'
+html_theme = 'default'
 html_static_path = ['_static']
 
 latex_documents = [
