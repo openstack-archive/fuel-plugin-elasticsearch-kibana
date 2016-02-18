@@ -1,0 +1,9 @@
+Verified+1: Plugins CI <plugins.ci@mirantis.com>
+Code-Review+2: Simon Pasquier <spasquier@mirantis.com>
+Workflow+1: Patrick Petit <ppetit@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 18 Feb 2016 16:00:28 +0000
+Reviewed-on: https://review.openstack.org/281323
+Project: openstack/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/master
