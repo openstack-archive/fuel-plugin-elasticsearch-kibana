@@ -13,6 +13,16 @@
 #    under the License.
 #
 
+$kibana_link_created_file = '/var/cache/kibana_link_created'
+$current_roles = hiera('roles')
+$is_primary = member($current_roles, 'primary-elasticsearch_kibana')
+
+unless $is_primary {
+  exec { 'notify_kibana_url':
+    command => "/usr/bin/touch ${kibana_link_created_file}",
+  }
+}
+
 class { 'lma_logging_analytics::kibana':
   es_host => hiera('lma::elasticsearch::vip'),
 }
