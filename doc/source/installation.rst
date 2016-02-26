@@ -16,7 +16,7 @@ Catalog, you need to follow these steps:
     [root@home ~]# scp elasticsearch_kibana-0.9-0.9.0-0.noarch.rpm \
     root@<Fuel Master node IP address>:
 
-3. Install the plugin using the `Fuel CLI <http://docs.mirantis.com/openstack/fuel/fuel-7.0/user-guide.html#using-fuel-cli>`_::
+3. Install the plugin using the `Fuel CLI <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#using-fuel-cli>`_::
 
     [root@fuel ~]# fuel plugins --install elasticsearch_kibana-0.9-0.9.0-0.noarch.rpm
 
