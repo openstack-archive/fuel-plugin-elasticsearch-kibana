@@ -10,7 +10,6 @@
     - logging
     - netconfig
     - hosts
-    - cluster-haproxy
   required_for: [deploy_end]
   requires: [deploy_start]
   parameters:
@@ -34,8 +33,8 @@
   requires: [netconfig]
   required_for: [deploy_end]
   parameters:
-    puppet_manifest: puppet/manifests/check_environment_configuration.pp
-    puppet_modules: puppet/modules
+    puppet_manifest: "puppet/manifests/check_environment_configuration.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -48,17 +47,27 @@
   requires: [netconfig]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 3600
 
 - id: lma-es-cluster
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  required_for: [cluster-haproxy]
+  required_for: [lma-es-cluster-haproxy]
   requires: [lma-es-firewall]
   parameters:
     puppet_manifest: "puppet/manifests/cluster.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
+    timeout: 3600
+  reexecute_on:
+    - deploy_changes
+
+- id: lma-es-cluster-haproxy
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  parameters:
+    puppet_manifest: "puppet/manifests/cluster-haproxy.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 3600
   reexecute_on:
     - deploy_changes
@@ -69,8 +78,8 @@
   required_for: [deploy_end]
   requires: [lma-es-cluster]
   parameters:
-    puppet_manifest: "puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
-    puppet_modules: "puppet/modules"
+    puppet_manifest: "/etc/puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
+    puppet_modules: "/etc/puppet/modules"
     timeout: 3600
 
 # This task needs to be reexecuted to adapt configuration variables depending
@@ -82,7 +91,7 @@
   required_for: [logging, lma-es-cluster, lma-es-kibana-haproxy]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -91,11 +100,11 @@
 - id: lma-es-kibana-haproxy
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  requires: [cluster-haproxy, lma-es-virtual-ip]
+  requires: [lma-es-cluster-haproxy, lma-es-virtual-ip]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/haproxy.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -107,8 +116,8 @@
   requires: [lma-es-kibana-haproxy]
   required_for: [deploy_end]
   parameters:
-    puppet_manifest: puppet/manifests/elasticsearch.pp
-    puppet_modules: puppet/modules
+    puppet_manifest: "puppet/manifests/elasticsearch.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 600
   reexecute_on:
     - deploy_changes
@@ -119,8 +128,8 @@
   requires: [lma-es-kibana-haproxy]
   required_for: [deploy_end]
   parameters:
-    puppet_manifest: puppet/manifests/kibana.pp
-    puppet_modules: puppet/modules
+    puppet_manifest: "puppet/manifests/kibana.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 600
 
 # This task needs to be reexecuted to reconfigure index templates with an
@@ -132,8 +141,8 @@
   requires: [post_deployment_start]
   required_for: [lma-es-kibana-enable-quorum, post_deployment_end]
   parameters:
-    puppet_manifest: puppet/manifests/provision_services.pp
-    puppet_modules: puppet/modules
+    puppet_manifest: "puppet/manifests/provision_services.pp"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 600
   reexecute_on:
     - deploy_changes
@@ -148,7 +157,7 @@
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: "puppet/modules:/etc/puppet/modules"
     timeout: 120
   reexecute_on:
     - deploy_changes
