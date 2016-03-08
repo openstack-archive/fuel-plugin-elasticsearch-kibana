@@ -10,7 +10,6 @@
     - logging
     - netconfig
     - hosts
-    - cluster-haproxy
   required_for: [deploy_end]
   requires: [deploy_start]
   parameters:
@@ -54,10 +53,20 @@
 - id: lma-es-cluster
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  required_for: [cluster-haproxy]
   requires: [lma-es-firewall]
   parameters:
     puppet_manifest: "puppet/manifests/cluster.pp"
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 3600
+  reexecute_on:
+    - deploy_changes
+
+- id: lma-es-cluster-haproxy
+  type: puppet
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [lma-es-cluster]
+  parameters:
+    puppet_manifest: "puppet/manifests/cluster-haproxy.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 3600
   reexecute_on:
@@ -91,7 +100,7 @@
 - id: lma-es-kibana-haproxy
   type: puppet
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  requires: [cluster-haproxy, lma-es-virtual-ip]
+  requires: [lma-es-cluster-haproxy, lma-es-virtual-ip]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/haproxy.pp"
