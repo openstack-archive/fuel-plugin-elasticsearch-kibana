@@ -11,8 +11,6 @@ ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearc
 # Dependency for Elasticsearch 0.10.x
 DATACAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/richardc-datacat-0.6.2.tar.gz"
 FIREWALL_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-firewall-1.7.2.tar.gz"
-FUEL_LIB_COMMIT="stable/8.0"
-FUEL_LIB_TARBALL_URL="https://github.com/openstack/fuel-library/archive/${FUEL_LIB_COMMIT}.tar.gz"
 
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.3.tar.gz"
@@ -46,12 +44,3 @@ download_puppet_module "datacat" "$DATACAT_TARBALL_URL"
 KIBANA_FOLDER="${MODULES_DIR}/lma_logging_analytics/files/kibana/src"
 mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
-
-# Extract dependent manifests from fuel-library
-rm -rf "${MODULES_DIR:?}"/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack,haproxy,corosync}
-wget -qO- "${FUEL_LIB_TARBALL_URL}" | \
-    tar -C "${MODULES_DIR}" --strip-components=3 -zxvf - \
-    fuel-library-${FUEL_LIB_COMMIT/\//-}/deployment/puppet/{l23network,osnailyfacter,cluster,pacemaker_wrappers,pacemaker,openstack,haproxy,corosync}
-
-# Remove the dead link : osnailyfacter/modular/master -> ../nailgun/examples
-rm -rf ${MODULES_DIR}/osnailyfacter/modular/master
