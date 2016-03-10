@@ -35,7 +35,7 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/check_environment_configuration.pp
-    puppet_modules: puppet/modules
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -48,7 +48,7 @@
   requires: [netconfig]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 3600
 
 - id: lma-es-cluster
@@ -58,7 +58,7 @@
   requires: [lma-es-firewall]
   parameters:
     puppet_manifest: "puppet/manifests/cluster.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 3600
   reexecute_on:
     - deploy_changes
@@ -70,7 +70,7 @@
   requires: [lma-es-cluster]
   parameters:
     puppet_manifest: "puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 3600
 
 # This task needs to be reexecuted to adapt configuration variables depending
@@ -82,7 +82,7 @@
   required_for: [logging, lma-es-cluster, lma-es-kibana-haproxy]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -95,7 +95,7 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/haproxy.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 120
   reexecute_on:
     - deploy_changes
@@ -108,7 +108,7 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/elasticsearch.pp
-    puppet_modules: puppet/modules
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
   reexecute_on:
     - deploy_changes
@@ -120,7 +120,7 @@
   required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
-    puppet_modules: puppet/modules
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
 # This task needs to be reexecuted to reconfigure index templates with an
@@ -133,7 +133,7 @@
   required_for: [lma-es-kibana-enable-quorum, post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
-    puppet_modules: puppet/modules
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
   reexecute_on:
     - deploy_changes
@@ -148,7 +148,7 @@
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
-    puppet_modules: "puppet/modules"
+    puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 120
   reexecute_on:
     - deploy_changes
