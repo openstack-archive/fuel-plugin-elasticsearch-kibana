@@ -66,5 +66,5 @@ Key terms, acronyms and abbreviations
 |                            | of Lucene behind a simple, coherent, RESTful API.                                    |
 +----------------------------+--------------------------------------------------------------------------------------+
 | Kibana                     | An open source (Apache Licensed), browser based analytics and search dashboard for   |
-|                            | Elasticsearch. Kibana is easry to setup and start using.                             |
+|                            | Elasticsearch. Kibana is easy to setup and start using.                              |
 +----------------------------+--------------------------------------------------------------------------------------+
