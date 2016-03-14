@@ -120,7 +120,7 @@ Here is how to proceed.
 
      curl http://10.109.1.5:9200/
 
-   The output should look like something like this::
+   The output should look like this::
 
     {
       "status" : 200,
@@ -151,7 +151,7 @@ Dashboards management
 
 The *Elasticsearch-Kibana Server Plugin* comes with two predefined dashboards:
 
-  - The *Logs Dashboard* that is the Kibana Home Dashboard for viewing the log messages.
+  - The *Logs Dashboard* which is the Kibana Home Dashboard for viewing the log messages.
   - The *Notifications Dashboard* for viewing the OpenStack notifications if you enabled
     this option in the LMA Collector settings.
 
@@ -198,9 +198,9 @@ Filters and queries have similar syntax but they are used for different purposes
   - The queries are used for free-text search.
 
 You can also combine multiple queries and compare their results.
-To further filter the log messages based, for example, on the deployment_id,
-you need to expand a log entry and then select the deployment_id field by clicking
-on the magnifying glass icon as shown below.
+To further filter the log messages to, for example, select the *deployment_id*,
+you need to expand a log entry and then select the *deployment_id* field
+by clicking on the magnifying glass icon as shown below.
 
 .. image:: ../images/kibana_logs_filter1.png
    :align: center
@@ -213,9 +213,9 @@ This will apply a new filter in the dashboard.
    :width: 800
 
 Filtering will work for any field that has been indexed for the log entries that
-are displayed in the dashboard.
+are in the dashboard.
 
-Filters and queries can also use wildcards wich can be conbined with *field names* like in::
+Filters and queries can also use wildcards which can be combined with *field names* like in::
 
     programname: <name>*
 
@@ -223,7 +223,7 @@ For example, to display only the Nova logs you could enter::
 
     programname:nova*
 
-in the query textbox like shown below.
+in the query textbox as shown below.
 
 .. image:: ../images/kibana_logs_query1.png
    :align: center
@@ -245,7 +245,7 @@ Troubleshooting
 ---------------
 
 If you cannot access the Kibana dashboard or you get no data in the dashboard,
-follow these troubleshoot tips.
+follow these troubleshooting tips.
 
 1. First, check that the LMA Collector is running properly by following the
    LMA Collector troubleshooting instructions in the
