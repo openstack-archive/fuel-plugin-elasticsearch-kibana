@@ -12,6 +12,7 @@ User documentation
    releases
    installation
    user
+   cluster_operations
    licenses
    appendix
 
