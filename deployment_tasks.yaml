@@ -69,8 +69,8 @@
   required_for: [deploy_end]
   requires: [lma-es-cluster]
   parameters:
-    puppet_manifest: "puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
-    puppet_modules: puppet/modules:/etc/puppet/modules
+    puppet_manifest: "/etc/puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
+    puppet_modules: /etc/puppet/modules
     timeout: 3600
 
 # This task needs to be reexecuted to adapt configuration variables depending
