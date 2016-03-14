@@ -3,8 +3,8 @@
 Installation Guide
 ==================
 
-Elasticsearch-Kibana Fuel Plugin install using the RPM file of the Fuel Plugins Catalog
----------------------------------------------------------------------------------------
+Elasticsearch-Kibana Fuel Plugin Installation using the RPM file of the Fuel Plugins Catalog
+--------------------------------------------------------------------------------------------
 
 To install the Elasticsearch-Kibana Fuel Plugin using the RPM file of the Fuel Plugins
 Catalog, you need to follow these steps:
@@ -27,8 +27,8 @@ Catalog, you need to follow these steps:
     ---|----------------------|---------|----------------
     1  | elasticsearch_kibana | 0.9.0   | 4.0.0
 
-Elasticsearch-Kibana Fuel Plugin install from source
-----------------------------------------------------
+Elasticsearch-Kibana Fuel Plugin installation from source
+---------------------------------------------------------
 
 Alternatively, you may want to build the RPM file of the plugin from source
 if, for example, you want to test the latest features, modify some built-in
@@ -36,7 +36,7 @@ configuration or implement your own customization.
 But note that running a Fuel plugin that you have built yourself is at your own risk.
 
 To install Elasticsearch-Kibana Plugin from source, you first need to prepare an
-environement to build the RPM file.
+environment to build the RPM file.
 The recommended approach is to build the RPM file directly onto the Fuel Master
 node so that you won't have to copy that file later on.
 
@@ -55,9 +55,9 @@ node so that you won't have to copy that file later on.
     [root@home ~] pip install fuel-plugin-builder
 
 **Note**: You may also need to build the Fuel Plugin Builder if the package version of the
-plugin is higher than package version supported by the Fuel Plugin Builder you get from `pypi`.
+plugin is higher than the package version supported by the Fuel Plugin Builder you get from `pypi`.
 In this case, please refer to the section "Preparing an environment for plugin development"
-of the `Fuel Plugins wiki <https://wiki.openstack.org/wiki/Fuel/Plugins>`_
+of the `Fuel Plugins wiki <https://wiki.openstack.org/wiki/Fuel/Plugins>`_,
 if you need further instructions about how to build the Fuel Plugin Builder.
 
 4. Clone the plugin git repository::
