@@ -3,6 +3,14 @@
 Release Notes
 =============
 
+Version 0.8.1
+-------------
+
+* Bug fixes
+
+  * Fix the cron job running Elastic Curator (`#1535435
+    <https://bugs.launchpad.net/lma-toolchain/+bug/1535435>`_).
+
 Version 0.8.0
 -------------
 
