@@ -59,7 +59,7 @@ To configure your plugin, you need to follow these steps:
       the *Elasticsearch_Kibana* role to at least three nodes. Note also that
       is possible to add or remove a node with the *Elasticsearch_Kibana* role after deployment.
 
-#. Clik on **Apply Changes**
+#. Click on **Apply Changes**
 
 #. Adjust the disk configuration if necessary (see the `Fuel User Guide
    <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#disk-partitioning>`_
@@ -177,15 +177,21 @@ As you can see, the Kibana dashboard for logs is divided into four main sections
 1. A time-picker control that lets you choose the time period you want
    to select and refresh frequency.
 
-#. A query and filter section where all the filters are displayed.
-#. A log analytics row which contains six panels to visualize:
+2. A query and filter section where all the filters are displayed.
+
+3. A log analytics row which contains six panels to visualize:
 
   a. The number of log messages for the chosen time period.
-  #. The top 10 hosts filter.
-  #. The top 10 log sources.
-  #. The number of log messages grouped by severity.
-  #. The top 10 programs.
-  #. The number of log messages grouped by role.
+
+  b. The top 10 hosts filter.
+
+  c. The top 10 log sources.
+
+  d. The number of log messages grouped by severity.
+
+  e. The top 10 programs.
+
+  f. The number of log messages grouped by role.
 
 4. A table of log messages sorted in reverse chronological order.
 
@@ -287,3 +293,7 @@ follow these troubleshooting tips.
 
     # On both CentOS and Ubuntu
     [root@node-1 ~]# /etc/init.d/nginx start
+
+#. Look for errors in the Elasticsearch log files (located at /var/log/elasticsearch/es-01/).
+
+#. Look for errors in the nginx log files (located at /var/log/nginx/).
