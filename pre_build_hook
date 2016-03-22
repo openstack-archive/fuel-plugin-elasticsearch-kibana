@@ -15,11 +15,13 @@ FIREWALL_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-firewa
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.3.tar.gz"
 
+TZ_VERSION="2016b-0ubuntu0.14.04_all"
+
 # Packages needed to install JRE headless
 download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.51_all.deb \
-    http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata-java_2016b-0ubuntu0.14.04_all.deb \
-    http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata_2016b-0ubuntu0.14.04_all.deb \
+    "http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata-java_${TZ_VERSION}.deb" \
+    "http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata_${TZ_VERSION}.deb" \
     http://security.ubuntu.com/ubuntu/pool/main/c/ca-certificates/ca-certificates_20160104ubuntu0.14.04.1_all.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
     http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u95-2.6.4-0ubuntu0.14.04.1_amd64.deb \
@@ -44,3 +46,18 @@ download_puppet_module "datacat" "$DATACAT_TARBALL_URL"
 KIBANA_FOLDER="${MODULES_DIR}/lma_logging_analytics/files/kibana/src"
 mkdir -p "${KIBANA_FOLDER}"
 wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
+
+# Update tzdata-java package to remove strict dependency on tzdata (see LP bug #1560436)
+ROOT="$(dirname "$(readlink -f "$0")")"
+DEB_REPO="${ROOT}"/repositories/ubuntu/
+TMP_DIR=$(mktemp -d || exit 1)
+cp "${DEB_REPO}/tzdata-java_${TZ_VERSION}.deb" "${TMP_DIR}"
+cd "${TMP_DIR}" || exit 1
+ar x "tzdata-java_${TZ_VERSION}.deb" || exit 1
+tar xzvf control.tar.gz || exit 1
+sed -i 's/Depends: tzdata (=/Depends: tzdata (>=/' control || exit 1
+tar czvf control.tar.gz md5sums control || exit 1
+ar r "tzdata-java_${TZ_VERSION}.deb" control.tar.gz data.tar.xz || exit 1
+mv "tzdata-java_${TZ_VERSION}.deb" "${DEB_REPO}/" || exit 1
+cd /tmp || exit 1
+rm -rf "${TMP_DIR}" || exit 1
