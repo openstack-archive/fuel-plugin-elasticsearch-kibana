@@ -36,7 +36,7 @@ file { $es_dir:
 
 # Install elasticsearch
 class { 'elasticsearch':
-  datadir       => ["${es_dir}/elasticsearch_data"],
+  datadir       => "${es_dir}/elasticsearch_data",
   init_defaults => {
       'MAX_LOCKED_MEMORY' => 'unlimited',
       'ES_HEAP_SIZE'      => "${es_heap_size}g"
