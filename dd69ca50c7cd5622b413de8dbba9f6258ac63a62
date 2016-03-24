@@ -1,0 +1,8 @@
+Code-Review+2: Eric Lemoine <elemoine@mirantis.com>
+Workflow+1: Swann Croiset <scroiset@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 24 Mar 2016 18:20:01 +0000
+Reviewed-on: https://review.openstack.org/297263
+Project: openstack/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/stable/0.9
