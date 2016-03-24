@@ -1,5 +1,6 @@
 - id: primary-elasticsearch_kibana
   type: group
+  version: 2.0.0
   role: [primary-elasticsearch_kibana]
   tasks: &common_tasks
     - hiera
@@ -10,18 +11,19 @@
     - logging
     - netconfig
     - hosts
-  required_for: [deploy_end]
   requires: [deploy_start]
+  required_for: [deploy_end]
   parameters:
     strategy:
       type: one_by_one
 
 - id: elasticsearch_kibana
   type: group
+  version: 2.0.0
   role: [elasticsearch_kibana]
   tasks: *common_tasks
-  required_for: [deploy_end]
   requires: [deploy_start, primary-elasticsearch_kibana]
+  required_for: [deploy_end]
   parameters:
     strategy:
       type: parallel
@@ -29,9 +31,9 @@
 # This task needs to be reexecuted to recheck the configuration
 - id: lma-es-check-configuration
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana]
   requires: [netconfig]
-  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/check_environment_configuration.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -42,8 +44,8 @@
 
 - id: lma-es-firewall
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  required_for: [deploy_end]
   requires: [netconfig]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
@@ -52,8 +54,10 @@
 
 - id: lma-es-cluster
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [lma-es-firewall]
+  required_for: [lma-es-cluster-haproxy]
   parameters:
     puppet_manifest: "puppet/manifests/cluster.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -63,6 +67,7 @@
 
 - id: lma-es-cluster-haproxy
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [lma-es-cluster]
   parameters:
@@ -74,8 +79,8 @@
 
 - id: lma-es-virtual-ip
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
-  required_for: [deploy_end]
   requires: [lma-es-cluster]
   parameters:
     puppet_manifest: "/etc/puppet/modules/osnailyfacter/modular/virtual_ips/virtual_ips.pp"
@@ -86,6 +91,7 @@
 # on the number of nodes in the cluster
 - id: lma-es-hiera
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [globals]
   required_for: [logging, lma-es-cluster, lma-es-kibana-haproxy]
@@ -99,9 +105,9 @@
 # This task needs to be reexecuted to reconfigure HAProxy backends
 - id: lma-es-kibana-haproxy
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [lma-es-cluster-haproxy, lma-es-virtual-ip]
-  required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/haproxy.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -112,9 +118,9 @@
 # This task needs to be reexecuted to reconfigure Elasticsearch instances
 - id: lma-install-elasticsearch
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [lma-es-kibana-haproxy]
-  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/elasticsearch.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -124,9 +130,9 @@
 
 - id: lma-install-kibana
   type: puppet
+  version: 2.0.0
   groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
   requires: [lma-es-kibana-haproxy]
-  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -137,9 +143,9 @@
 # ensure that the cluster is ready (the number of expected master nodes is reached)
 - id: lma-provision-services
   type: puppet
+  version: 2.0.0
   role: [primary-elasticsearch_kibana]
   requires: [post_deployment_start]
-  required_for: [lma-es-kibana-enable-quorum, post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -152,8 +158,9 @@
 # after the new nodes have added themselves to the Pacemaker cluster.
 - id: lma-es-kibana-enable-quorum
   type: puppet
+  version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start]
+  requires: [lma-provision-services]
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
