@@ -24,11 +24,17 @@ $corosync_nodes = corosync_nodes(
     ),
     'mgmt/corosync'
 )
+
+$cluster_recheck_interval = hiera('cluster_recheck_interval', '190s')
+$corosync_nodes_processed = corosync_nodes_process($corosync_nodes)
+
 $cluster_recheck_interval = hiera('cluster_recheck_interval', '190s')
 
-class { 'cluster':
+class { '::cluster':
   internal_address         => get_network_role_property('mgmt/corosync', 'ipaddr'),
-  corosync_nodes           => $corosync_nodes,
+  quorum_members           => $corosync_nodes_processed['ips'],
+  unicast_addresses        => $corosync_nodes_processed['ips'],
+  quorum_members_ids       => $corosync_nodes_processed['ids'],
   cluster_recheck_interval => $cluster_recheck_interval,
 }
 
