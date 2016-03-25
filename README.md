@@ -1,3 +1,4 @@
+test-gate
 The Elasticsearch-Kibana Plugin for Fuel
 ========================================
 
