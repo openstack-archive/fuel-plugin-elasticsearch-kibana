@@ -91,6 +91,10 @@ a link to the Kibana dashboard as shown in the figure below:
    :align: center
    :width: 800
 
+.. note:: Be aware that Kibana is attached to the *management network*. 
+   Your desktop machine must have access to the OpenStack environment's
+   *management network* you just created, to get access to the Kibana dashboard
+
 Verifying Elasticsearch
 ~~~~~~~~~~~~~~~~~~~~~~~
 
