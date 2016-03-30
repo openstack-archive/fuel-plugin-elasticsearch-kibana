@@ -10,6 +10,8 @@ Version 0.8.1
 
   * Fix the cron job running Elastic Curator (`#1535435
     <https://bugs.launchpad.net/lma-toolchain/+bug/1535435>`_).
+  * Specify explicitly one data.path for Elasticsearch (`#1559126
+    <https://bugs.launchpad.net/lma-toolchain/+bug/1559126>`_):
 
 Version 0.8.0
 -------------
