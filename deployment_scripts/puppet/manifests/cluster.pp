@@ -24,12 +24,25 @@ $corosync_nodes = corosync_nodes(
     ),
     'mgmt/corosync'
 )
+
+$corosync_nodes_processed = corosync_nodes_process($corosync_nodes)
+
 $cluster_recheck_interval = hiera('cluster_recheck_interval', '190s')
 
-class { 'cluster':
-  internal_address         => get_network_role_property('mgmt/corosync', 'ipaddr'),
-  corosync_nodes           => $corosync_nodes,
-  cluster_recheck_interval => $cluster_recheck_interval,
+if $::fuel_release >= 8.0 and $::fuel_release < 9.0 {
+  class { '::cluster':
+    internal_address         => get_network_role_property('mgmt/corosync', 'ipaddr'),
+    corosync_nodes           => $corosync_nodes,
+    cluster_recheck_interval => $cluster_recheck_interval,
+  }
+} else {
+  class { '::cluster':
+    internal_address         => get_network_role_property('mgmt/corosync', 'ipaddr'),
+    quorum_members           => $corosync_nodes_processed['ips'],
+    unicast_addresses        => $corosync_nodes_processed['ips'],
+    quorum_members_ids       => $corosync_nodes_processed['ids'],
+    cluster_recheck_interval => $cluster_recheck_interval,
+  }
 }
 
 pcmk_nodes { 'pacemaker' :
