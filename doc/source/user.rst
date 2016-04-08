@@ -232,7 +232,7 @@ If you get no data in the Kibana dashboards, follow these troubleshoot tips.
 
 1. First, check that the LMA Collector is running properly by following the
    troubleshooting instructions of the
-   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.org/en/latest/user/guide.html/>`_.
+   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.org/en/latest/>`_.
 
 2. Check if the nodes are able to connect to the Elasticsearch server on port *9200*.
 
@@ -255,3 +255,7 @@ If you get no data in the Kibana dashboards, follow these troubleshoot tips.
 
     # On both CentOS and Ubuntu
     [root@node-13 ~]# /etc/init.d/nginx start
+
+#. Look for errors in the Elasticsearch log files (located at /var/log/elasticsearch/es-01/).
+
+#. Look for errors in the nginx log files (located at /var/log/nginx/).

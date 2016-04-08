@@ -9,7 +9,7 @@ project = u'The Elasticsearch-Kibana plugin for Fuel'
 copyright = u'2015, Mirantis Inc.'
 
 version = '0.8'
-release = '0.8.0'
+release = '0.8.1'
 
 exclude_patterns = []
 
