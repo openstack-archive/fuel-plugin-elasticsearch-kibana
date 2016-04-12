@@ -22,6 +22,17 @@
   parameters:
     timeout: 600
 
+# Force the re-execution of the firewall task because from time to time, the
+# Elasticsearch and Kibana ports aren't opened as expected.
+# See https://bugs.launchpad.net/lma-toolchain/+bug/1564394
+- role: ['elasticsearch_kibana']
+  stage: post_deployment/8100
+  type: puppet
+  parameters:
+    puppet_manifest: puppet/manifests/firewall.pp
+    puppet_modules: /etc/puppet/modules
+    timeout: 300
+
 - role: ['elasticsearch_kibana']
   stage: post_deployment/8100
   type: puppet
