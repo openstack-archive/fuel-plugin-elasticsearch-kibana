@@ -22,7 +22,7 @@ from fuelweb_test import logger
 from fuelweb_test.settings import ELASTICSEARCH_KIBANA_PLUGIN_PATH
 from fuelweb_test.tests.base_test_case import TestBasic
 
-from openstack_utils import create_cluster_with_neutron
+import openstack_utils
 
 
 NAME = 'elasticsearch_kibana'
@@ -45,7 +45,7 @@ class TestPlugin(TestBasic):
             plugin_file_name=os.path.basename(
                 ELASTICSEARCH_KIBANA_PLUGIN_PATH))
 
-        create_cluster_with_neutron(self, **options)
+        openstack_utils.create_cluster_with_neutron(self, **options)
 
     def activate_plugin(self):
         msg = "Plugin couldn't be enabled. Check plugin version. Test aborted"

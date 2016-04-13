@@ -43,7 +43,7 @@ class ElasticsearchKibanaPlugin(TestPlugin):
 
         """
 
-        self.prepare_plugin(self, slaves=3)
+        self.prepare_plugin(slaves=3)
 
     @test(depends_on=[SetupEnvironment.prepare_slaves_3],
           groups=["elasticsearch_kibana_smoke"])
@@ -63,9 +63,9 @@ class ElasticsearchKibanaPlugin(TestPlugin):
         Duration 90 min
 
         """
-        self.prepare_plugin(self, slaves=3)
+        self.prepare_plugin(slaves=3)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -101,7 +101,7 @@ class ElasticsearchKibanaPlugin(TestPlugin):
         """
         self.prepare_plugin(slaves=3)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -114,6 +114,6 @@ class ElasticsearchKibanaPlugin(TestPlugin):
 
         openstack_utils.deploy_cluster(self)
 
-        self.check_elasticsearch_plugin(self)
+        self.check_elasticsearch_plugin()
 
         self.fuel_web.run_ostf(cluster_id=self.cluster_id)

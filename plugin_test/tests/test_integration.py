@@ -52,7 +52,7 @@ class IntegrationTests(TestPlugin):
 
         self.prepare_plugin(slaves=5)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -67,7 +67,7 @@ class IntegrationTests(TestPlugin):
 
         openstack_utils.deploy_cluster(self)
 
-        self.check_plugin(self)
+        self.check_plugin()
 
         self.fuel_web.run_ostf(cluster_id=self.cluster_id)
 
@@ -95,7 +95,7 @@ class IntegrationTests(TestPlugin):
         """
         self.prepare_plugin(slaves=5)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -110,7 +110,7 @@ class IntegrationTests(TestPlugin):
 
         openstack_utils.deploy_cluster(self)
 
-        self.check_plugin(self)
+        self.check_plugin()
 
         self.fuel_web.run_ostf(cluster_id=self.cluster_id)
 
@@ -140,7 +140,7 @@ class IntegrationTests(TestPlugin):
         """
         self.prepare_plugin(slaves=9)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -158,7 +158,7 @@ class IntegrationTests(TestPlugin):
 
         openstack_utils.deploy_cluster(self)
 
-        self.check_plugin(self)
+        self.check_plugin()
 
         self.fuel_web.run_ostf(cluster_id=self.cluster_id)
 
@@ -184,7 +184,7 @@ class IntegrationTests(TestPlugin):
         """
 
         self.prepare_plugin(
-            self, slaves=5,
+            slaves=5,
             options={
                 'images_ceph': True,
                 'volumes_ceph': True,
@@ -194,7 +194,7 @@ class IntegrationTests(TestPlugin):
                 'osd_pool_size': '3'
             })
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         self.fuel_web.update_nodes(
             self.cluster_id,
@@ -208,7 +208,7 @@ class IntegrationTests(TestPlugin):
 
         openstack_utils.deploy_cluster(self)
 
-        self.check_plugin(self)
+        self.check_plugin()
 
         self.fuel_web.run_ostf(cluster_id=self.cluster_id)
 

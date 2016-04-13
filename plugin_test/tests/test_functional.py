@@ -51,9 +51,9 @@ class IntegrationTests(TestPlugin):
             11. Run OSTF tests. All steps must be completed successfully,
                 without any errors.
         """
-        self.prepare_plugin(self, slaves=5)
+        self.prepare_plugin(slaves=5)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         conf_no_controller = {
             'slave-01': ['controller'],
@@ -91,9 +91,9 @@ class IntegrationTests(TestPlugin):
             10. Run OSTF tests
 
         """
-        self.prepare_plugin(self, slaves=5)
+        self.prepare_plugin(slaves=5)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         conf_no_controller = {
             'slave-01': ['controller'],
@@ -132,9 +132,9 @@ class IntegrationTests(TestPlugin):
             10. Run OSTF tests
 
         """
-        self.prepare_plugin(self, slaves=9)
+        self.prepare_plugin(slaves=9)
 
-        self.activate_plugin(self)
+        self.activate_plugin()
 
         conf_no_controller = {
             'slave-01': ['controller'],
