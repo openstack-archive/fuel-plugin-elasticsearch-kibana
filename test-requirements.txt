@@ -1,2 +1,2 @@
-Sphinx
+Sphinx>1.3,<1.4
 -e git+https://github.com/openstack/fuel-plugins.git#egg=fuel-plugin-builder
