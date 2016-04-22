@@ -3,7 +3,7 @@
   type: group
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  tasks: &common_tasks
+  tasks:
     - hiera
     - setup_repositories
     - fuel_pkgs
@@ -31,7 +31,26 @@
   type: group
   version: 2.0.0
   role: [elasticsearch_kibana]
-  tasks: *common_tasks
+  tasks:
+    - hiera
+    - setup_repositories
+    - fuel_pkgs
+    - globals
+    - tools
+    - logging
+    - netconfig
+    - hosts
+    - elasticsearch-check-configuration
+    - elasticsearch-hiera
+    - elasticsearch-firewall
+    - elasticsearch-cluster
+    - elasticsearch-cluster-haproxy
+    - elasticsearch-virtual-ip
+    - elasticsearch-haproxy
+    - elasticsearch-installation
+    - kibana-installation
+  requires: [deploy_start]
+
   requires: [deploy_start, primary-elasticsearch_kibana]
   required_for: [deploy_end]
   parameters:
@@ -40,7 +59,8 @@
 
 # Tasks definitions for deployment
 #
-# This task needs to be reexecuted to recheck the configuration
+# This task needs to be reexecuted to recheck that the configuration parameters
+# match with the node's characteristics (eg JVM size).
 - id: elasticsearch-check-configuration
   type: puppet
   version: 2.0.0
@@ -53,8 +73,8 @@
   reexecute_on:
     - deploy_changes
 
-# This task needs to be reexecuted to adapt configuration variables depending
-# on the number of nodes in the cluster
+# This task needs to be reexecuted to adapt the configuration parameters which
+# depend on the number of nodes in the cluster
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
@@ -125,6 +145,19 @@
     - deploy_changes
 
 # This task needs to be reexecuted to reconfigure Elasticsearch instances
+- id: primary-elasticsearch-installation
+  type: puppet
+  version: 2.0.0
+  requires: [elasticsearch-haproxy]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: puppet/manifests/elasticsearch.pp
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 600
+  reexecute_on:
+    - deploy_changes
+
+# This task needs to be reexecuted to reconfigure Elasticsearch instances
 - id: elasticsearch-installation
   type: puppet
   version: 2.0.0
@@ -137,6 +170,16 @@
   reexecute_on:
     - deploy_changes
 
+- id: primary-kibana-installation
+  type: puppet
+  version: 2.0.0
+  requires: [elasticsearch-haproxy]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: puppet/manifests/kibana.pp
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 600
+
 - id: kibana-installation
   type: puppet
   version: 2.0.0
@@ -147,17 +190,15 @@
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
-# Tasks definitions for post-deployment
-#
-# This task needs to be reexecuted to reconfigure index templates with an
-# appropriate number_of_replicas. This is done at post_deployment time to
-# ensure that the cluster is ready (the number of expected master nodes is reached)
+# This task needs to be reexecuted to reconfigure the index templates with an
+# appropriate number_of_replicas.
+# It should only be executed once the Elasticsearch cluster is ready.
 - id: elasticsearch-kibana-configuration
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start]
-  required_for: [post_deployment_end]
+  requires: [elasticsearch-installation, kibana-installation]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -172,8 +213,8 @@
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [elasticsearch-kibana-configuration]
-  required_for: [post_deployment_end]
+  requires: [elasticsearch-installation, kibana-installation]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
