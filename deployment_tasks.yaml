@@ -40,7 +40,8 @@
 
 # Tasks definitions for deployment
 #
-# This task needs to be reexecuted to recheck the configuration
+# This task needs to be reexecuted to recheck that the configuration parameters
+# match with the node's characteristics (eg JVM size).
 - id: elasticsearch-check-configuration
   type: puppet
   version: 2.0.0
@@ -53,8 +54,8 @@
   reexecute_on:
     - deploy_changes
 
-# This task needs to be reexecuted to adapt configuration variables depending
-# on the number of nodes in the cluster
+# This task needs to be reexecuted to adapt the configuration parameters which
+# depend on the number of nodes in the cluster
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
@@ -147,17 +148,24 @@
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
-# Tasks definitions for post-deployment
-#
-# This task needs to be reexecuted to reconfigure index templates with an
-# appropriate number_of_replicas. This is done at post_deployment time to
-# ensure that the cluster is ready (the number of expected master nodes is reached)
+# Dummy task to synchronize the tasks that need to wait for the
+# Elasticsearch/Kibana cluster to be ready
+- id: elasticsearch-kibana-cluster-ready
+  type: skipped
+  version: 2.0.0
+  requires: [kibana-installation, elasticsearch-installation]
+  required_for: [deploy_end]
+  groups: [primary-elasticsearch_kibana, elasticsearch_kibana]
+
+# This task needs to be reexecuted to reconfigure the index templates with an
+# appropriate number_of_replicas.
+# It should only be executed once the Elasticsearch cluster is ready.
 - id: elasticsearch-kibana-configuration
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start]
-  required_for: [post_deployment_end]
+  requires: [elasticsearch-kibana-cluster-ready]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -172,8 +180,8 @@
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [elasticsearch-kibana-configuration]
-  required_for: [post_deployment_end]
+  requires: [elasticsearch-kibana-cluster-ready]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
