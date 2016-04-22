@@ -147,17 +147,15 @@
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
-# Tasks definitions for post-deployment
-#
 # This task needs to be reexecuted to reconfigure index templates with an
-# appropriate number_of_replicas. This is done at post_deployment time to
-# ensure that the cluster is ready (the number of expected master nodes is reached)
+# appropriate number_of_replicas. It should be executed once the Elasticsearch
+# cluster is ready.
 - id: elasticsearch-kibana-configuration
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start]
-  required_for: [post_deployment_end]
+  requires: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -173,7 +171,7 @@
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
   requires: [elasticsearch-kibana-configuration]
-  required_for: [post_deployment_end]
+  required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/enable_quorum.pp"
     puppet_modules: puppet/modules:/etc/puppet/modules
