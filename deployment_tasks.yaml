@@ -1,4 +1,5 @@
 # Groups definitions
+####################
 - id: primary-elasticsearch_kibana
   type: group
   version: 2.0.0
@@ -38,9 +39,11 @@
     strategy:
       type: parallel
 
-# Tasks definitions for deployment
-#
-# This task needs to be reexecuted to recheck the configuration
+# Tasks definitions for the deployment
+######################################
+
+# This task needs to be reexecuted to recheck that the configuration parameters
+# match with the node's characteristics (eg JVM size).
 - id: elasticsearch-check-configuration
   type: puppet
   version: 2.0.0
@@ -53,8 +56,8 @@
   reexecute_on:
     - deploy_changes
 
-# This task needs to be reexecuted to adapt configuration variables depending
-# on the number of nodes in the cluster
+# This task needs to be reexecuted to adapt the configuration parameters which
+# depend on the number of nodes in the cluster
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
@@ -147,17 +150,22 @@
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
-# Tasks definitions for post-deployment
-#
-# This task needs to be reexecuted to reconfigure index templates with an
-# appropriate number_of_replicas. This is done at post_deployment time to
-# ensure that the cluster is ready (the number of expected master nodes is reached)
+# Tasks defintion for the post-deployment
+#########################################
+
+# This task needs to be reexecuted to reconfigure the index templates with an
+# appropriate number_of_replicas.
+# This is done at post_deployment time to ensure that the cluster is ready.
 - id: elasticsearch-kibana-configuration
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
   requires: [post_deployment_start]
-  required_for: [post_deployment_end]
+  # We use update_hosts as an anchor to order the post-deployment tasks executed
+  # by this plugin and the LMA collector plugin. Eventually the dependency
+  # chain looks like this:
+  # elasticsearch-kibana-configuration -> update_hosts -> (LMA collector tasks)
+  required_for: [update_hosts, post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
