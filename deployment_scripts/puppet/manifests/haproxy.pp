@@ -23,8 +23,6 @@ $es_nodes = get_nodes_hash_by_roles(hiera_hash('network_metadata'), $roles)
 $es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
 $es_nodes_ips = values($es_address_map)
 $es_nodes_names = keys($es_address_map)
-notice($es_address_map)
-notice($es_nodes_ips)
 
 Openstack::Ha::Haproxy_service {
   server_names        => $es_nodes_names,
