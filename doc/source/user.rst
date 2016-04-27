@@ -106,11 +106,11 @@ Here is how to proceed.
    server is installed using the following command::
 
     [root@fuel ~]# fuel nodes
-    id | status   | name             | cluster | ip         | mac               | roles                     |
-    ---|----------|------------------|---------|------------|-------------------|---------------------------|
-    1  | ready    | Untitled (fa:87) | 1       | 10.109.0.8 | 64:18:ef:86:fa:87 | elasticsearch_kibana, ... |
-    2  | ready    | Untitled (12:aa) | 1       | 10.109.0.3 | 64:5f:c6:88:12:aa | elasticsearch_kibana, ... |
-    3  | ready    | Untitled (4e:6e) | 1       | 10.109.0.7 | 64:ca:bf:a4:4e:6e | elasticsearch_kibana, ... |
+    id | status   | name             | cluster | ip  | mac | roles                |
+    ---|----------|------------------|---------|-----|----------------------------|
+    1  | ready    | Untitled (fa:87) | 1       | ... | ... | elasticsearch_kibana |
+    2  | ready    | Untitled (12:aa) | 1       | ... | ... | elasticsearch_kibana |
+    3  | ready    | Untitled (4e:6e) | 1       | ... | ... | elasticsearch_kibana |
 
 
 #. Then `ssh` to anyone of these nodes (ex. *node-1*) and type the command::
