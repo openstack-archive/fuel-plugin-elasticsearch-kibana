@@ -18,11 +18,13 @@ define lma_logging_analytics::es_template (
   $number_of_shards = 5,
   $number_of_replicas = 0,
   $host = 'localhost',
+  $port = 9200,
 ) {
   $index_prefix = $title
 
   elasticsearch::template { $title:
     content => template("lma_logging_analytics/es_template_${title}.json.erb"),
     host    => $host,
+    port    => $port,
   }
 }
