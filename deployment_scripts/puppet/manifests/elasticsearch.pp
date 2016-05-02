@@ -14,20 +14,11 @@
 
 notice('fuel-plugin-elasticsearch-kibana: elasticsearch.pp')
 
-prepare_network_config(hiera('network_scheme', {}))
-$mgmt_address = get_network_role_property('management', 'ipaddr')
-$elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
-$network_metadata = hiera('network_metadata')
-$es_nodes = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
-$es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'management')
-$es_nodes_ips = values($es_address_map)
-
-include lma_logging_analytics::params
-
-# Params related to Elasticsearch.
-$es_dir       = $elasticsearch_kibana['data_dir']
-$es_instance  = 'es-01'
-$es_heap_size = $elasticsearch_kibana['jvm_heap_size']
+$listen_address = hiera('lma::elasticsearch::listen_address')
+$es_nodes       = hiera('lma::elasticsearch::nodes')
+$es_dir         = hiera('lma::elasticsearch::data_dir')
+$es_instance    = hiera('lma::elasticsearch::instance_name')
+$es_heap_size   = hiera('lma::elasticsearch::jvm_size')
 
 # Java
 $java = $::operatingsystem ? {
@@ -61,18 +52,18 @@ elasticsearch::instance { $es_instance:
     'bootstrap.mlockall'                 => true,
     'http.cors.allow-origin'             => '/.*/',
     'http.cors.enabled'                  => true,
-    'cluster.name'                       => $lma_logging_analytics::params::es_cluster_name,
-    'node.name'                          => "${::fqdn}_${es_instance}",
+    'cluster.name'                       => hiera('lma::elasticsearch::cluster_name'),
+    'node.name'                          => hiera('lma::elasticsearch::node_name'),
     'node.master'                        => true,
     'node.data'                          => true,
     'discovery.zen.ping.multicast'       => {'enabled' => false},
-    'discovery.zen.ping.unicast.hosts'   => $es_nodes_ips,
+    'discovery.zen.ping.unicast.hosts'   => $es_nodes,
     'discovery.zen.minimum_master_nodes' => hiera('lma::elasticsearch::minimum_master_nodes'),
     'gateway.recover_after_time'         => hiera('lma::elasticsearch::recover_after_time'),
     'gateway.recover_after_nodes'        => hiera('lma::elasticsearch::recover_after_nodes'),
-    'gateway.expected_nodes'             => size($es_nodes_ips),
-    'http.bind_host'                     => $mgmt_address,
-    'transport.bind_host'                => $mgmt_address,
-    'transport.publish_host'             => $mgmt_address,
+    'gateway.expected_nodes'             => size($es_nodes),
+    'http.bind_host'                     => $listen_address,
+    'transport.bind_host'                => $listen_address,
+    'transport.publish_host'             => $listen_address,
   }
 }
