@@ -14,19 +14,22 @@
 
 notice('fuel-plugin-elasticsearch-kibana: hiera_override.pp')
 
-$hiera_dir            = '/etc/hiera/plugins'
-$plugin_name          = 'elasticsearch_kibana'
-$plugin_yaml          = "${plugin_name}.yaml"
-$corosync_roles       = [$plugin_name, "primary-${plugin_name}"]
+# Initialize network-related variables
+$network_scheme   = hiera('network_scheme')
+$network_metadata = hiera('network_metadata')
+prepare_network_config($network_scheme)
+
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
-$network_metadata     = hiera('network_metadata')
+$hiera_file           = '/etc/hiera/plugins/elasticsearch_kibana.yaml'
+$listen_address       = get_network_role_property('elasticsearch', 'ipaddr')
 $es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
+$es_addresses_map     = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
+$es_ip_addresses      = sort(values($es_addresses_map))
 $es_nodes_count       = count($es_nodes)
-$vip_name             = 'es_vip_mgmt'
-if ! $network_metadata['vips'][$vip_name] {
+if ! $network_metadata['vips']['es_vip_mgmt'] {
   fail('Elasticsearch VIP is not defined')
 }
-$vip = $network_metadata['vips'][$vip_name]['ipaddr']
+$vip = $network_metadata['vips']['es_vip_mgmt']['ipaddr']
 
 if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < $es_nodes_count {
   $number_of_replicas = 0 + $elasticsearch_kibana['number_of_replicas']
@@ -60,19 +63,29 @@ if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_k
 
 $calculated_content = inline_template('
 lma::corosync_roles:
-<%
-@corosync_roles.each do |crole|
-%>  - <%= crole %>
-<% end -%>
-
+    - primary-elasticsearch_kibana
+    - elasticsearch_kibana
 lma::elasticsearch::vip: <%= @vip%>
+lma::elasticsearch::listen_address: <%= @listen_address%>
+lma::elasticsearch::kibana_port: 80
+lma::elasticsearch::rest_port: 9200
+lma::elasticsearch::clustering_port: 9300
+lma::elasticsearch::nodes:
+<% @es_ip_addresses.each do |x| -%>
+    - "<%= x %>"
+<% end -%>
 lma::elasticsearch::number_of_replicas: <%= @number_of_replicas %>
 lma::elasticsearch::minimum_master_nodes: <%= @minimum_master_nodes %>
 lma::elasticsearch::recover_after_time: <%= @recover_after_time %>
 lma::elasticsearch::recover_after_nodes: <%= @recover_after_nodes %>
+lma::elasticsearch::data_dir: "<%= @elasticsearch_kibana["data_dir"] %>"
+lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
+lma::elasticsearch::instance_name: es-01
+lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
+lma::elasticsearch::cluster_name: lma
 ')
 
-file { "${hiera_dir}/${plugin_yaml}":
+file { $hiera_file:
   ensure  => file,
   content => "${calculated_content}\n",
 }

@@ -16,7 +16,10 @@
 
 
 class lma_logging_analytics::kibana (
+  $listen_address,
+  $listen_port,
   $es_host = 'localhost',
+  $es_port = 9200,
 ) {
 
   include lma_logging_analytics::params
@@ -47,6 +50,8 @@ class lma_logging_analytics::kibana (
       }
     },
     nginx_vhosts_defaults => {
+      'listen_ip'      => $listen_address,
+      'listen_port'    => $listen_port,
       'listen_options' => 'default_server'
     },
     require               => File[$kibana_conf],
