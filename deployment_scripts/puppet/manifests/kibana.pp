@@ -15,5 +15,8 @@
 notice('fuel-plugin-elasticsearch-kibana: kibana.pp')
 
 class { 'lma_logging_analytics::kibana':
-  es_host => hiera('lma::elasticsearch::vip'),
+  listen_address => hiera('lma::elasticsearch::listen_address'),
+  listen_port    => hiera('lma::elasticsearch::kibana_port'),
+  es_host        => hiera('lma::elasticsearch::vip'),
+  es_port        => hiera('lma::elasticsearch::rest_port'),
 }

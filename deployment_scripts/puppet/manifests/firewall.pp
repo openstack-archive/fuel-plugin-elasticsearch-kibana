@@ -51,19 +51,19 @@ firewall { '114 corosync-output':
 }
 
 firewall { '100 elasticsearch REST':
-  port   => 9200,
+  port   => hiera('lma::elasticsearch::rest_port'),
   proto  => 'tcp',
   action => 'accept',
 }
 
 firewall { '110 elasticsearch clustering':
-  port   => 9300,
+  port   => hiera('lma::elasticsearch::clustering_port'),
   proto  => 'tcp',
   action => 'accept',
 }
 
 firewall { '101 kibana':
-  port   => 80,
+  port   => hiera('lma::elasticsearch::kibana_port'),
   proto  => 'tcp',
   action => 'accept',
 }
