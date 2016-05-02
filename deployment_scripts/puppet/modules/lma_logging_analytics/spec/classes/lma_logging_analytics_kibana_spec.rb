@@ -16,7 +16,11 @@ require 'spec_helper'
 describe 'lma_logging_analytics::kibana' do
     let(:facts) do
         {:kernel => 'Linux', :operatingsystem => 'Ubuntu',
-         :concat_basedir => '/foo'}
+         :concat_basedir => '/foo' }
+    end
+
+    let(:params) do
+        {:listen_address => '127.0.0.1', :listen_port => 80}
     end
 
     it { should create_file('/opt/kibana')}
