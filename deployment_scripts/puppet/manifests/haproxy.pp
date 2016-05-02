@@ -14,19 +14,16 @@
 
 notice('fuel-plugin-elasticsearch-kibana: haproxy.pp')
 
-$role_name = 'elasticsearch_kibana'
-$es_port = '9200'
-$nginx_port = '80'
+$es_port = hiera('lma::elasticsearch::rest_port')
+$nginx_port = hiera('lma::elasticsearch::kibana_port')
 $vip = hiera('lma::elasticsearch::vip')
-$roles = [ $role_name , "primary-${role_name}"]
-$es_nodes = get_nodes_hash_by_roles(hiera_hash('network_metadata'), $roles)
-$es_address_map = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
-$es_nodes_ips = values($es_address_map)
-$es_nodes_names = keys($es_address_map)
+
+$nodes_ips = hiera('lma::elasticsearch')
+$nodes_names = prefix(range(1, size($nodes_ips)), 'server_')
 
 Openstack::Ha::Haproxy_service {
-  server_names        => $es_nodes_names,
-  ipaddresses         => $es_nodes_ips,
+  server_names        => $nodes_names,
+  ipaddresses         => $nodes_ips,
   public              => false,
   public_ssl          => false,
   internal            => true,
