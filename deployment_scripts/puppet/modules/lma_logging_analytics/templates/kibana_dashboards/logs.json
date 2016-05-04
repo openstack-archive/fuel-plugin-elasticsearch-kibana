@@ -321,8 +321,8 @@
           "field_list": false,
           "all_fields": true,
           "trimFactor": 300,
-          "localTime": false,
-          "timeField": "@timestamp",
+          "localTime": true,
+          "timeField": "Timestamp",
           "spyable": true,
           "queries": {
             "mode": "all",
