@@ -161,10 +161,10 @@
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
   requires: [post_deployment_start]
-  # We use update_hosts as an anchor to order the post-deployment tasks executed
+  # We use upload_nodes_info as an anchor to order the post-deployment tasks executed
   # by this plugin and the LMA collector plugin. The dependency chain is like this:
-  # elasticsearch-kibana-configuration -> update_hosts -> (LMA collector tasks)
-  required_for: [update_hosts, post_deployment_end]
+  # elasticsearch-kibana-configuration -> upload_nodes_info -> (LMA collector tasks)
+  required_for: [upload_nodes_info, post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
