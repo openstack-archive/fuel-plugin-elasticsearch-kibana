@@ -1,7 +1,12 @@
+.. _advanced_user_guide:
+
+Advanced Operations
+===================
+
  .. _cluster_operations:
 
 Cluster Operations
-==================
+------------------
 
 Because of certain limitations in the current implementation of the Fuel plugin, it is necessary to
 perform some manual operations after the Elasticsearch cluster is scaled up or scaled down.
@@ -29,7 +34,7 @@ to one node, are used as examples. Your mileage may vary but the
 principal of (re)configuring the replication factor of the indices should remain the same.
 
 Scaling Up
------------
+^^^^^^^^^^
 
 The problem the manual operation aims to address is that the replication factor for the old
 indices is not updated automatically by the plugin when a new node is added in the cluster. If you
@@ -64,7 +69,7 @@ Note that replicating the old indices on the new node(s) will increase the load 
 cluster as well as the size required to store the data.
 
 Scaling down
-------------
+^^^^^^^^^^^^
 
 Similarly, after a scale-down the *number_of_replicas* of all indices must be
 aligned with the new size of the cluster. Not doing so will be reported by LMA as a critical
@@ -83,3 +88,42 @@ status for the Elasticsearch cluster::
   [root@node-1 ~]# curl <VIP>:9200/_cat/indices?v
   health  status index                  pri rep docs.count ....
   green   open   log-2016.02.04           5   2    1934581 ....
+
+.. _network_templates:
+
+Deployment using network templates
+----------------------------------
+
+By default, the Elasticsearch-Kibana cluster is deployed on the Fuel management
+network. If this behavior doesn't meet your needs, you can leverage the
+Fuel `network templates
+<https://docs.mirantis.com/openstack/fuel/fuel-8.0/operations.html#using-networking-templates>`_
+to use a different network instead.
+
+Here is a network template example that defines a new network named `monitoring`.
+
+.. literalinclude:: ./network_template.yaml
+
+You can use this configuration as a starting point and adapt it to your setup.
+
+The deployment of the environment happens as described in the :ref:`User Guide
+<user_guide>` except that before deploying the environment, you have to:
+
+* Upload the network template::
+
+    $ fuel2 network-template upload -f network_template.yaml <ENVIRONMENT_ID>
+
+* Allocate an IP subnet for the `monitoring` network::
+
+    $ fuel2 network-group create -N <ENVIRONMENT_ID> -C 10.109.5.0/24 monitoring
+
+* Adjust the IP range through the Fuel user interface (optional).
+
+   .. image:: ../images/network_group_configuration.png
+      :width: 800
+      :align: center
+
+* Deploy the environment.
+
+For more details, please refer to the official `Fuel documentation
+<https://docs.mirantis.com/openstack/fuel/fuel-8.0/operations.html#using-networking-templates>`_.
