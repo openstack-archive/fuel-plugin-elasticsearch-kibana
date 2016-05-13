@@ -1,7 +1,7 @@
 define(['settings'],
 function (Settings) {
   return new Settings({
-    elasticsearch: "http://" + window.location.hostname + "<%= @es_port %>",
+    elasticsearch: "http://" + window.location.hostname + ":<%= @es_port %>",
     default_route: '<%= @default_route %>',
     kibana_index: "kibana-int",
     panel_names: [
