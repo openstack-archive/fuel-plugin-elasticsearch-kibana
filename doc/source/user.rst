@@ -259,7 +259,7 @@ follow these troubleshooting tips.
 
 1. First, check that the LMA Collector is running properly by following the
    LMA Collector troubleshooting instructions in the
-   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.org/>`_.
+   `LMA Collector Fuel Plugin User Guide <http://fuel-plugin-lma-collector.readthedocs.io/>`_.
 
 #. Check that the nodes are able to connect to the Elasticsearch cluster via the VIP address
    on port *9200* as explained in the `Verifying Elasticsearch` section above.
