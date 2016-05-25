@@ -15,8 +15,8 @@
 notice('fuel-plugin-elasticsearch-kibana: hiera_override.pp')
 
 # Initialize network-related variables
-$network_scheme   = hiera('network_scheme')
-$network_metadata = hiera('network_metadata')
+$network_scheme   = hiera_hash('network_scheme')
+$network_metadata = hiera_hash('network_metadata')
 prepare_network_config($network_scheme)
 
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')

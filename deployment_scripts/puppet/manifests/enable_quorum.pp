@@ -14,9 +14,9 @@
 
 notice('fuel-plugin-elasticsearch-kibana: enable_quorum.pp')
 
-prepare_network_config(hiera('network_scheme', {}))
+prepare_network_config(hiera_hash('network_scheme', {}))
 $corosync_roles = hiera_array('lma::corosync_roles')
-$network_metadata = hiera('network_metadata')
+$network_metadata = hiera_hash('network_metadata')
 $nodes = get_nodes_hash_by_roles($network_metadata, $corosync_roles)
 $fuel_version = 0 + hiera('fuel_version')
 
