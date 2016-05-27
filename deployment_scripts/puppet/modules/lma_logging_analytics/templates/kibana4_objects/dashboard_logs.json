@@ -1,0 +1,15 @@
+{
+  "title": "Logs",
+  "hits": 0,
+  "description": "",
+  "panelsJSON": "[{\"col\":1,\"columns\":[\"Hostname\",\"Logger\",\"programname\",\"severity_label\",\"Payload\",\"environment_label\"],\"id\":\"search-logs\",\"panelIndex\":5,\"row\":13,\"size_x\":12,\"size_y\":12,\"sort\":[\"Timestamp\",\"desc\"],\"type\":\"search\"},{\"col\":1,\"id\":\"NUMBER-OF-LOG-MESSAGES-PER-SEVERITY\",\"panelIndex\":7,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"TOP-10-PROGRAMS\",\"panelIndex\":9,\"row\":5,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"LOG-MESSAGES-OVER-TIME-PER-SOURCE\",\"panelIndex\":10,\"row\":1,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":5,\"id\":\"TOP-10-HOSTS\",\"panelIndex\":11,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":9,\"id\":\"NUMBER-OF-LOG-MESSAGES-PER-ROLE\",\"panelIndex\":12,\"row\":9,\"size_x\":4,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"TOP-10-SOURCES\",\"panelIndex\":14,\"row\":5,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"LOG-MESSAGES-OVER-TIME-PER-SEVERITY\",\"panelIndex\":16,\"row\":1,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"}]",
+  "optionsJSON": "{\"darkTheme\":true}",
+  "uiStateJSON": "{\"P-10\":{\"vis\":{\"legendOpen\":true}},\"P-11\":{\"vis\":{\"colors\":{\"Count\":\"#629E51\"},\"legendOpen\":true}},\"P-12\":{\"spy\":{\"mode\":{\"fill\":false,\"name\":null}},\"vis\":{\"colors\":{\"Count\":\"#2F575E\"},\"legendOpen\":false}},\"P-14\":{\"vis\":{\"legendOpen\":true}},\"P-7\":{\"vis\":{\"legendOpen\":false}},\"P-9\":{\"vis\":{\"colors\":{\"Count\":\"#99440A\"},\"legendOpen\":true}}}",
+  "version": 1,
+  "timeRestore": true,
+  "timeTo": "now",
+  "timeFrom": "now-1h",
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+  }
+}

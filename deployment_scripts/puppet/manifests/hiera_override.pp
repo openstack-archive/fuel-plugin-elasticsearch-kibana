@@ -66,9 +66,12 @@ $calculated_content = inline_template('
 lma::corosync_roles:
     - primary-elasticsearch_kibana
     - elasticsearch_kibana
-lma::elasticsearch::vip: <%= @vip%>
+lma::elasticsearch::vip: <%= @vip %>
+lma::elasticsearch::es_haproxy_service: elasticsearch-rest
 lma::elasticsearch::listen_address: <%= @listen_address%>
-lma::elasticsearch::kibana_port: 80
+lma::elasticsearch::kibana_frontend_port: 80
+lma::elasticsearch::kibana_port: 5601
+lma::elasticsearch::kibana_index: .kibana
 lma::elasticsearch::rest_port: 9200
 lma::elasticsearch::clustering_port: 9300
 lma::elasticsearch::nodes:
@@ -77,7 +80,7 @@ lma::elasticsearch::nodes:
 <% end -%>
 lma::elasticsearch::number_of_replicas: <%= @number_of_replicas %>
 lma::elasticsearch::minimum_master_nodes: <%= @minimum_master_nodes %>
-lma::elasticsearch::recover_after_time: <%= @recover_after_time %>
+lma::elasticsearch::recover_after_time: <%= @recover_after_time %>m
 lma::elasticsearch::recover_after_nodes: <%= @recover_after_nodes %>
 lma::elasticsearch::data_dir: "<%= @elasticsearch_kibana["data_dir"] %>"
 lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
