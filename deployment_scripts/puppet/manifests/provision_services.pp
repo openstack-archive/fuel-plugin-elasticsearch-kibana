@@ -27,14 +27,10 @@ $kibana_link_data = "{\"title\":\"Kibana\",\
 $kibana_link_created_file = '/var/cache/kibana_link_created'
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 
-lma_logging_analytics::es_template { ['log', 'notification', 'kibana']:
+lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
   host               => $vip,
   port               => $es_port,
-} ->
-lma_logging_analytics::kibana_dashboard { ['logs', 'notifications']:
-  host => $vip,
-  port => $es_port,
 } ->
 class { 'lma_logging_analytics::curator':
   host             => $vip,
