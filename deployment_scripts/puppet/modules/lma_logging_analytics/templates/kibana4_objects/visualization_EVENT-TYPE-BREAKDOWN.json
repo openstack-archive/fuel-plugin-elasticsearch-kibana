@@ -1,0 +1,10 @@
+{
+ "title": "EVENT TYPE BREAKDOWN",
+ "visState": "{\"title\":\"EVENT TYPE BREAKDOWN\",\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"scale\":\"linear\",\"mode\":\"grouped\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"group\",\"params\":{\"field\":\"event_type\",\"size\":30,\"order\":\"desc\",\"orderBy\":\"1\"}}],\"listeners\":{}}",
+ "uiStateJSON": "{}",
+ "description": "",
+ "version": 1,
+ "kibanaSavedObjectMeta": {
+   "searchSourceJSON": "{\"index\":\"notification-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+ }
+}

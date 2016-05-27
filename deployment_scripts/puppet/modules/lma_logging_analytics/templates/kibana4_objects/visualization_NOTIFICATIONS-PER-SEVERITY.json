@@ -1,0 +1,10 @@
+{
+  "title": "NOTIFICATIONS PER SEVERITY",
+  "visState": "{\n  \"title\": \"New Visualization\",\n  \"type\": \"histogram\",\n  \"params\": {\n    \"shareYAxis\": true,\n    \"addTooltip\": true,\n    \"addLegend\": true,\n    \"scale\": \"linear\",\n    \"mode\": \"stacked\",\n    \"times\": [],\n    \"addTimeMarker\": false,\n    \"defaultYExtents\": false,\n    \"setYExtents\": false,\n    \"yAxis\": {}\n  },\n  \"aggs\": [\n    {\n      \"id\": \"1\",\n      \"type\": \"count\",\n      \"schema\": \"metric\",\n      \"params\": {}\n    },\n    {\n      \"id\": \"2\",\n      \"type\": \"terms\",\n      \"schema\": \"segment\",\n      \"params\": {\n        \"field\": \"severity_label\",\n        \"size\": 10,\n        \"order\": \"desc\",\n        \"orderBy\": \"1\"\n      }\n    }\n  ],\n  \"listeners\": {}\n}",
+  "uiStateJSON": "{\n  \"vis\": {\n    \"colors\": {\n      \"ERROR\": \"#BF1B00\",\n      \"EMERGENCY\": \"#99440A\",\n      \"WARNING\": \"#EF843C\",\n      \"INFO\": \"#7EB26C\",\n      \"DEBUG\": \"#1F78C1\",\n      \"NOTICE\": \"#6ED0E0\",\n      \"ALERT\": \"#1F78C1\"\n    }\n  }\n}",
+  "description": "",
+  "version": 1,
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\n  \"index\": \"notification-*\",\n  \"query\": {\n    \"query_string\": {\n      \"query\": \"*\",\n      \"analyze_wildcard\": true\n    }\n  },\n  \"filter\": []\n}"
+  }
+}
