@@ -1,0 +1,25 @@
+{
+  "title": "Notifications",
+  "description": "",
+  "hits": 0,
+  "columns": [
+    "Logger",
+    "publisher",
+    "severity_label",
+    "event_type",
+    "old_state",
+    "old_task_state",
+    "state",
+    "new_task_state",
+    "environment_label",
+    "display_name"
+  ],
+  "sort": [
+    "Timestamp",
+    "desc"
+  ],
+  "version": 1,
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\"index\":\"notification-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+  }
+}
