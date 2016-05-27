@@ -19,8 +19,13 @@ define lma_logging_analytics::es_template (
   $number_of_replicas = 0,
   $host = 'localhost',
   $port = 9200,
+  $index_template = undef,
 ) {
-  $index_prefix = $title
+  if $index_template {
+    $template = $index_template
+  } else {
+    $template = "${title}-*"
+  }
 
   elasticsearch::template { $title:
     content => template("lma_logging_analytics/es_template_${title}.json.erb"),
