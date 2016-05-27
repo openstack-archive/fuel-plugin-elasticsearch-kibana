@@ -140,6 +140,17 @@
   reexecute_on:
     - deploy_changes
 
+- id: kibana-es-configuration
+  type: puppet
+  version: 2.0.0
+  role: [primary-elasticsearch_kibana]
+  requires: [elasticsearch-installation]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: puppet/manifests/kibana_es_configuration.pp
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 600
+
 - id: kibana-installation
   type: puppet
   version: 2.0.0
