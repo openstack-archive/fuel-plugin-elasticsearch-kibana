@@ -17,24 +17,20 @@ notice('fuel-plugin-elasticsearch-kibana: provision_services.pp')
 $deployment_id = hiera('deployment_id')
 $master_ip = hiera('master_ip')
 $vip = hiera('lma::elasticsearch::vip')
-$kibana_port = hiera('lma::elasticsearch::kibana_port')
+$kibana_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
 
 $kibana_link_data = "{\"title\":\"Kibana\",\
 \"description\":\"Dashboard for visualizing logs and notifications\",\
-\"url\":\"http://${vip}:${port}/\"}"
+\"url\":\"http://${vip}:${kibana_port}/\"}"
 $kibana_link_created_file = '/var/cache/kibana_link_created'
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 
-lma_logging_analytics::es_template { ['log', 'notification', 'kibana']:
+lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
   host               => $vip,
   port               => $es_port,
-} ->
-lma_logging_analytics::kibana_dashboard { ['logs', 'notifications']:
-  host => $vip,
-  port => $es_port,
 } ->
 class { 'lma_logging_analytics::curator':
   host             => $vip,

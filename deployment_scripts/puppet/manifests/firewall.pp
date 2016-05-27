@@ -62,6 +62,12 @@ firewall { '110 elasticsearch clustering':
   action => 'accept',
 }
 
+firewall { '101 haproxy kibana':
+  port   => hiera('lma::elasticsearch::kibana_frontend_port'),
+  proto  => 'tcp',
+  action => 'accept',
+}
+
 firewall { '101 kibana':
   port   => hiera('lma::elasticsearch::kibana_port'),
   proto  => 'tcp',
