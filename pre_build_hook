@@ -6,14 +6,10 @@ set -eux
 # Puppet manifests
 CONCAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-concat-1.2.4.tar.gz"
 STDLIB_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-stdlib-4.7.0.tar.gz"
-NGINX_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/jfryman-nginx-0.2.2.tar.gz"
 ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearch-elasticsearch-0.10.1.tar.gz"
 # Dependency for Elasticsearch 0.10.x
 DATACAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/richardc-datacat-0.6.2.tar.gz"
 FIREWALL_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-firewall-1.7.2.tar.gz"
-
-# Kibana 3 sources
-KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.3.tar.gz"
 
 TZ_VERSION="2016d-0ubuntu0.14.04_all"
 
@@ -26,7 +22,8 @@ download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcscl
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
     http://security.ubuntu.com/ubuntu/pool/main/o/openjdk-7/openjdk-7-jre-headless_7u101-2.6.6-0ubuntu0.14.04.1_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/c/ca-certificates-java/ca-certificates-java_20130815ubuntu1_all.deb \
-    https://download.elastic.co/elasticsearch/elasticsearch/elasticsearch-1.7.4.deb
+    https://download.elastic.co/kibana/kibana/kibana_4.5.1_amd64.deb \
+    https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.3/elasticsearch-2.3.3.deb
 
 # Download curator and dependencies
 download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch-curator_3.3.0_all.deb \
@@ -37,15 +34,10 @@ download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/
 # Install puppet manifests
 download_puppet_module "concat" "$CONCAT_TARBALL_URL"
 download_puppet_module "stdlib" "$STDLIB_TARBALL_URL"
-download_puppet_module "nginx" "$NGINX_TARBALL_URL"
 download_puppet_module "elasticsearch" "$ELASTICSEARCH_TARBALL_URL"
 download_puppet_module "firewall" "$FIREWALL_TARBALL_URL"
 download_puppet_module "datacat" "$DATACAT_TARBALL_URL"
 
-# Untar kibana
-KIBANA_FOLDER="${MODULES_DIR}/lma_logging_analytics/files/kibana/src"
-mkdir -p "${KIBANA_FOLDER}"
-wget -qO- "${KIBANA_TARBALL_URL}" | tar -C "${KIBANA_FOLDER}" --strip-components=1 -xz
 
 # Update tzdata-java package to remove strict dependency on tzdata (see LP bug #1560436)
 ROOT="$(dirname "$(readlink -f "$0")")"

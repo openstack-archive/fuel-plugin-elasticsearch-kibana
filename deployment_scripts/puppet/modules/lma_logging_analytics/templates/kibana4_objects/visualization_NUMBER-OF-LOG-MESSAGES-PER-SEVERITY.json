@@ -1,0 +1,10 @@
+{
+  "title": "NUMBER OF LOG MESSAGES PER SEVERITY",
+  "visState": "{\"title\":\"NUMBER OF LOG MESSAGES PER SEVERITY\",\"type\":\"histogram\",\"params\":{\"shareYAxis\":true,\"addTooltip\":true,\"addLegend\":true,\"scale\":\"linear\",\"mode\":\"stacked\",\"times\":[],\"addTimeMarker\":false,\"defaultYExtents\":false,\"setYExtents\":false,\"yAxis\":{}},\"aggs\":[{\"id\":\"1\",\"type\":\"count\",\"schema\":\"metric\",\"params\":{\"customLabel\":\"\"}},{\"id\":\"2\",\"type\":\"terms\",\"schema\":\"segment\",\"params\":{\"field\":\"severity_label\",\"size\":10,\"order\":\"desc\",\"orderBy\":\"1\",\"customLabel\":\"Number of log messages per severity\"}}],\"listeners\":{}}",
+  "uiStateJSON": "{\"vis\":{\"colors\":{\"Count\":\"#CCA300\"}}}",
+  "description": "",
+  "version": 1,
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\"index\":\"log-*\",\"query\":{\"query_string\":{\"query\":\"*\",\"analyze_wildcard\":true}},\"filter\":[]}"
+  }
+}
