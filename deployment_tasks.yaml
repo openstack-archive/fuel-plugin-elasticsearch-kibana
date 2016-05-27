@@ -21,7 +21,6 @@
     - elasticsearch-virtual-ip
     - elasticsearch-haproxy
     - elasticsearch-installation
-    - kibana-installation
   requires: [deploy_start]
   required_for: [deploy_end]
   parameters:
@@ -140,10 +139,24 @@
   reexecute_on:
     - deploy_changes
 
+# In order to automatically import dashboards, this is mandatory to create and
+# configure the Kibana index before Kibana4 starts.
+- id: provision-kibana-index
+  type: puppet
+  version: 2.0.0
+  role: [primary-elasticsearch_kibana]
+  requires: [elasticsearch-installation]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: puppet/manifests/kibana_index_configuration.pp
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 600
+
 - id: kibana-installation
   type: puppet
   version: 2.0.0
-  requires: [elasticsearch-haproxy]
+  role: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [provision-kibana-index]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
