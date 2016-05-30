@@ -61,7 +61,7 @@
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
-  requires: [globals]
+  requires: [elasticsearch-check-configuration]
   required_for: [logging]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
@@ -73,7 +73,7 @@
 - id: elasticsearch-firewall
   type: puppet
   version: 2.0.0
-  requires: [netconfig]
+  requires: [elasticsearch-hiera]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
