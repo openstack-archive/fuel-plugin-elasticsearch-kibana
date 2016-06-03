@@ -14,11 +14,6 @@
 
 notice('fuel-plugin-elasticsearch-kibana: elasticsearch.pp')
 
-$listen_address = hiera('lma::elasticsearch::listen_address')
-$es_nodes       = hiera('lma::elasticsearch::nodes')
-$es_dir         = hiera('lma::elasticsearch::data_dir')
-$es_instance    = hiera('lma::elasticsearch::instance_name')
-$es_heap_size   = hiera('lma::elasticsearch::jvm_size')
 
 # Java
 $java = $::operatingsystem ? {
@@ -31,39 +26,17 @@ package { $java:
   ensure => installed,
 }
 
-file { $es_dir:
-  ensure => 'directory',
-}
-
-# Install elasticsearch
-class { 'elasticsearch':
-  datadir       => "${es_dir}/elasticsearch_data",
-  init_defaults => {
-      'MAX_LOCKED_MEMORY' => 'unlimited',
-      'ES_HEAP_SIZE'      => "${es_heap_size}g"
-  },
-  require       => [File[$es_dir], Package[$java]],
-}
-
-# Start an instance of elasticsearch
-elasticsearch::instance { $es_instance:
-  config => {
-    'threadpool.bulk.queue_size'         => '1000',
-    'bootstrap.mlockall'                 => true,
-    'http.cors.allow-origin'             => '/.*/',
-    'http.cors.enabled'                  => true,
-    'cluster.name'                       => hiera('lma::elasticsearch::cluster_name'),
-    'node.name'                          => hiera('lma::elasticsearch::node_name'),
-    'node.master'                        => true,
-    'node.data'                          => true,
-    'discovery.zen.ping.multicast'       => {'enabled' => false},
-    'discovery.zen.ping.unicast.hosts'   => $es_nodes,
-    'discovery.zen.minimum_master_nodes' => hiera('lma::elasticsearch::minimum_master_nodes'),
-    'gateway.recover_after_time'         => hiera('lma::elasticsearch::recover_after_time'),
-    'gateway.recover_after_nodes'        => hiera('lma::elasticsearch::recover_after_nodes'),
-    'gateway.expected_nodes'             => size($es_nodes),
-    'http.bind_host'                     => $listen_address,
-    'transport.bind_host'                => $listen_address,
-    'transport.publish_host'             => $listen_address,
-  }
+class { 'lma_logging_analytics::elasticsearch':
+  listen_address       => hiera('lma::elasticsearch::listen_address'),
+  node_name            => hiera('lma::elasticsearch::node_name'),
+  nodes                => hiera('lma::elasticsearch::nodes'),
+  data_dir             => hiera('lma::elasticsearch::data_dir'),
+  instance_name        => hiera('lma::elasticsearch::instance_name'),
+  heap_size            => hiera('lma::elasticsearch::jvm_size'),
+  cluster_name         => hiera('lma::elasticsearch::cluster_name'),
+  logs_dir             => hiera('lma::elasticsearch::logs_dir'),
+  minimum_master_nodes => hiera('lma::elasticsearch::minimum_master_nodes'),
+  recover_after_time   => hiera('lma::elasticsearch::recover_after_time'),
+  recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
+  require              => Package[$java],
 }
