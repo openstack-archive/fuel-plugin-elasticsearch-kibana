@@ -111,7 +111,7 @@ The deployment of the environment happens as described in the :ref:`User Guide
 
 * Upload the network template::
 
-    $ fuel2 network-template upload -f network_template.yaml <ENVIRONMENT_ID>
+    $ fuel2 network-template upload -f ./network_template <ENVIRONMENT_ID>
 
 * Allocate an IP subnet for the `monitoring` network::
 
