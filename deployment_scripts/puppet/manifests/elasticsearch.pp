@@ -19,6 +19,8 @@ $es_nodes       = hiera('lma::elasticsearch::nodes')
 $es_dir         = hiera('lma::elasticsearch::data_dir')
 $es_instance    = hiera('lma::elasticsearch::instance_name')
 $es_heap_size   = hiera('lma::elasticsearch::jvm_size')
+$cluster_name   = hiera('lma::elasticsearch::cluster_name')
+$logs_dir       = hiera('lma::elasticsearch::logs_dir')
 
 # Java
 $java = $::operatingsystem ? {
@@ -47,12 +49,14 @@ class { 'elasticsearch':
 
 # Start an instance of elasticsearch
 elasticsearch::instance { $es_instance:
-  config => {
+  logging_file => 'puppet:///modules/lma_logging_analytics/elasticsearch_logging.yaml',
+  config       => {
     'threadpool.bulk.queue_size'         => '1000',
     'bootstrap.mlockall'                 => true,
     'http.cors.allow-origin'             => '/.*/',
     'http.cors.enabled'                  => true,
-    'cluster.name'                       => hiera('lma::elasticsearch::cluster_name'),
+    'cluster.name'                       => $cluster_name,
+    'path.logs'                          => $logs_dir,
     'node.name'                          => hiera('lma::elasticsearch::node_name'),
     'node.master'                        => true,
     'node.data'                          => true,
@@ -65,5 +69,13 @@ elasticsearch::instance { $es_instance:
     'http.bind_host'                     => $listen_address,
     'transport.bind_host'                => $listen_address,
     'transport.publish_host'             => $listen_address,
-  }
+  },
+}
+
+file { "/etc/logrotate.d/elasticsearch-${instance_name}.conf":
+  ensure  => present,
+  owner   => 'root',
+  group   => 'root',
+  mode    => '0644',
+  content => template('lma_logging_analytics/elasticsearch_logrotate.conf.erb'),
 }
