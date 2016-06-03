@@ -61,6 +61,9 @@ if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_k
   notice("Set recover_after_nodes to ${recover_after_nodes}")
 }
 
+$instance_name = 'es-01'
+$logs_dir = "/var/log/elasticsearch/${instance_name}"
+
 $calculated_content = inline_template('
 ---
 lma::corosync_roles:
@@ -80,8 +83,9 @@ lma::elasticsearch::minimum_master_nodes: <%= @minimum_master_nodes %>
 lma::elasticsearch::recover_after_time: <%= @recover_after_time %>
 lma::elasticsearch::recover_after_nodes: <%= @recover_after_nodes %>
 lma::elasticsearch::data_dir: "<%= @elasticsearch_kibana["data_dir"] %>"
+lma::elasticsearch::logs_dir: "<%= @logs_dir %>"
 lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
-lma::elasticsearch::instance_name: es-01
+lma::elasticsearch::instance_name: <%= @instance_name %>
 lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
 lma::elasticsearch::cluster_name: lma
 ')

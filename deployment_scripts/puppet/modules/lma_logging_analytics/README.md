@@ -10,6 +10,16 @@ Usage
 -----
 
 ```puppet
+class {'lma_logging_analytics::elasticsearch':
+  listen_address       => 'localhost',
+  node_name            => ::fqdn,
+  nodes                => [::fqdn, 'node-x', 'node-y']
+  data_dir             => '/opt/es-data'
+  instance_name        => 'es-01',
+  heap_size            => 16,
+  cluster_name         => 'my_cluster',
+}
+
 class {'lma_logging_analytics::kibana': }
 ```
 
