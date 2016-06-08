@@ -28,4 +28,6 @@ describe 'lma_logging_analytics::kibana' do
         :ensure => '42.24')
     }
     it { should contain_service('kibana')}
+
+    it { is_expected.to  contain_file('/etc/logrotate.d/kibana.conf') }
 end
