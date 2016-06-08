@@ -27,6 +27,7 @@ class lma_logging_analytics::elasticsearch (
   $is_data = true,
   $heap_size = 1,
   $listen_port = 9200,
+  $version = 'latest',
 ){
 
   validate_bool($is_master)
@@ -43,6 +44,7 @@ class lma_logging_analytics::elasticsearch (
 
   # Install elasticsearch
   class { '::elasticsearch':
+    version       => $version,
     datadir       => "${data_dir}/elasticsearch_data",
     init_defaults => {
         'MAX_LOCKED_MEMORY' => 'unlimited',
