@@ -34,8 +34,12 @@ class lma_logging_analytics::kibana (
     ensure => $version,
   }
 
+  # The init script always creates /var/log/kibana and sets appropriate rights.
+  $log_dir = '/var/log/kibana'
+
   file { '/opt/kibana/config/kibana.yml':
     ensure  => present,
+    # This template uses $log_dir
     content => template('lma_logging_analytics/kibana4.yaml.erb'),
     notify  => Service['kibana'],
     require => Package['kibana'],
@@ -47,5 +51,15 @@ class lma_logging_analytics::kibana (
     hasstatus  => true,
     hasrestart => true,
     require    => Package['kibana'],
+  }
+
+  file { '/etc/logrotate.d/kibana.conf':
+    ensure  => present,
+    # This template uses $log_dir
+    content => template('lma_logging_analytics/kibana_logrotate.conf.erb'),
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    require => Package['kibana'],
   }
 }
