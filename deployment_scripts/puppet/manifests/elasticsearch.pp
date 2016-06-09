@@ -38,5 +38,6 @@ class { 'lma_logging_analytics::elasticsearch':
   minimum_master_nodes => hiera('lma::elasticsearch::minimum_master_nodes'),
   recover_after_time   => hiera('lma::elasticsearch::recover_after_time'),
   recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
+  version              => '2.3.3',
   require              => Package[$java],
 }

@@ -18,7 +18,7 @@ describe 'lma_logging_analytics::elasticsearch', :type => :class do
         {:kernel => 'Linux', :operatingsystem => 'Ubuntu'}
     end
 
-    describe 'minmal parameter' do
+    describe 'minimal parameters' do
         let(:params) do
             {:listen_address => '127.0.0.1',
              :data_dir => '/tmp/es-data',
@@ -26,10 +26,14 @@ describe 'lma_logging_analytics::elasticsearch', :type => :class do
              :cluster_name => 'es-cluster',
              :instance_name => 'es-42',
              :nodes => ['node-1', 'node-2', 'foo-host'],
+             :version => '5.0.0',
             }
         end
 
-        it { is_expected.to contain_class('elasticsearch') }
+        it { is_expected.to contain_class('elasticsearch').with(
+             :version => '5.0.0'
+        )}
+
         it { is_expected.to contain_elasticsearch__instance('es-42') }
         it { is_expected.to contain_file('/tmp/es-data').with(
             :ensure => 'directory'
