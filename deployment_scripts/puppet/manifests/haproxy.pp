@@ -44,14 +44,30 @@ openstack::ha::haproxy_service { $es_haproxy_service:
   }
 }
 
-openstack::ha::haproxy_service { 'kibana':
-  order                  => '921',
-  listen_port            => $kibana_frontend_port,
-  balancermember_port    => $kibana_backend_port,
-  balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
-  haproxy_config_options => {
-    'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
-    'balance' => 'roundrobin',
-    'mode'    => 'http',
+if hiera('lma::kibana::tls::enabled') {
+  openstack::ha::haproxy_service { 'kibana':
+    order                  => '921',
+    internal_ssl           => true,
+    internal_ssl_path      => hiera('lma::kibana::tls::cert_file_path'),
+    listen_port            => $kibana_frontend_port,
+    balancermember_port    => $kibana_backend_port,
+    balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
+    haproxy_config_options => {
+      'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
+      'balance' => 'roundrobin',
+      'mode'    => 'http',
+    },
+  }
+} else {
+  openstack::ha::haproxy_service { 'kibana':
+    order                  => '921',
+    listen_port            => $kibana_frontend_port,
+    balancermember_port    => $kibana_backend_port,
+    balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
+    haproxy_config_options => {
+      'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
+      'balance' => 'roundrobin',
+      'mode'    => 'http',
+    }
   }
 }

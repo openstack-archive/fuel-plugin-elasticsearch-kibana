@@ -20,12 +20,21 @@ $vip = hiera('lma::elasticsearch::vip')
 $kibana_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
-
-$kibana_link_data = "{\"title\":\"Kibana\",\
-\"description\":\"Dashboard for visualizing logs and notifications\",\
-\"url\":\"http://${vip}:${kibana_port}/\"}"
-$kibana_link_created_file = '/var/cache/kibana_link_created'
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
+if hiera('lma::kibana::tls::enabled') {
+  $protocol = 'https'
+  $kibana_hostname = hiera('lma::kibana::tls::hostname')
+  $kibana_link_data = "{\"title\":\"Kibana\",\
+  \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+  \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
+} else {
+  $protocol = 'http'
+  $kibana_link_data = "{\"title\":\"Kibana\",\
+  \"description\":\"Dashboard for visualizing logs and notifications\",\
+  \"url\":\"${protocol}://${vip}:${kibana_port}/\"}"
+}
+
+$kibana_link_created_file = '/var/cache/kibana_link_created'
 
 lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
