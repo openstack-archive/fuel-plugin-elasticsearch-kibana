@@ -90,3 +90,32 @@ attributes:
     restrictions:
       - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
         action: hide
+
+# TLS Settings: BEGIN
+  tls_enabled:
+    value: false
+    label: 'Enable TLS for Kibana'
+    description: ''
+    weight: 30
+    type: "checkbox"
+
+  kibana_hostname:
+    value: 'kibana.fuel.local'
+    label: 'DNS hostname for Kibana'
+    description: 'Your DNS entries should point to this name.'
+    weight: 40
+    type: "text"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.tls_enabled.value == false"
+        action: "hide"
+
+  kibana_ssl_cert:
+    value: ''
+    label: 'Certificate for Kibana'
+    description: 'Certificate and private key data, concatenated into a single file.'
+    weight: 50
+    type: "file"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.tls_enabled.value == false"
+        action: "hide"
+  # TLS Settings: END
