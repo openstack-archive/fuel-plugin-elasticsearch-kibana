@@ -4,7 +4,7 @@
   type: group
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  tasks: &common_tasks
+  tasks:
     - hiera
     - setup_repositories
     - fuel_pkgs
@@ -60,26 +60,12 @@
 # Tasks definitions for the deployment
 ######################################
 
-# This task needs to be reexecuted to recheck that the configuration parameters
-# match the node's characteristics (eg JVM size).
-- id: elasticsearch-check-configuration
-  type: puppet
-  version: 2.0.0
-  requires: [netconfig]
-  required_for: [deploy_end]
-  parameters:
-    puppet_manifest: puppet/manifests/check_environment_configuration.pp
-    puppet_modules: puppet/modules:/etc/puppet/modules
-    timeout: 120
-  reexecute_on:
-    - deploy_changes
-
 # This task needs to be reexecuted to adapt the configuration parameters which
 # depend on the number of nodes in the cluster
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
-  requires: [elasticsearch-check-configuration]
+  requires: [netconfig]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
@@ -88,10 +74,24 @@
   reexecute_on:
     - deploy_changes
 
-- id: elasticsearch-firewall
+# This task needs to be reexecuted to recheck that the configuration parameters
+# match the node's characteristics (eg JVM size).
+- id: elasticsearch-check-configuration
   type: puppet
   version: 2.0.0
   requires: [elasticsearch-hiera]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: puppet/manifests/check_environment_configuration.pp
+    puppet_modules: puppet/modules:/etc/puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
+
+- id: elasticsearch-firewall
+  type: puppet
+  version: 2.0.0
+  requires: [elasticsearch-check-configuration]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
