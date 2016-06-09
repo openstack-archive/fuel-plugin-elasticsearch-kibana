@@ -91,6 +91,8 @@ lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
 lma::elasticsearch::instance_name: <%= @instance_name %>
 lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
 lma::elasticsearch::cluster_name: lma
+
+lma::kibana::cert_file_path: "/etc/haproxy/conf.d/kibana.pem"
 ')
 
 file { $hiera_file:

@@ -21,3 +21,16 @@ $jvmsize_mb = ($elasticsearch_kibana['jvm_heap_size'] + 0.0) * 1024
 if $jvmsize_mb >= $::memorysize_mb {
   fail("The configured JVM size (${ $elasticsearch_kibana['jvm_heap_size'] } GB) is greater than the system RAM (${ ::memorysize }).")
 }
+
+if $elasticsearch_kibana['tls_enabled'] {
+  $certificate_content = $elasticsearch_kibana['kibana_ssl_cert']['content']
+  $common_name = $elasticsearch_kibana['kibana_hostname']
+
+  if ! validate_ssl_certificate($certificate_content, $common_name) {
+    # Blocking errors like no private key, wrong CN or no date are exceptions
+    # in valid_ssl_certificate(). If it is only the date that is incorrect
+    # let's continue the deployment, log the error and the client will deal
+    # with this error by accepting or denying the certificate.
+    notice('Dates of the Kibana certificate are not valid')
+  }
+}
