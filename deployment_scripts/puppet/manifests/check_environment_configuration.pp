@@ -21,3 +21,12 @@ $jvmsize_mb = ($elasticsearch_kibana['jvm_heap_size'] + 0.0) * 1024
 if $jvmsize_mb >= $::memorysize_mb {
   fail("The configured JVM size (${ $elasticsearch_kibana['jvm_heap_size'] } GB) is greater than the system RAM (${ ::memorysize }).")
 }
+
+if $elasticsearch_kibana['tls_enabled'] {
+  $certificate_content = $elasticsearch_kibana['kibana_ssl_cert']['content']
+  $common_name = $elasticsearch_kibana['kibana_hostname']
+
+  if ! validate_ssl_certificate($certificate_content, $common_name) {
+    fail('Certificate provided for Kibana is not valid')
+  }
+}
