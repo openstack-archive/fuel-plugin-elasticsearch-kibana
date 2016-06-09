@@ -4,7 +4,7 @@
   type: group
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  tasks: &common_tasks
+  tasks:
     - hiera
     - setup_repositories
     - fuel_pkgs
