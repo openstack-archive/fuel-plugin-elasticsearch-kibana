@@ -1,0 +1,19 @@
+# managed by puppet
+
+<%= @log_dir %>/*.log {
+    copytruncate
+    compress
+    delaycompress
+    missingok
+    notifempty
+    # logrotate allows to use only year, month, day and unix epoch
+    dateext
+    dateformat -%Y%m%d-%s
+    # number of rotated files to keep
+    rotate 10
+    # do not rotate files unless both size and time conditions are met
+    hourly
+    minsize 20M
+    # force rotate if filesize exceeded 100M
+    maxsize 100M
+}
