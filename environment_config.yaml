@@ -32,18 +32,45 @@ attributes:
       source: '^([1-9]|[12][0-9]|3[0-2])$'
       error: 'Enter a value between 1 and 32'
 
+  tls_enabled:
+    value: false
+    label: 'Enable TLS for Kibana'
+    description: ''
+    weight: 20
+    type: "checkbox"
+
+  kibana_hostname:
+    value: 'kibana.fuel.local'
+    label: 'DNS hostname for Kibana'
+    description: 'Your DNS entries should point to this name'
+    weight: 30
+    type: "text"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.tls_enabled.value == false"
+        action: "hide"
+
+  kibana_ssl_cert:
+    value: ''
+    label: 'Certificate for Kibana'
+    description: 'Use certificate and private key'
+    weight: 40
+    type: "file"
+    restrictions:
+      - condition: "settings:elasticsearch_kibana.tls_enabled.value == false"
+        action: "hide"
+
   advanced_settings:
     label: "Advanced settings"
     value: false
     description: "The plugin determines the best settings if not set"
-    weight: 19
+    weight: 50
     type: checkbox
 
   number_of_replicas:
     value: ''
     label: 'Number of replicas'
     description: "The number of replicas must be less than the total number of Elasticsearch nodes (total number of Elasticsearch nodes - 1 by default)."
-    weight: 20
+    weight: 60
     type: "text"
     regex:
       source: '^\d?$'
@@ -56,7 +83,7 @@ attributes:
     value: ''
     label: 'Minimum number of master eligible nodes'
     description: 'This must be less than or equal to the total number of Elasticsearch nodes (total number of Elasticsearch nodes / 2 + 1 by default).'
-    weight: 21
+    weight: 70
     type: "text"
     regex:
       source: '^\d?$'
@@ -69,7 +96,7 @@ attributes:
     value: ''
     label: 'Recover after nodes'
     description: "The number of nodes to wait before starting a recovery action following a cluster restart. This must be less than or equal to the total number of nodes in the cluster (2/3 of the total number of nodes by default)."
-    weight: 22
+    weight: 80
     type: "text"
     regex:
       source: '^\d?$'
@@ -82,11 +109,22 @@ attributes:
     value: '5'
     label: 'Recover after time'
     description: 'The number of minutes the cluster should wait before starting a recovery action following a cluster restart.'
-    weight: 23
+    weight: 100
     type: "text"
     regex:
       source: '^\d+$'
       error: "You must provide a number"
     restrictions:
       - condition: "settings:elasticsearch_kibana.advanced_settings.value == false"
+        action: hide
+
+  # Parameter hidden in the UI on purpose
+  cert_file_path:
+    value: '/etc/haproxy/conf.d/kibana.pem'
+    label: 'Path to the Kibana certificate'
+    description: ''
+    weight: 110
+    type: "text"
+    restrictions:
+      - condition: "true"
         action: hide
