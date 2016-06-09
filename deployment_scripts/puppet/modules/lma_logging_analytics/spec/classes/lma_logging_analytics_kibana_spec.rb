@@ -20,10 +20,12 @@ describe 'lma_logging_analytics::kibana' do
     end
 
     let(:params) do
-        {:listen_address => '127.0.0.1', :listen_port => 80}
+        {:listen_address => '127.0.0.1', :listen_port => 80,
+         :version => '42.24'}
     end
 
-    it { should create_file('/opt/kibana')}
-    it { should create_file('/opt/kibana/config.js')}
-    it { should create_class('nginx')}
+    it { should contain_package('kibana').with(
+        :ensure => '42.24')
+    }
+    it { should contain_service('kibana')}
 end

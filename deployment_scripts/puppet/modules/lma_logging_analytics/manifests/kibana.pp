@@ -20,6 +20,8 @@ class lma_logging_analytics::kibana (
   $listen_port,
   $es_host = 'localhost',
   $es_port = 9200,
+  $es_scheme = 'http',
+  $version = 'latest'
 ) {
 
   include lma_logging_analytics::params
@@ -28,32 +30,22 @@ class lma_logging_analytics::kibana (
   $kibana_conf   = $lma_logging_analytics::params::kibana_config
   $default_route = $lma_logging_analytics::params::kibana_default_route
 
-  # Deploy Kibana
-  file { $kibana_dir:
-    source  => 'puppet:///modules/lma_logging_analytics/kibana/src',
-    recurse => true,
+  package { 'kibana':
+    ensure => $version,
   }
 
-  # Replace config.js
-  file { $kibana_conf:
-    ensure  => file,
-    content => template('lma_logging_analytics/config.js.erb'),
-    require => File[$kibana_dir],
+  file { '/opt/kibana/config/kibana.yml':
+    ensure  => present,
+    content => template('lma_logging_analytics/kibana4.yaml.erb'),
+    notify  => Service['kibana'],
+    require => Package['kibana'],
   }
 
-  # Install nginx
-  class { 'nginx':
-    manage_repo           => false,
-    nginx_vhosts          => {
-      'kibana.local' => {
-        'www_root' => $kibana_dir
-      }
-    },
-    nginx_vhosts_defaults => {
-      'listen_ip'      => $listen_address,
-      'listen_port'    => $listen_port,
-      'listen_options' => 'default_server'
-    },
-    require               => File[$kibana_conf],
+  service { 'kibana':
+    ensure     => 'running',
+    enable     => true,
+    hasstatus  => true,
+    hasrestart => true,
+    require    => Package['kibana'],
   }
 }

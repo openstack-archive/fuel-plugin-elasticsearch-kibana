@@ -1,0 +1,15 @@
+{
+  "title": "Notifications",
+  "hits": 0,
+  "description": "",
+  "panelsJSON": "[{\"col\":1,\"columns\":[\"Logger\",\"publisher\",\"severity_label\",\"event_type\",\"old_state\",\"old_task_state\",\"state\",\"new_task_state\",\"environment_label\",\"display_name\"],\"id\":\"search-notifications\",\"panelIndex\":1,\"row\":14,\"size_x\":12,\"size_y\":11,\"sort\":[\"Timestamp\",\"desc\"],\"type\":\"search\"},{\"col\":1,\"id\":\"NOTIFICATIONS-OVER-TIME-PER-SOURCE\",\"panelIndex\":2,\"row\":1,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"NOTIFICATIONS-OVER-TIME-PER-SEVERITY\",\"panelIndex\":3,\"row\":1,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"EVENT-TYPE-BREAKDOWN\",\"panelIndex\":4,\"row\":5,\"size_x\":6,\"size_y\":5,\"type\":\"visualization\"},{\"col\":1,\"id\":\"SOURCE-BREAKDOWN\",\"panelIndex\":5,\"row\":5,\"size_x\":6,\"size_y\":5,\"type\":\"visualization\"},{\"col\":1,\"id\":\"HOST-BREAKDOWN\",\"panelIndex\":6,\"row\":10,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"},{\"col\":7,\"id\":\"NOTIFICATIONS-PER-SEVERITY\",\"panelIndex\":7,\"row\":10,\"size_x\":6,\"size_y\":4,\"type\":\"visualization\"}]",
+  "optionsJSON": "{\"darkTheme\":true}",
+  "uiStateJSON": "{\"P-4\":{\"vis\":{\"legendOpen\":true}},\"P-7\":{\"vis\":{\"legendOpen\":false}}}",
+  "version": 1,
+  "timeRestore": true,
+  "timeTo": "now",
+  "timeFrom": "now-1h",
+  "kibanaSavedObjectMeta": {
+    "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+  }
+}

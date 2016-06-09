@@ -19,4 +19,5 @@ class { 'lma_logging_analytics::kibana':
   listen_port    => hiera('lma::elasticsearch::kibana_port'),
   es_host        => hiera('lma::elasticsearch::vip'),
   es_port        => hiera('lma::elasticsearch::rest_port'),
+  version        => '4.5.1',
 }
