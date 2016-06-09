@@ -21,3 +21,12 @@ $jvmsize_mb = ($elasticsearch_kibana['jvm_heap_size'] + 0.0) * 1024
 if $jvmsize_mb >= $::memorysize_mb {
   fail("The configured JVM size (${ $elasticsearch_kibana['jvm_heap_size'] } GB) is greater than the system RAM (${ ::memorysize }).")
 }
+
+if hiera('lma::kibana::tls_enabled') {
+  $certificate = hiera('lma::kibana::cert_file')
+  $common_name = hiera('lma::kibana::hostname')
+
+  # function validate_ssl_certificate() must be the value of a statement, so
+  # we must use it in a statement.
+  $not_used = validate_ssl_certificate($certificate, $common_name)
+}
