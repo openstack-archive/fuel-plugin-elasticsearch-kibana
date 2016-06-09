@@ -64,6 +64,33 @@ if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_k
 $instance_name = 'es-01'
 $logs_dir = "/var/log/elasticsearch/${instance_name}"
 
+$tls_enabled = $elasticsearch_kibana['tls_enabled']
+if $tls_enabled {
+  $kibana_hostname = $elasticsearch_kibana['kibana_hostname']
+  $cert_base_dir = '/etc/haproxy'
+  $cert_dir = "${cert_base_dir}/certs"
+  $cert_file_path = "${cert_dir}/${elasticsearch_kibana['kibana_ssl_cert']['name']}"
+
+  file { $cert_base_dir:
+    ensure => directory,
+    mode   => '0755'
+  }
+
+  file { $cert_dir:
+    ensure  => directory,
+    mode    => '0700',
+    require => File[$cert_base_dir]
+  }
+
+  file { $cert_file_path:
+    ensure  => present,
+    mode    => '0440',
+    content => $elasticsearch_kibana['kibana_ssl_cert']['content'],
+    require => File[$cert_dir]
+  }
+
+}
+
 $calculated_content = inline_template('
 ---
 lma::corosync_roles:
@@ -91,6 +118,12 @@ lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
 lma::elasticsearch::instance_name: <%= @instance_name %>
 lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
 lma::elasticsearch::cluster_name: lma
+
+lma::kibana::tls_enabled: <%= @tls_enabled %>
+<% if @tls_enabled -%>
+lma::kibana::hostname: <%= @kibana_hostname %>
+lma::kibana::cert_file_path: <%= @cert_file_path %>
+<% end -%>
 ')
 
 file { $hiera_file:
