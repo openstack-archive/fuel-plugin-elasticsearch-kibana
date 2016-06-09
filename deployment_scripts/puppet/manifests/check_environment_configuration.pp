@@ -14,10 +14,18 @@
 
 notice('fuel-plugin-elasticsearch-kibana: check_environment_configuration.pp')
 
-$elasticsearch_kibana = hiera('elasticsearch_kibana')
-
 # Check that JVM size doesn't exceed the physical RAM size
-$jvmsize_mb = ($elasticsearch_kibana['jvm_heap_size'] + 0.0) * 1024
+$jvm_heap_size = hiera('lma::elasticsearch::jvm_size')
+$jvmsize_mb = ($jvm_heap_size + 0.0) * 1024
 if $jvmsize_mb >= $::memorysize_mb {
-  fail("The configured JVM size (${ $elasticsearch_kibana['jvm_heap_size'] } GB) is greater than the system RAM (${ ::memorysize }).")
+  fail("The configured JVM size (${jvm_heap_size} GB) is greater than the system RAM (${::memorysize}).")
+}
+
+if hiera('lma::kibana::tls_enabled') {
+  $certificate = hiera('lma::kibana::tls::cert_file_path')
+  $common_name = hiera('lma::kibana::tls::hostname')
+
+  # function validate_ssl_certificate() must be the value of a statement, so
+  # we must use it in a statement.
+  $not_used = validate_ssl_certificate($certificate, $common_name)
 }
