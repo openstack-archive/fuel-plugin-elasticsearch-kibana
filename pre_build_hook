@@ -10,6 +10,8 @@ ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearc
 # Dependency for Elasticsearch 0.10.x
 DATACAT_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/richardc-datacat-0.6.2.tar.gz"
 FIREWALL_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-firewall-1.7.2.tar.gz"
+APACHE_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-apache-1.4.0.tar.gz"
+HTPASSWD_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/leinaddm-htpasswd-0.0.3.tar.gz"
 
 TZ_VERSION="2016d-0ubuntu0.14.04_all"
 
@@ -37,6 +39,8 @@ download_puppet_module "stdlib" "$STDLIB_TARBALL_URL"
 download_puppet_module "elasticsearch" "$ELASTICSEARCH_TARBALL_URL"
 download_puppet_module "firewall" "$FIREWALL_TARBALL_URL"
 download_puppet_module "datacat" "$DATACAT_TARBALL_URL"
+download_puppet_module "apache" "${APACHE_TARBALL_URL}"
+download_puppet_module "htpasswd" "${HTPASSWD_TARBALL_URL}"
 
 
 # Update tzdata-java package to remove strict dependency on tzdata (see LP bug #1560436)
