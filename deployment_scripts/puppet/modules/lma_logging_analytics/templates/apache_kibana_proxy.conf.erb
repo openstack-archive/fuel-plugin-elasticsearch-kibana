@@ -1,0 +1,31 @@
+# ************************************
+# Vhost template in module nagios
+# Managed by Puppet
+# ************************************
+
+<VirtualHost <%= @listen_address %>:<%= @listen_port %>>
+  ServerName kibana
+  DocumentRoot "/opt/kibana"
+
+  ProxyRequests Off
+
+  <Proxy *>
+    Order Allow,Deny
+    Allow From All
+    AuthName "Kibana Access"
+    AuthType Basic
+    AuthUserFile <%= @htpasswd_file %>
+    require valid-user
+  </Proxy>
+
+  ProxyPass / http://<%= @kibana_address %>:<%= @kibana_port %>
+  ProxyPassReverse / http://<%= @kibana_address %>:<%= @kibana_port %>
+  RewriteEngine on
+  RewriteCond %{DOCUMENT_ROOT}/%{REQUEST_FILENAME} !-f
+  RewriteRule .* http://<%= @kibana_address %>:<%= @kibana_port %>%{REQUEST_URI} [P,QSA]
+
+  ErrorLog "/var/log/apache2/kibana_error.log"
+  ServerSignature Off
+  CustomLog "/var/log/apache2/kibana_access.log" combined
+</VirtualHost>
+

@@ -32,6 +32,26 @@ attributes:
       source: '^([1-9]|[12][0-9]|3[0-2])$'
       error: 'Enter a value between 1 and 32'
 
+  kibana_username:
+    value: 'lma'
+    label: 'User name'
+    description: 'The username to access Kibana.'
+    weight: 18
+    type: "text"
+    regex:
+      source: '\S'
+      error: "You must provide a username."
+
+  kibana_password:
+    value: ''
+    label: 'User password'
+    description: 'The password to access Kibana.'
+    weight: 18
+    type: "password"
+    regex:
+      source: '^[\S]{4,}$'
+      error: "You must provide a password with at least 4 characters"
+
   advanced_settings:
     label: "Advanced settings"
     value: false
