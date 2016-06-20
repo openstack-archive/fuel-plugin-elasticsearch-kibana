@@ -15,7 +15,7 @@
 notice('fuel-plugin-elasticsearch-kibana: haproxy.pp')
 
 $es_port = hiera('lma::elasticsearch::rest_port')
-$kibana_backend_port = hiera('lma::elasticsearch::kibana_port')
+$kibana_backend_port = hiera('lma::elasticsearch::apache_port')
 $kibana_frontend_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $vip = hiera('lma::elasticsearch::vip')
 
