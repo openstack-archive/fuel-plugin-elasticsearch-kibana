@@ -74,6 +74,12 @@ firewall { '101 kibana':
   action => 'accept',
 }
 
+firewall { '101 proxy-kibana':
+  port   => hiera('lma::elasticsearch::apache_port'),
+  proto  => 'tcp',
+  action => 'accept',
+}
+
 firewall { '999 drop all other requests':
   proto  => 'all',
   chain  => 'INPUT',

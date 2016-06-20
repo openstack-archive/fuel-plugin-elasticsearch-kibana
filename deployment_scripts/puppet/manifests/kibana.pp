@@ -21,3 +21,13 @@ class { 'lma_logging_analytics::kibana':
   es_port        => hiera('lma::elasticsearch::rest_port'),
   version        => '4.5.1',
 }
+
+class { 'lma_logging_analytics::kibana_auth':
+  listen_address => hiera('lma::elasticsearch::listen_address'),
+  listen_port    => hiera('lma::elasticsearch::apache_port'),
+  kibana_address => hiera('lma::elasticsearch::listen_address'),
+  kibana_port    => hiera('lma::elasticsearch::kibana_port'),
+  username       => hiera('lma::kibana::username'),
+  password       => hiera('lma::kibana::password'),
+  require        => Class[lma_logging_analytics::kibana],
+}

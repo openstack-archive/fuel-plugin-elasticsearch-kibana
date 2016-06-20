@@ -20,6 +20,7 @@ class lma_logging_analytics::params {
 
   $kibana_dir              = '/opt/kibana'
   $kibana_config           = "${kibana_dir}/config.js"
+  $apache_htpasswd_file    = '/etc/apache2/kibana.htpasswd'
   $kibana_dashboard_prefix = 'Logging, Monitoring and Alerting - '
   $kibana_default_route    = join(['/dashboard/elasticsearch/', $kibana_dashboard_prefix, 'Logs'], '')
   $kibana_replicas         = 0
