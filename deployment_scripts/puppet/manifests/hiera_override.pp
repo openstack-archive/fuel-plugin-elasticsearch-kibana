@@ -39,6 +39,8 @@ if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_ki
   notice("Set number_of_replicas to ${number_of_replicas}")
 }
 
+$retention_period = $elasticsearch_kibana['retention_period']
+
 if is_integer($elasticsearch_kibana['minimum_master_nodes'] and $elasticsearch_kibana['minimum_master_nodes'] <= $es_nodes_count) {
   $minimum_master_nodes = 0 + $elasticsearch_kibana['minimum_master_nodes']
 } elsif $es_nodes_count > 2 {
@@ -108,6 +110,7 @@ lma::elasticsearch::nodes:
 <% @es_ip_addresses.each do |x| -%>
     - "<%= x %>"
 <% end -%>
+lma::elasticsearch::retention_period: <%= @retention_period %>
 lma::elasticsearch::number_of_replicas: <%= @number_of_replicas %>
 lma::elasticsearch::minimum_master_nodes: <%= @minimum_master_nodes %>
 lma::elasticsearch::recover_after_time: <%= @recover_after_time %>

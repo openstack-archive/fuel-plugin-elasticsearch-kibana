@@ -20,7 +20,6 @@ $vip = hiera('lma::elasticsearch::vip')
 $kibana_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
-$elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 if hiera('lma::kibana::tls::enabled') {
   $protocol = 'https'
   $kibana_hostname = hiera('lma::kibana::tls::hostname')
@@ -44,7 +43,7 @@ lma_logging_analytics::es_template { ['log', 'notification']:
 class { 'lma_logging_analytics::curator':
   host             => $vip,
   port             => $es_port,
-  retention_period => $elasticsearch_kibana['retention_period'],
+  retention_period => hiera('lma::elasticsearch::retention_period'),
   prefixes         => ['log', 'notification'],
 } ->
 exec { 'notify_kibana_url':
