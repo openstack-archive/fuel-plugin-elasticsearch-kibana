@@ -21,6 +21,9 @@
     "dependencies": [
         {"name": "puppetlabs/stdlib", "version_requirement": "4.x"},
         {"name": "jfryman/nginx", "version_requirement": ">= 0.2.2"},
-        {"name": "elasticsearch/elasticsearch", "version_requirement": ">= 0.10.x"}
+        {"name": "elasticsearch/elasticsearch", "version_requirement": ">= 0.10.x"},
+        {"name": "puppetlabs/concat", "version_requirement": "1.2.3"},
+        {"name": "puppetlabs/apache", "version_requirement": "1.5.0"},
+        {"name": "leinaddm/htpasswd", "version_requirement": ">= 0.0.3"}
     ]
 }

@@ -9,5 +9,11 @@ fixtures:
     concat:
       repo: "git://github.com/puppetlabs/puppetlabs-concat"
       ref: "1.2.4"
+    apache:
+      repo: "git://github.com/puppetlabs/puppetlabs-apache"
+      ref: "1.5.0"
+    htpasswd:
+      repo: "git://github.com/leinaddm/puppet-htpasswd"
+      ref: "0.0.3"
   symlinks:
     lma_logging_analytics: "#{source_dir}"
