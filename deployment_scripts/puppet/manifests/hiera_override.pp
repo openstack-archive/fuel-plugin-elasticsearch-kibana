@@ -122,10 +122,11 @@ lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
 lma::elasticsearch::instance_name: <%= @instance_name %>
 lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
 lma::elasticsearch::cluster_name: lma
-lma::kibana::tls::enabled: <%= @tls_enabled %>
+lma::kibana::tls:
+    enabled: <%= @tls_enabled %>
 <% if @tls_enabled -%>
-lma::kibana::tls::hostname: <%= @kibana_hostname %>
-lma::kibana::tls::cert_file_path: <%= @cert_file_path %>
+    hostname: <%= @kibana_hostname %>
+    cert_file_path: <%= @cert_file_path %>
 <% end -%>
 lma::kibana::username: <%= @elasticsearch_kibana["kibana_username"] %>
 lma::kibana::password: <%= @elasticsearch_kibana["kibana_password"] %>

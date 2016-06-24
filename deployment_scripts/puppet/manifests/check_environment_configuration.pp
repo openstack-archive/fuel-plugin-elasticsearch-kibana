@@ -21,9 +21,10 @@ if $jvmsize_mb >= $::memorysize_mb {
   fail("The configured JVM size (${jvm_heap_size} GB) is greater than the system RAM (${::memorysize}).")
 }
 
-if hiera('lma::kibana::tls::enabled') {
-  $certificate = hiera('lma::kibana::tls::cert_file_path')
-  $common_name = hiera('lma::kibana::tls::hostname')
+$kibana_tls = hiera_hash('lma::kibana::tls')
+if $kibana_tls['enabled'] {
+  $certificate = $kibana_tls['cert_file_path']
+  $common_name = $kibana_tls['hostname']
 
   # function validate_ssl_certificate() must be the value of a statement, so
   # we must use it in a statement.

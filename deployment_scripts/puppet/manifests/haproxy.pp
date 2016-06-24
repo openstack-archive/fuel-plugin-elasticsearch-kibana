@@ -44,11 +44,12 @@ openstack::ha::haproxy_service { $es_haproxy_service:
   }
 }
 
-if hiera('lma::kibana::tls::enabled') {
+$kibana_tls = hiera_hash('lma::kibana::tls')
+if $kibana_tls['enabled'] {
   openstack::ha::haproxy_service { 'kibana':
     order                  => '921',
     internal_ssl           => true,
-    internal_ssl_path      => hiera('lma::kibana::tls::cert_file_path'),
+    internal_ssl_path      => $kibana_tls['cert_file_path'],
     listen_port            => $kibana_frontend_port,
     balancermember_port    => $kibana_backend_port,
     balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',

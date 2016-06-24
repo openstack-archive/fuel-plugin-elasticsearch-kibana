@@ -20,9 +20,10 @@ $vip = hiera('lma::elasticsearch::vip')
 $kibana_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
-if hiera('lma::kibana::tls::enabled') {
+$kibana_tls = hiera_hash('lma::kibana::tls')
+if $kibana_tls['enabled'] {
   $protocol = 'https'
-  $kibana_hostname = hiera('lma::kibana::tls::hostname')
+  $kibana_hostname = $kibana_tls['hostname']
   $kibana_link_data = "{\"title\":\"Kibana\",\
   \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
   \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
