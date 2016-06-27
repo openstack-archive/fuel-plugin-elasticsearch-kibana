@@ -15,7 +15,7 @@
 notice('fuel-plugin-elasticsearch-kibana: kibana.pp')
 
 class { 'lma_logging_analytics::kibana':
-  listen_address => hiera('lma::elasticsearch::listen_address'),
+  listen_address => '127.0.0.1',
   listen_port    => hiera('lma::elasticsearch::kibana_port'),
   es_host        => hiera('lma::elasticsearch::vip'),
   es_port        => hiera('lma::elasticsearch::rest_port'),
@@ -25,7 +25,7 @@ class { 'lma_logging_analytics::kibana':
 class { 'lma_logging_analytics::kibana_authentication':
   listen_address => hiera('lma::elasticsearch::listen_address'),
   listen_port    => hiera('lma::elasticsearch::apache_port'),
-  kibana_address => hiera('lma::elasticsearch::listen_address'),
+  kibana_address => '127.0.0.1',
   kibana_port    => hiera('lma::elasticsearch::kibana_port'),
   username       => hiera('lma::kibana::username'),
   password       => hiera('lma::kibana::password'),
