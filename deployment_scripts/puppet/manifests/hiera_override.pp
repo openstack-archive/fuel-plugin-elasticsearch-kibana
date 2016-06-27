@@ -41,7 +41,7 @@ if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_ki
 
 $retention_period = $elasticsearch_kibana['retention_period']
 
-if is_integer($elasticsearch_kibana['minimum_master_nodes'] and $elasticsearch_kibana['minimum_master_nodes'] <= $es_nodes_count) {
+if is_integer($elasticsearch_kibana['minimum_master_nodes']) and $elasticsearch_kibana['minimum_master_nodes'] <= $es_nodes_count {
   $minimum_master_nodes = 0 + $elasticsearch_kibana['minimum_master_nodes']
 } elsif $es_nodes_count > 2 {
   $minimum_master_nodes = floor($es_nodes_count / 2 + 1)
