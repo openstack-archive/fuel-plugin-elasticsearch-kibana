@@ -3,7 +3,7 @@
 # Managed by Puppet
 # ************************************
 
-<VirtualHost <%= @listen_address %>:<%= @listen_port %>>
+<VirtualHost <%= @listen_address %>:<%= @listen_port_viewer %>>
   ServerName kibana
   DocumentRoot "/opt/kibana"
 
@@ -26,6 +26,7 @@
     AuthBasicAuthoritative off
     <RequireAny>
     require user <%= @username %>
+    Require ldap-group <%= @ldap_viewer_group_dn %>
     Require ldap-group <%= @ldap_admin_group_dn %>
     </RequireAny>
 <% else -%>
@@ -39,6 +40,13 @@
   ProxyPass / http://<%= @kibana_address %>:<%= @kibana_port %>
   ProxyPassReverse / http://<%= @kibana_address %>:<%= @kibana_port %>
   RewriteEngine on
+  # Deleting is forbidden for viewers
+  RewriteCond %{REQUEST_METHOD} DELETE
+  RewriteRule .* - [F,L]
+  # Creation/update is forbidden for viewers
+  RewriteCond %{REQUEST_METHOD} POST
+  RewriteCond %{QUERY_STRING} op_type=create
+  RewriteRule .* - [F,L]
   # Passthrough the request to Kibana with the orginal query string
   RewriteRule .* http://<%= @kibana_address %>:<%= @kibana_port %>%{REQUEST_URI} [P,QSA,L]
 
