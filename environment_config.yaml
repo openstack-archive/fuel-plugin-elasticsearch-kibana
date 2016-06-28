@@ -43,7 +43,8 @@ attributes:
       error: "You must provide a username."
 
   kibana_password:
-    value: ''
+    value:
+      generator: 'password'
     label: 'User password'
     description: 'The password to access Kibana.'
     weight: 18
