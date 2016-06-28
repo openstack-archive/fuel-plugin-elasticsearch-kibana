@@ -14,6 +14,8 @@
 
 notice('fuel-plugin-elasticsearch-kibana: firewall.pp')
 
+$authnz = hiera_hash('lma::kibana::authnz')
+
 class {'::firewall':}
 
 firewall { '000 accept all icmp requests':
@@ -78,6 +80,14 @@ firewall { '101 proxy-kibana':
   port   => hiera('lma::elasticsearch::apache_port'),
   proto  => 'tcp',
   action => 'accept',
+}
+
+if $authnz['ldap_authorization_enabled'] {
+  firewall { '101 proxy-kibana-viewer':
+    port   => hiera('lma::elasticsearch::kibana_frontend_viewer_port'),
+    proto  => 'tcp',
+    action => 'accept',
+  }
 }
 
 firewall { '999 drop all other requests':
