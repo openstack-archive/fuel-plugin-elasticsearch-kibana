@@ -21,13 +21,61 @@ class lma_logging_analytics::kibana_authentication (
   $kibana_address,
   $username,
   $password,
+  $ldap_enabled = false,
+  $ldap_protocol = undef,
+  $ldap_servers = [],
+  $ldap_port = undef,
+  $ldap_bind_dn = undef,
+  $ldap_bind_password = undef,
+  $ldap_user_search_base_dns = undef,
+  $ldap_user_search_filter = undef,
+  $ldap_user_attribute = undef,
+  $ldap_authorization_enabled = false,
+  $listen_port_viewer = undef,
+  $ldap_group_attribute = undef,
+  $ldap_admin_group_dn = undef,
+  $ldap_viewer_group_dn = undef,
 ) {
 
   include lma_logging_analytics::params
 
-  $apache_modules = ['proxy', 'proxy_http', 'rewrite',
-                    'authn_file', 'auth_basic', 'authz_user']
+  validate_integer($listen_port)
+  validate_integer($kibana_port)
 
+  if $ldap_enabled {
+    if empty($ldap_servers) {
+      fail('ldap_servers list parameter is empty')
+    }
+    if ! $ldap_port { fail('Missing ldap_port parameter')}
+    if ! $ldap_protocol { fail('Missing ldap_protocol parameter')}
+    if ! $ldap_bind_dn { fail('Missing ldap_bind_dn parameter')}
+    if ! $ldap_bind_password { fail('Missing ldap_bind_password parameter')}
+    if ! $ldap_user_search_base_dns { fail('Missing ldap_user_search_base_dns parameter')}
+    if ! $ldap_user_search_filter { fail('Missing ldap_user_search_filter parameter')}
+    if ! $ldap_user_attribute { fail('Missing ldap_user_attribute parameter')}
+
+    if $ldap_authorization_enabled {
+      if ! $ldap_group_attribute {fail('Missing ldap_group_attribute parameter')}
+      if ! $ldap_admin_group_dn {fail('Missing ldap_admin_group_dn parameter')}
+      if ! $ldap_viewer_group_dn {fail('Missing ldap_viewer_group_dn parameter')}
+      if ! $listen_port_viewer {fail('Missing listen_port_viewer parameter')}
+
+      validate_integer($listen_port_viewer)
+    }
+  }
+
+  $default_apache_modules = ['proxy', 'proxy_http', 'rewrite',
+    'authn_file', 'auth_basic', 'authz_user']
+
+  if $ldap_enabled {
+    $apache_modules = concat($default_apache_modules, ['ldap', 'authnz_ldap'])
+  } else {
+    $apache_modules = $default_apache_modules
+  }
+
+  $ldap_urls = suffix($ldap_servers, ":${ldap_port}/${ldap_user_search_base_dns}?${ldap_user_attribute}?sub?${ldap_user_search_filter}")
+
+  $ldap_url = join($ldap_urls, ' ')
   ## Configure apache
   class { 'apache':
     # be good citizen by not erasing other configurations
@@ -55,8 +103,19 @@ class lma_logging_analytics::kibana_authentication (
     require => Class[Apache],
   }
 
-  apache::custom_config { 'kibana-proxy':
-    content => template('lma_logging_analytics/apache_kibana_proxy.conf.erb'),
-    require => [Class['apache'], File[$htpasswd_file]],
+  if $ldap_authorization_enabled {
+    apache::custom_config { 'kibana-proxy':
+      content => template('lma_logging_analytics/apache_kibana_proxy.conf.erb'),
+      require => [Class['apache'], File[$htpasswd_file]],
+    }
+    apache::custom_config { 'kibana-proxy-viewer':
+      content => template('lma_logging_analytics/apache_kibana_proxy_viewer.conf.erb'),
+      require => [Class['apache'], File[$htpasswd_file]],
+    }
+  } else {
+    apache::custom_config { 'kibana-proxy':
+      content => template('lma_logging_analytics/apache_kibana_proxy.conf.erb'),
+      require => [Class['apache'], File[$htpasswd_file]],
+    }
   }
 }

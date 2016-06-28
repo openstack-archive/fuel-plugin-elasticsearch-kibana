@@ -90,7 +90,29 @@ if $tls_enabled {
     content => $elasticsearch_kibana['kibana_ssl_cert']['content'],
     require => File[$cert_dir]
   }
+}
 
+$ldap_enabled = $elasticsearch_kibana['ldap_enabled'] or false
+$ldap_protocol              = $elasticsearch_kibana['ldap_protocol']
+$ldap_servers               = split($elasticsearch_kibana['ldap_servers'], '\s+')
+$ldap_bind_dn               = $elasticsearch_kibana['ldap_bind_dn']
+$ldap_bind_password         = $elasticsearch_kibana['ldap_bind_password']
+$ldap_user_search_base_dns  = $elasticsearch_kibana['ldap_user_search_base_dns']
+$ldap_user_search_filter    = $elasticsearch_kibana['ldap_user_search_filter']
+$ldap_user_attribute        = $elasticsearch_kibana['ldap_user_attribute']
+$ldap_authorization_enabled = $elasticsearch_kibana['ldap_authorization_enabled'] or false
+$ldap_group_attribute       = $elasticsearch_kibana['ldap_group_attribute']
+$ldap_admin_group_dn        = $elasticsearch_kibana['ldap_admin_group_dn']
+$ldap_viewer_group_dn       = $elasticsearch_kibana['ldap_viewer_group_dn']
+
+if empty($elasticsearch_kibana['ldap_server_port']) {
+  if downcase($ldap_protocol) == 'ldap' {
+    $ldap_port = 389
+  } else {
+    $ldap_port = 636
+  }
+} else {
+  $ldap_port = $elasticsearch_kibana['ldap_server_port']
 }
 
 $calculated_content = inline_template('
@@ -102,7 +124,9 @@ lma::elasticsearch::vip: <%= @vip %>
 lma::elasticsearch::es_haproxy_service: elasticsearch-rest
 lma::elasticsearch::listen_address: <%= @listen_address%>
 lma::elasticsearch::kibana_frontend_port: 80
+lma::elasticsearch::kibana_frontend_viewer_port: 81
 lma::elasticsearch::apache_port: 80
+lma::elasticsearch::apache_viewer_port: 81
 lma::elasticsearch::kibana_port: 5601
 lma::elasticsearch::kibana_index: .kibana
 lma::elasticsearch::rest_port: 9200
@@ -128,8 +152,29 @@ lma::kibana::tls:
     hostname: <%= @kibana_hostname %>
     cert_file_path: <%= @cert_file_path %>
 <% end -%>
-lma::kibana::username: <%= @elasticsearch_kibana["kibana_username"] %>
-lma::kibana::password: <%= @elasticsearch_kibana["kibana_password"] %>
+lma::kibana::authnz:
+    username: <%= @elasticsearch_kibana["kibana_username"] %>
+    password: <%= @elasticsearch_kibana["kibana_password"] %>
+    ldap_enabled: <%= @ldap_enabled %>
+    ldap_authorization_enabled: <%= @ldap_authorization_enabled %>
+<% if @ldap_enabled -%>
+    ldap_servers:
+<% @ldap_servers.each do |s| -%>
+        - "<%= s %>"
+<% end -%>
+    ldap_protocol: <%= @ldap_protocol %>
+    ldap_port: <%= @ldap_port %>
+    ldap_bind_dn: <%= @ldap_bind_dn %>
+    ldap_bind_password: <%= @ldap_bind_password %>
+    ldap_user_search_base_dns: <%= @ldap_user_search_base_dns %>
+    ldap_user_attribute: <%= @ldap_user_attribute %>
+    ldap_user_search_filter: <%= @ldap_user_search_filter %>
+    ldap_group_attribute: <%= @ldap_group_attribute %>
+<% if @ldap_authorization_enabled -%>
+    ldap_admin_group_dn: <%= @ldap_admin_group_dn %>
+    ldap_viewer_group_dn: <%= @ldap_viewer_group_dn %>
+<% end -%>
+<% end -%>
 ')
 
 file { $hiera_file:

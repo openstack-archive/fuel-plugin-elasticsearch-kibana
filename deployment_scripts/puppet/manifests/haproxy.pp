@@ -16,7 +16,9 @@ notice('fuel-plugin-elasticsearch-kibana: haproxy.pp')
 
 $es_port = hiera('lma::elasticsearch::rest_port')
 $kibana_backend_port = hiera('lma::elasticsearch::apache_port')
+$kibana_backend_viewer_port = hiera('lma::elasticsearch::apache_viewer_port')
 $kibana_frontend_port = hiera('lma::elasticsearch::kibana_frontend_port')
+$kibana_frontend_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
 $vip = hiera('lma::elasticsearch::vip')
 
 $nodes_ips = hiera('lma::elasticsearch::nodes')
@@ -45,6 +47,7 @@ openstack::ha::haproxy_service { $es_haproxy_service:
 }
 
 $kibana_tls = hiera_hash('lma::kibana::tls')
+$authnz = hiera_hash('lma::kibana::authnz')
 if $kibana_tls['enabled'] {
   openstack::ha::haproxy_service { 'kibana':
     order                  => '921',
@@ -59,6 +62,22 @@ if $kibana_tls['enabled'] {
       'mode'    => 'http',
     },
   }
+  if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
+    openstack::ha::haproxy_service { 'kibana-viewer':
+      order                  => '922',
+      internal_ssl           => true,
+      internal_ssl_path      => $kibana_tls['cert_file_path'],
+      listen_port            => $kibana_frontend_viewer_port,
+      balancermember_port    => $kibana_backend_viewer_port,
+      balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
+      haproxy_config_options => {
+        'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
+        'balance' => 'roundrobin',
+        'mode'    => 'http',
+      },
+    }
+  }
+
 } else {
   openstack::ha::haproxy_service { 'kibana':
     order                  => '921',
@@ -69,6 +88,19 @@ if $kibana_tls['enabled'] {
       'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
       'balance' => 'roundrobin',
       'mode'    => 'http',
+    }
+  }
+  if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
+    openstack::ha::haproxy_service { 'kibana':
+      order                  => '922',
+      listen_port            => $kibana_frontend_viewer_port,
+      balancermember_port    => $kibana_backend_viewer_port,
+      balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
+      haproxy_config_options => {
+        'option'  => ['httplog', 'http-keep-alive', 'prefer-last-server', 'dontlog-normal'],
+        'balance' => 'roundrobin',
+        'mode'    => 'http',
+      }
     }
   }
 }
