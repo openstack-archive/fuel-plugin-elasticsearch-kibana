@@ -18,23 +18,47 @@ $deployment_id = hiera('deployment_id')
 $master_ip = hiera('master_ip')
 $vip = hiera('lma::elasticsearch::vip')
 $kibana_port = hiera('lma::elasticsearch::kibana_frontend_port')
+$kibana_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
+
+$authnz = hiera_hash('lma::kibana::authnz')
+if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
+  $two_links = true
+} else {
+  $two_links = false
+}
 $kibana_tls = hiera_hash('lma::kibana::tls')
 if $kibana_tls['enabled'] {
   $protocol = 'https'
   $kibana_hostname = $kibana_tls['hostname']
-  $kibana_link_data = "{\"title\":\"Kibana\",\
-  \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
-  \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
+  if $two_links {
+    $kibana_link_data = "{\"title\":\"Kibana (Admin role)\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
+    $kibana_link_viewer_data = "{\"title\":\"Kibana (Viewer role)\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"url\":\"${protocol}://${kibana_hostname}:${kibana_viewer_port}/\"}"
+  } else {
+    $kibana_link_data = "{\"title\":\"Kibana\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
+  }
 } else {
   $protocol = 'http'
-  $kibana_link_data = "{\"title\":\"Kibana\",\
-  \"description\":\"Dashboard for visualizing logs and notifications\",\
-  \"url\":\"${protocol}://${vip}:${kibana_port}/\"}"
+  if $two_links {
+    $kibana_link_data = "{\"title\":\"Kibana (Admin role)\",\
+    \"description\":\"Dashboard for visualizing logs and notifications\",\
+    \"url\":\"${protocol}://${vip}:${kibana_port}/\"}"
+    $kibana_link_viewer_data = "{\"title\":\"Kibana (Viewer role)\",\
+    \"description\":\"Dashboard for visualizing logs and notifications\",\
+    \"url\":\"${protocol}://${vip}:${kibana_viewer_port}/\"}"
+  } else {
+    $kibana_link_data = "{\"title\":\"Kibana\",\
+    \"description\":\"Dashboard for visualizing logs and notifications\",\
+    \"url\":\"${protocol}://${vip}:${kibana_port}/\"}"
+  }
 }
-
-$kibana_link_created_file = '/var/cache/kibana_link_created'
 
 lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
@@ -46,11 +70,26 @@ class { 'lma_logging_analytics::curator':
   port             => $es_port,
   retention_period => hiera('lma::elasticsearch::retention_period'),
   prefixes         => ['log', 'notification'],
-} ->
+}
+
+$kibana_link_created_file = '/var/cache/kibana_link_created'
 exec { 'notify_kibana_url':
   creates => $kibana_link_created_file,
   command => "/usr/bin/curl -sL -w \"%{http_code}\" \
 -H 'Content-Type: application/json' -X POST -d '${kibana_link_data}' \
 http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
 -o /dev/null | /bin/grep 201 && touch ${kibana_link_created_file}",
+  require => Class['lma_logging_analytics::curator'],
+}
+
+if $two_links {
+  $kibana_viewer_link_created_file = '/var/cache/kibana_viewer_link_created'
+  exec { 'notify_kibana_url_for_viewer':
+    creates => $kibana_viewer_link_created_file,
+    command => "/usr/bin/curl -sL -w \"%{http_code}\" \
+  -H 'Content-Type: application/json' -X POST -d '${kibana_link_viewer_data}' \
+  http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
+  -o /dev/null | /bin/grep 201 && touch ${kibana_viewer_link_created_file}",
+    require => Exec['notify_kibana_url'],
+  }
 }
