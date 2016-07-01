@@ -34,14 +34,14 @@ if $kibana_tls['enabled'] {
   $kibana_hostname = $kibana_tls['hostname']
   if $two_links {
     $kibana_link_data = "{\"title\":\"Kibana (Admin role)\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip}:${kibana_port})\",\
     \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
     $kibana_link_viewer_data = "{\"title\":\"Kibana (Viewer role)\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip}:${kibana_viewer_port})\",\
     \"url\":\"${protocol}://${kibana_hostname}:${kibana_viewer_port}/\"}"
   } else {
     $kibana_link_data = "{\"title\":\"Kibana\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${vip})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip}:${kibana_port})\",\
     \"url\":\"${protocol}://${kibana_hostname}:${kibana_port}/\"}"
   }
 } else {
