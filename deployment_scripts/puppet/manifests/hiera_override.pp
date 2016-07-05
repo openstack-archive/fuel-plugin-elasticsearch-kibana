@@ -50,7 +50,14 @@ if is_integer($elasticsearch_kibana['minimum_master_nodes']) and $elasticsearch_
 }
 notice("Set minimum_master_nodes to ${minimum_master_nodes}")
 
-$recover_after_time = 0 + $elasticsearch_kibana['recover_after_time']
+if is_integer($elasticsearch_kibana['recover_after_time']) {
+  $recover_after_time = 0 + $elasticsearch_kibana['recover_after_time']
+} else {
+  # Use the same default value as environment_config.yaml
+  # see #1593135
+  $recover_after_time = 5
+  notice("Set recover_after_time to ${recover_after_time}")
+}
 
 if is_integer($elasticsearch_kibana['recover_after_nodes']) and $elasticsearch_kibana['recover_after_nodes'] <= $es_nodes_count {
   $recover_after_nodes = $elasticsearch_kibana['recover_after_nodes']
