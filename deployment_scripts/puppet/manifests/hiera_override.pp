@@ -130,8 +130,13 @@ lma::corosync_roles:
 lma::elasticsearch::vip: <%= @vip %>
 lma::elasticsearch::es_haproxy_service: elasticsearch-rest
 lma::elasticsearch::listen_address: <%= @listen_address%>
+<% if @tls_enabled -%>
+lma::elasticsearch::kibana_frontend_port: 443
+lma::elasticsearch::kibana_frontend_viewer_port: 8443
+<% else -%>
 lma::elasticsearch::kibana_frontend_port: 80
-lma::elasticsearch::kibana_frontend_viewer_port: 81
+lma::elasticsearch::kibana_frontend_viewer_port: 8000
+<% end -%>
 lma::elasticsearch::apache_port: 80
 lma::elasticsearch::apache_viewer_port: 81
 lma::elasticsearch::kibana_port: 5601
