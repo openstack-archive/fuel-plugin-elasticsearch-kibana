@@ -3,6 +3,10 @@
 # Managed by Puppet
 # ************************************
 
+<% if @ldap_enabled -%>
+LDAPVerifyServerCert off
+<% end -%>
+
 <VirtualHost <%= @listen_address %>:<%= @listen_port %>>
   ServerName kibana
   DocumentRoot "/opt/kibana"
