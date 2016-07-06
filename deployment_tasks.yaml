@@ -21,8 +21,6 @@
     - elasticsearch-virtual-ip
     - elasticsearch-haproxy
     - elasticsearch-installation
-    - provision-kibana-index
-    - kibana-installation
   requires: [deploy_start]
   required_for: [deploy_end]
   parameters:
@@ -50,7 +48,6 @@
     - elasticsearch-virtual-ip
     - elasticsearch-haproxy
     - elasticsearch-installation
-    - kibana-installation
   requires: [deploy_start, primary-elasticsearch_kibana]
   required_for: [deploy_end]
   parameters:
@@ -158,13 +155,19 @@
   reexecute_on:
     - deploy_changes
 
-# In order to automatically import dashboards, this is mandatory to create and
-# configure the Kibana index before Kibana4 starts.
+# Tasks defintions for the post-deployment
+##########################################
+
+# In order to automatically import dashboards, it is mandatory to create and
+# configure the Kibana index before Kibana4 starts. This task is ran at post-deployment
+# stage because the index creation must occur when the Elasticsearch cluster is ready
+# (eg. all instances are started). This is required for MOS 8 (role-based deployment).
 - id: provision-kibana-index
   type: puppet
   version: 2.0.0
-  requires: [elasticsearch-installation]
-  required_for: [deploy_end]
+  role: [primary-elasticsearch_kibana]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana_index_configuration.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
@@ -173,18 +176,16 @@
 - id: kibana-installation
   type: puppet
   version: 2.0.0
+  role: [primary-elasticsearch_kibana, elasticsearch_kibana]
   cross-depends:
     - name: provision-kibana-index
       role: [primary-elasticsearch_kibana]
-  requires: [elasticsearch-installation, provision-kibana-index]
-  required_for: [deploy_end]
+  requires: [post_deployment_start, provision-kibana-index]
+  required_for: [post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
-
-# Tasks defintions for the post-deployment
-##########################################
 
 # This task needs to be reexecuted to reconfigure the index templates with an
 # appropriate number_of_replicas.
@@ -193,7 +194,7 @@
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start]
+  requires: [post_deployment_start, kibana-installation]
   # We use upload_nodes_info as an anchor to order the post-deployment tasks executed
   # by this plugin and the LMA collector plugin. The dependency chain is like this:
   # elasticsearch-kibana-configuration -> upload_nodes_info -> (LMA collector tasks)
