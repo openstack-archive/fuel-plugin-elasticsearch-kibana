@@ -235,8 +235,8 @@ attributes:
 
   ldap_user_attribute:
     value: 'uid'
-    label: 'User attribute to search for'
-    description: "It's a good idea to choose an attribute that will be unique across all entries."
+    label: 'User search attribute'
+    description: 'The attribute to search for.'
     weight: 165
     type: "text"
     regex: *not_empty_parameter
