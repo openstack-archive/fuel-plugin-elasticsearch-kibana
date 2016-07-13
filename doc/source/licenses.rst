@@ -26,7 +26,7 @@ Puppet modules
 +------------------------+-------------------------------------------------------------+------------+
 | Stdlib                 | https://github.com/puppetlabs/puppetlabs-stdlib             | Apache V2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Nginx                  | https://github.com/jfryman/puppet-nginx                     | MIT license|
+| Apache                 | https://github.com/puppetlabs/puppetlabs-apache             | Apache V2  |
 +------------------------+-------------------------------------------------------------+------------+
 | Firewall               | https://github.com/puppetlabs/puppetlabs-firewall           | Apache V2  |
 +------------------------+-------------------------------------------------------------+------------+

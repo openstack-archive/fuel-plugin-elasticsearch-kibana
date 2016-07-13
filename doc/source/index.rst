@@ -1,6 +1,6 @@
-============================================================================
-Welcome to the Mirantis OpenStack Elasticsearch-Kibana Plugin Documentation!
-============================================================================
+====================================================================
+Welcome to the StackLight Elasticsearch-Kibana Plugin Documentation!
+====================================================================
 
 User documentation
 ==================

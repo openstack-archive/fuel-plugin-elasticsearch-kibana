@@ -1,22 +1,23 @@
-The Elasticsearch-Kibana Plugin for Fuel
-========================================
+The StackLight Elasticsearch-Kibana Plugin for Fuel
+===================================================
 
-The Elasticsearch-Kibana Plugin for Fuel is used to install and configure
-[Elasticsearch](https://www.elastic.co/products/elasticsearch) and
+The StackLight Elasticsearch-Kibana Plugin for Fuel is used
+to install and configure [Elasticsearch](
+https://www.elastic.co/products/elasticsearch) and
 [Kibana](https://www.elastic.co/products/kibana) which collectively
-provide access to OpenStack analytics for the logs and the notifications collected
-and processed by the [LMA Collector](
-http://fuel-plugin-lma-collector.readthedocs.org/en/latest/index.html)
-Plugin.
+provide access to the logs and notifications analytics of
+Mirantis OpenStack. The logs and the notifications of Mirantis
+OpenStack are collected and processed by the [StackLight Collector](
+http://fuel-plugin-lma-collector.readthedocs.org/en/latest/index.html).
 
-Please check the [Elasticsearch-Kibana Plugin Overview](
+Please go to the [Elasticsearch-Kibana Plugin Overview](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#overview)
-section of the plugin documentation for additional details.
+to getting started.
 
 Release Notes
 -------------
 
-The release notes of the Elasticsearch-Kibana Plugin are provided in the
+A summary description of the new features are provided in the
 [Release Notes](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/releases.html)
 section of the plugin documentation.
@@ -24,28 +25,27 @@ section of the plugin documentation.
 Requirements
 ------------
 
-The Elasticsearch-Kibana Plugin requirements are defined in the [Requirements](
+The requirements are defined in the [Requirements](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#requirements)
 section of the plugin documentation.
 
 Known issues
 ------------
 
-The LMA Toolchain's related issues are available on [Launchpad](
+All known issues are listed on [Launchpad](
 https://bugs.launchpad.net/lma-toolchain).
 
 Limitations
 -----------
 
-The Elasticsearch-Kibana Plugin limitations are described in the [Limitations](
+All known limitations are described in the [Limitations](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/overview.html#limitations)
 section of the plugin documentation.
 
 Installation
 ------------
 
-The installation instructions of the Elasticsearch-Kibana Plugin are provided
-in the [Installation](
+The installation instructions are provided in the [Installation](
 http://fuel-plugin-elasticsearch-kibana.readthedocs.org/en/latest/installation.html)
 section of the plugin documentation.
 
