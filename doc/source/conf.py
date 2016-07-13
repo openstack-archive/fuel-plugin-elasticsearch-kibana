@@ -5,7 +5,7 @@ source_suffix = '.rst'
 
 master_doc = 'index'
 
-project = u'The Elasticsearch-Kibana plugin for Fuel'
+project = u'The StackLight Elasticsearch-Kibana Plugin for Fuel'
 copyright = u'2015, Mirantis Inc.'
 
 version = '0.10'
@@ -19,7 +19,7 @@ html_theme = 'default'
 html_static_path = ['_static']
 
 latex_documents = [
-  ('index', 'ElasticsearchKibana.tex', u'The Elasticsearch-Kibana plugin for Fuel Documentation',
+  ('index', 'ElasticsearchKibana.tex', u'The StackLight Elasticsearch-Kibana Plugin for Fuel Documentation',
    u'Mirantis Inc.', 'manual'),
 ]
 

@@ -1,7 +1,7 @@
 # Plugin name
 name: elasticsearch_kibana
 # Human-readable name for your plugin
-title: The Elasticsearch-Kibana Server Plugin
+title: The StackLight Elasticsearch-Kibana Server Plugin
 # Plugin version
 version: '0.10.0'
 # Description

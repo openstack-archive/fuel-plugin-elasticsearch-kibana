@@ -3,20 +3,24 @@
 Installation Guide
 ==================
 
-Elasticsearch-Kibana Fuel Plugin Installation using the RPM file of the Fuel Plugins Catalog
+StackLight Elasticsearch-Kibana Plugin installation using the RPM file of the Fuel Plugins Catalog
 --------------------------------------------------------------------------------------------
 
-To install the Elasticsearch-Kibana Fuel Plugin using the RPM file of the Fuel Plugins
+To install the StackLight Elasticsearch-Kibana Fuel Plugin using the RPM file of the Fuel Plugins
 Catalog, you need to follow these steps:
 
-1. Download the RPM file from the `Fuel Plugins Catalog <https://software.mirantis.com/download-mirantis-openstack-fuel-plug-ins/>`_.
+
+1. Select, using the MONITORING category and Mirantis OpenStack version you are using,
+   the RPM file you want to download from the `Fuel Plugins Catalog
+   <https://www.mirantis.com/validated-solution-integrations/fuel-plugins>`_.
 
 2. Copy the RPM file to the Fuel Master node::
 
     [root@home ~]# scp elasticsearch_kibana-0.10-0.10.0-0.noarch.rpm \
     root@<Fuel Master node IP address>:
 
-3. Install the plugin using the `Fuel CLI <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#using-fuel-cli>`_::
+3. Install the plugin using the `Fuel CLI
+   <http://docs.mirantis.com/openstack/fuel/fuel-8.0/user-guide.html#using-fuel-cli>`_::
 
     [root@fuel ~]# fuel plugins --install elasticsearch_kibana-0.10-0.10.0-0.noarch.rpm
 
@@ -27,16 +31,17 @@ Catalog, you need to follow these steps:
     ---|----------------------|----------|----------------
     1  | elasticsearch_kibana | 0.10.0   | 4.0.0
 
-Elasticsearch-Kibana Fuel Plugin installation from source
----------------------------------------------------------
+StackLight Elasticsearch-Kibana Fuel Plugin installation from source
+--------------------------------------------------------------------
 
-Alternatively, you may want to build the RPM file of the plugin from source
-if, for example, you want to test the latest features, modify some built-in
-configuration or implement your own customization.
-But note that running a Fuel plugin that you have built yourself is at your own risk.
+Alternatively, you may want to build the RPM file of the plugin from source if,
+for example, you want to test the latest features of the master branch or customize the plugin.
 
-To install Elasticsearch-Kibana Plugin from source, you first need to prepare an
-environment to build the RPM file.
+.. note:: Be aware that running a Fuel plugin that you built yourself is at your
+   own risk and will not be supported.
+
+To install StacLight Elasticsearch-Kibana Plugin from source,
+you first need to prepare an environment to build the RPM file.
 The recommended approach is to build the RPM file directly onto the Fuel Master
 node so that you won't have to copy that file later on.
 
@@ -54,11 +59,11 @@ node so that you won't have to copy that file later on.
 
     [root@home ~] pip install fuel-plugin-builder
 
-**Note**: You may also need to build the Fuel Plugin Builder if the package version of the
-plugin is higher than the package version supported by the Fuel Plugin Builder you get from `pypi`.
-In this case, please refer to the section "Preparing an environment for plugin development"
-of the `Fuel Plugins wiki <https://wiki.openstack.org/wiki/Fuel/Plugins>`_,
-if you need further instructions about how to build the Fuel Plugin Builder.
+.. note::  You may also need to build the Fuel Plugin Builder if the package version of the
+   plugin is higher than the package version supported by the Fuel Plugin Builder you get from `pypi`.
+   In this case, please refer to the section "Preparing an environment for plugin development"
+   of the `Fuel Plugins wiki <https://wiki.openstack.org/wiki/Fuel/Plugins>`_,
+   if you need further instructions about how to build the Fuel Plugin Builder.
 
 4. Clone the plugin git repository::
 
@@ -79,17 +84,17 @@ if you need further instructions about how to build the Fuel Plugin Builder.
       ./fuel-plugin-elasticsearch-kibana/*.noarch.rpm
 
 
-Elasticsearch-Kibana Fuel Plugin software components
-----------------------------------------------------
+StackLight Elasticsearch-Kibana Fuel Plugin software components
+---------------------------------------------------------------
 
 List of software components installed by the plugin
 
 +---------------+--------------------------------------------------------+
 | Components    | Version                                                |
 +===============+========================================================+
-| Elasticsearch | v1.7.4 for Ubuntu (64-bit)                             |
+| Elasticsearch | v2.3.3 for Ubuntu (64-bit)                             |
 +---------------+--------------------------------------------------------+
-| Kibana        | v3.1.3                                                 |
+| Kibana        | v4.5                                                   |
 +---------------+--------------------------------------------------------+
-| Nginx         | Version coming by default with the Ubuntu distribution |
+| Apache        | Version coming by default with the Ubuntu distribution |
 +---------------+--------------------------------------------------------+
