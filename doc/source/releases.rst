@@ -6,6 +6,20 @@ Release Notes
 Version 0.10.0
 --------------
 
+* Changes
+
+  * Add supprt for LDAP(S) authentication to access the Kibana UI.
+  * Add Support for TLS encryption to access the Kibana UI.
+    A PEM file (obtained by concatenating the SSL certificate with the private key)
+    must be provided in the settings of the plugin to configure the TLS termination.
+  * Upgrade to Elasticsearch v2.3.3
+  * Upgrade to Kibana v4.5
+
+* Bug Fixes
+
+  * Logs and notifications are dropped during a "long" Elasticsearch outage (`#1566748
+    <https://bugs.launchpad.net/lma-toolchain/+bug/1566748>`_).
+
 Version 0.9.0
 -------------
 
