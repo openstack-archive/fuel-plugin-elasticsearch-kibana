@@ -94,20 +94,20 @@ status for the Elasticsearch cluster::
 Deployment using network templates
 ----------------------------------
 
-By default, the Elasticsearch-Kibana cluster is deployed on the Fuel management
-network. If this behavior doesn't meet your needs, you can leverage the
+By default, the Elasticsearch-Kibana cluster will be deployed on the Fuel management
+network. If this default configuration doesn't meet your requirements, you can leverage the
 Fuel `network templates
 <https://docs.mirantis.com/openstack/fuel/fuel-8.0/operations.html#using-networking-templates>`_
-to use a different network instead.
+capability to change that default configuration to use a dedicated network instead.
 
-Here is a network template example that defines a new network named `monitoring`.
+Below is a network template example to define a new network named `monitoring`.
 
 .. literalinclude:: ./network_template.yaml
 
-You can use this configuration as a starting point and adapt it to your setup.
+You can use this configuration example as a starting point and adapt it to your requirements.
 
-The deployment of the environment happens as described in the :ref:`User Guide
-<user_guide>` except that before deploying the environment, you have to:
+The deployment of the environment should work as described in the :ref:`User Guide
+<user_guide>` excepted that before deploying the environment, you will have to:
 
 * Upload the network template::
 

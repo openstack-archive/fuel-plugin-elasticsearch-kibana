@@ -262,7 +262,7 @@ attributes:
   ldap_authorization_enabled:
     value: false
     label: 'Enable group-based authorization'
-    description: 'It allows to associate the users with the Admin or Viewer role. Otherwise all users are assigned to admin role.'
+    description: 'It allows to associate users with the Admin or Viewer role. Otherwise all users are assigned to Admin role by default.'
     weight: 200
     type: "checkbox"
     restrictions:
@@ -286,7 +286,7 @@ attributes:
 
   ldap_admin_group_dn:
     value: ''
-    label: 'Group DN mapping to the Admins role'
+    label: 'Group DN mapping to the Admin role'
     description: ''
     weight: 210
     type: "text"
@@ -301,7 +301,7 @@ attributes:
 
   ldap_viewer_group_dn:
     value: ''
-    label: 'Group DN mapping to the Viewers role'
+    label: 'Group DN mapping to the Viewer role'
     description: ''
     weight: 220
     type: "text"

@@ -3,10 +3,11 @@
 Overview
 ========
 
-The **Elasticsearch-Kibana Fuel Plugin** is used to install and configure
-Elasticsearch and Kibana which collectively provide access to the OpenStack
-logs and notifications analytics.
-Those analytics can be used to search and correlate service-affecting
+The **StackLight Elasticsearch-Kibana Plugin** is used to install and configure
+Elasticsearch and Kibana which collectively provide access to the logs and
+notifications analytics of the so-called Logging, Monitoring and Alerting (LMA)
+Toolchain of Mirantis OpenStack.
+These analytics can be used to search and correlate service-affecting
 events which occurred in your OpenStack environment. It is an indispensable
 tool to troubleshooting problems.
 
@@ -29,7 +30,7 @@ Requirements
 |                        | system, 10GB for the logs and 30GB for the database. As a result, the installation       |
 |                        | of the plugin will fail if there is less than 55GB of disk space available on the node.  |
 +------------------------+------------------------------------------------------------------------------------------+
-| Mirantis OpenStack     | 8.0                                                                                      |
+| Mirantis OpenStack     | 8.0, 9.0                                                                                 |
 +------------------------+------------------------------------------------------------------------------------------+
 | Hardware configuration | The hardware configuration (RAM, CPU, disk) required by this plugin depends on the size  |
 |                        | of your cloud environment and other parameters like the retention period and log level.  |
@@ -57,8 +58,8 @@ Key terms, acronyms and abbreviations
 +----------------------------+--------------------------------------------------------------------------------------+
 | **Terms & acronyms**       | **Definition**                                                                       |
 +============================+======================================================================================+
-| LMA Collector              | Logging, Monitoring and Alerting (LMA) Collector. A service running on each node     |
-|                            | which collects all the logs and the OpenStak notifications.                          |
+| The Collector              | The StackLight Collector is a smart monitoring agent running on every node which     |
+|                            | collects and processes the logs and the notifications of your OpenStack environment. |
 +----------------------------+--------------------------------------------------------------------------------------+
 | Elasticsearch              | An open source (Apache Licensed) application based on the  Lucene™ search engine     |
 |                            | that makes data like log messages easy to explore and correlate.                     |
