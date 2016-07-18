@@ -4,7 +4,7 @@ Installation Guide
 ==================
 
 StackLight Elasticsearch-Kibana Plugin installation using the RPM file of the Fuel Plugins Catalog
---------------------------------------------------------------------------------------------
+--------------------------------------------------------------------------------------------------
 
 To install the StackLight Elasticsearch-Kibana Fuel Plugin using the RPM file of the Fuel Plugins
 Catalog, you need to follow these steps:
