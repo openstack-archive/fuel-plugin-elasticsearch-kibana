@@ -85,6 +85,9 @@ class { 'haproxy::base':
   use_include       => true,
 }
 
+# IP forwarding needs to be enabled for multi-rack environments
+# See https://bugs.launchpad.net/lma-toolchain/+bug/1604432
+sysctl::value { 'net.ipv4.ip_forward': value => '1' }
 sysctl::value { 'net.ipv4.ip_nonlocal_bind':
   value => '1'
 }
@@ -115,7 +118,7 @@ Service['haproxy']
 Package['haproxy'] ~>
 Service['haproxy']
 
-Sysctl::Value['net.ipv4.ip_nonlocal_bind'] ~>
+Sysctl::Value['net.ipv4.ip_nonlocal_bind', 'net.ipv4.ip_forward'] ~>
 Service['haproxy']
 
 # Pacemaker
