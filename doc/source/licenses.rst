@@ -3,15 +3,15 @@
 Licenses
 ========
 
-Third Party Components
+Third-party components
 ----------------------
 
 +------------------------+-------------------------------------------------------------+------------+
 | Name                   | Project Web Site                                            | License    |
 +========================+=============================================================+============+
-| Elasticsearch          | https://www.elastic.co/products/elasticsearch               | Apache V2  |
+| Elasticsearch          | https://www.elastic.co/products/elasticsearch               | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Kibana                 | https://www.elastic.co/products/kibana                      | Apache V2  |
+| Kibana                 | https://www.elastic.co/products/kibana                      | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
 
 Puppet modules
@@ -20,15 +20,15 @@ Puppet modules
 +------------------------+-------------------------------------------------------------+------------+
 | Name                   | Project Web Site                                            | License    |
 +========================+=============================================================+============+
-| Elasticsearch          | https://forge.puppetlabs.com/elasticsearch/elasticsearch    | Apache V2  |
+| Elasticsearch          | https://forge.puppetlabs.com/elasticsearch/elasticsearch    | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Concat                 | https://github.com/puppetlabs/puppetlabs-concat             | Apache V2  |
+| Concat                 | https://github.com/puppetlabs/puppetlabs-concat             | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Stdlib                 | https://github.com/puppetlabs/puppetlabs-stdlib             | Apache V2  |
+| Stdlib                 | https://github.com/puppetlabs/puppetlabs-stdlib             | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Apache                 | https://github.com/puppetlabs/puppetlabs-apache             | Apache V2  |
+| Apache                 | https://github.com/puppetlabs/puppetlabs-apache             | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Firewall               | https://github.com/puppetlabs/puppetlabs-firewall           | Apache V2  |
+| Firewall               | https://github.com/puppetlabs/puppetlabs-firewall           | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
-| Datacat                | https://github.com/richardc/puppet-datacat                  | Apache V2  |
+| Datacat                | https://github.com/richardc/puppet-datacat                  | Apache v2  |
 +------------------------+-------------------------------------------------------------+------------+
