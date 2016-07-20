@@ -1,17 +1,38 @@
-.. _user_installation:
+.. _install:
 
-Installation Guide
+Install the plugin
 ==================
 
-StackLight Elasticsearch-Kibana Plugin installation using the RPM file of the Fuel Plugins Catalog
---------------------------------------------------------------------------------------------------
+Introduction
+------------
 
-To install the StackLight Elasticsearch-Kibana Fuel Plugin using the RPM file of the Fuel Plugins
-Catalog, you need to follow these steps:
+You can install the StackLight Elasticsearch-Kibana Fuel plugin using one of
+the following options:
 
+* Install using the RPM file
+* Install from source
 
-1. Select, using the MONITORING category and Mirantis OpenStack version you are using,
-   the RPM file you want to download from the `Fuel Plugins Catalog
+The following is a list of software components installed by the StackLight
+Elasticsearch-Kibana Fuel plugin:
+
++---------------+---------------------------------------------+
+| Components    | Version                                     |
++===============+=============================================+
+| Elasticsearch | v2.3.3 for Ubuntu (64-bit)                  |
++---------------+---------------------------------------------+
+| Kibana        | v4.5                                        |
++---------------+---------------------------------------------+
+| Apache        | Version coming with the Ubuntu distribution |
++---------------+---------------------------------------------+
+
+Install the plugin using the RPM file from the Fuel Plugins Catalogs
+--------------------------------------------------------------------
+
+To install the StackLight Elasticsearch-Kibana Fuel plugin using the RPM file
+from the Fuel Plugins' Catalog:
+
+1. Using the MONITORING category and Mirantis OpenStack version you are using,
+   select the RPM file **********you want to download******** from the `Fuel Plugins Catalog
    <https://www.mirantis.com/validated-solution-integrations/fuel-plugins>`_.
 
 2. Copy the RPM file to the Fuel Master node::
@@ -31,21 +52,23 @@ Catalog, you need to follow these steps:
     ---|----------------------|----------|----------------
     1  | elasticsearch_kibana | 0.10.0   | 4.0.0
 
-StackLight Elasticsearch-Kibana Fuel Plugin installation from source
---------------------------------------------------------------------
 
-Alternatively, you may want to build the RPM file of the plugin from source if,
-for example, you want to test the latest features of the master branch or customize the plugin.
+Install the plugin from source
+------------------------------
 
-.. note:: Be aware that running a Fuel plugin that you built yourself is at your
-   own risk and will not be supported.
+You may want to build the RPM file of the plugin from source if, for example,
+you want to test the latest features of the master branch or customize the
+plugin.
+
+.. caution:: Running a Fuel plugin that you built yourself is at your
+   own risk and is not be supported.
 
 To install StacLight Elasticsearch-Kibana Plugin from source,
 you first need to prepare an environment to build the RPM file.
 The recommended approach is to build the RPM file directly onto the Fuel Master
 node so that you won't have to copy that file later on.
 
-**Prepare an environment for building the plugin on the Fuel Master Node**
+**To prepare an environment for building the plugin on the Fuel Master Node:**
 
 1. Install the standard Linux development tools::
 
@@ -78,23 +101,11 @@ node so that you won't have to copy that file later on.
 
     [root@home ~] fpb --build ./fuel-plugin-elasticsearch-kibana
 
-7. Now that you have created the RPM file, you can install the plugin using the `fuel plugins --install` command::
+**To install the plugin:**
+
+#. Once you create the RPM file, install the plugin::
 
     [root@fuel ~] fuel plugins --install \
       ./fuel-plugin-elasticsearch-kibana/*.noarch.rpm
 
-
-StackLight Elasticsearch-Kibana Fuel Plugin software components
----------------------------------------------------------------
-
-List of software components installed by the plugin
-
-+---------------+--------------------------------------------------------+
-| Components    | Version                                                |
-+===============+========================================================+
-| Elasticsearch | v2.3.3 for Ubuntu (64-bit)                             |
-+---------------+--------------------------------------------------------+
-| Kibana        | v4.5                                                   |
-+---------------+--------------------------------------------------------+
-| Apache        | Version coming by default with the Ubuntu distribution |
-+---------------+--------------------------------------------------------+
+#. Check whether the plugin is installed successfully:.....................
