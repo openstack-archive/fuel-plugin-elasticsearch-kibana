@@ -1,6 +1,6 @@
 .. _releases:
 
-Release Notes
+Release notes
 =============
 
 Version 0.10.0

@@ -1,22 +1,40 @@
-====================================================================
-Welcome to the StackLight Elasticsearch-Kibana Plugin Documentation!
-====================================================================
+=========================================================================
+Welcome to the Fuel StackLight Elasticsearch-Kibana plugin documentation!
+=========================================================================
 
-User documentation
-==================
+Overview
+========
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
 
-   overview
-   releases
-   installation
-   user
-   advanced_operations
+   intro
+   definitions
+   requirements
+   limitations
+   release_notes
    licenses
-   appendix
+   references
 
-Indices and Tables
-==================
+Installing and configuring StackLight Elasticsearch-Kibana plugin for Fuel
+==========================================================================
 
-* :ref:`search`
+.. toctree::
+   :maxdepth: 1
+
+   install
+   configure
+   deploy_with_network_templates
+   verify
+   
+
+Using StackLight Elasticsearch-Kibana plugin for Fuel
+=====================================================
+
+.. toctree::
+   :maxdepth: 1
+
+   user
+   troubleshooting
+   advanced_operations
+   
