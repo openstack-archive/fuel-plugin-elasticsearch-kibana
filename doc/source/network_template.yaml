@@ -72,7 +72,6 @@ adv_net_template:
           name: <% if4 %>
       public:
         endpoints:
-        - br-mesh
         - br-ex
         roles:
           ceph/radosgw: br-ex
@@ -115,8 +114,11 @@ adv_net_template:
         roles:
           monitoring: br-monitoring
           elasticsearch: br-monitoring
+          kibana: br-monitoring
           influxdb_vip: br-monitoring
+          grafana: br-monitoring
           infrastructure_alerting: br-monitoring
+          infrastructure_alerting_ui: br-monitoring
         transformations:
         - action: add-br
           name: br-monitoring
@@ -160,21 +162,18 @@ adv_net_template:
       elasticsearch_kibana:
       - admin
       - mgmt
-      - public
       - private
       - storage
       - monitoring
       influxdb_grafana:
       - admin
       - mgmt
-      - public
       - private
       - storage
       - monitoring
       infrastructure_alerting:
       - admin
       - mgmt
-      - public
       - private
       - storage
       - monitoring
