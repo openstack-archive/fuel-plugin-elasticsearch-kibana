@@ -8,9 +8,9 @@ Dashboards management
 
 The StackLight Elasticsearch-Kibana plugin contains two built-in dashboards:
 
-  * The :guilabel:`Logs` Analytics Dashboard is used to visualize and
+  * The :guilabel:`Logs` Analytics Dashboard that is used to visualize and
     search the logs.
-  * The :guilabel:`Notifications` Analytics Dashboard is used to visualize
+  * The :guilabel:`Notifications` Analytics Dashboard that is used to visualize
     and search the OpenStack notifications if you enabled the feature in the
     Collector settings.
 
@@ -61,7 +61,7 @@ Filters and queries
 Filters and queries have similar syntax but they are used for different
 purposes:
 
-* The filters are used to restrict what is displayed in the dashboard.
+* The filters are used to restrict what is displayed in the Dashboard.
 * The queries are used for free-text search.
 
 You can combine multiple queries and compare their results.
@@ -86,7 +86,7 @@ Filtering works for any field that has been indexed for the log entries that
 are in the Dashboard.
 
 Filters and queries can also use wildcards that can be combined with the
-*field names* like in ``programname: <name>*``
+*field names* like in ``programname: <name>*``.
 
 For example, to display only the Nova logs, enter ``programname:nova*`` in
 the query text box as shown below:
