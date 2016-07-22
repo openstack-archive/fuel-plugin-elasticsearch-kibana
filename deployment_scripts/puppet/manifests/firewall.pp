@@ -84,7 +84,7 @@ firewall { '101 proxy-kibana':
 
 if $authnz['ldap_authorization_enabled'] {
   firewall { '101 proxy-kibana-viewer':
-    port   => hiera('lma::elasticsearch::kibana_frontend_viewer_port'),
+    port   => hiera('lma::elasticsearch::apache_viewer_port'),
     proto  => 'tcp',
     action => 'accept',
   }
