@@ -13,11 +13,12 @@ in the picture below:
    :align: center
    :width: 800
 
-.. note:: For technical reasons, it was necessary to create two different ports
-   to enforce the access authorization to Kibana:
+.. note::
+   Two different ports are created to enforce the access authorization
+   to Kibana:
 
-   * One port (80) for users with the *admin role*
-   * One port (81) for users with the *viewer role*.
+    * One port (80) for users with the *admin role*
+    * One port (81) for users with the *viewer role*.
 
    If Kibana is installed on the *management network*, you may not have
    direct access to the Kibana web UI. Some extra network configuration may
@@ -29,10 +30,10 @@ Verifying Elasticsearch
 -----------------------
 
 To verify that the Elasticsearch cluster is running properly, first retrieve
-the Elasticsearch cluster VIP address:
+the Elasticsearch cluster virtual IP address:
 
-#. On the Fuel Master node, find the IP address of a node where the Elasticsearch
-   server is installed using the :command:`fuel nodes` command. For example:
+#. On the Fuel Master node, find the IP address of a node where the
+   Elasticsearch server is installed using the :command:`fuel nodes` command:
 
    .. code-block:: console
 

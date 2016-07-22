@@ -32,7 +32,7 @@ To install the StackLight Elasticsearch-Kibana Fuel plugin using the RPM file
 from the Fuel plugins' catalog:
 
 #. Go to the
-   `Fuel plugins' Catalog <https://www.mirantis.com/validated-solution-integrations/fuel-plugins>`_.
+   `Fuel plugins' catalog <https://www.mirantis.com/validated-solution-integrations/fuel-plugins>`_.
 
 #. From the :guilabel:`Filter` drop-down menu, select the Mirantis OpenStack
    version you are using and the :guilabel:`MONITORING` category.
@@ -73,7 +73,7 @@ customize the plugin.
 .. caution:: Running a Fuel plugin that you built from source is at your
    own risk and is not supported.
 
-To install the StackLight Elasticsearch-Kibana plugin from source, at first
+Before you install the StackLight Elasticsearch-Kibana plugin from source,
 prepare an environment to build the RPM file. We recommend building the RPM
 file directly on the Fuel Master node not to copy that file later on.
 
@@ -101,7 +101,6 @@ file directly on the Fuel Master node not to copy that file later on.
     package version of the plugin is higher than the package version supported
     by the Fuel Plugin Builder you get from ``pypi``. For instructions on how
     to build the Fuel Plugin Builder, see the
-    *Install Fuel Plugin Builder* section of the
     `Fuel Plugin SDK Guide <http://docs.openstack.org/developer/fuel-docs/plugindocs/fuel-plugin-sdk-guide/create-plugin/install-plugin-builder.html>`_.
 
 #. Clone the plugin repository:

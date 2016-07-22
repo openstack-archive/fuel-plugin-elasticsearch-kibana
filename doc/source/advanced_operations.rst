@@ -24,7 +24,7 @@ The plugin uses three types of indices:
   installation to store the templates of the Kibana dashboards.
 
 Adjusting the replication factor for the *kibana-int* index is performed
-automatically by the plugin. Therefore, no manual operation is not required
+automatically by the plugin. Therefore, no manual operation is required
 for this index when the cluster is scaled up or down. But this is not the case
 for the replication factor of other two indices that you should manually
 update as described in the
@@ -36,20 +36,20 @@ down from three nodes to one node are used as examples. Your mileage may vary,
 but the principal of (re)configuring the replication factor of the indices
 should remain the same.
 
-Scaling Up
+Scaling up
 ~~~~~~~~~~
 
 The problem that the manual operation aims to address is that the replication
 factor for the old indices is not updated automatically by the plugin when
 a new node is added in the cluster. If you want the old indices to be
-replicated on the new node(s), you need to adjust the *number_of_replicas*
+replicated on the new node(s), adjust the *number_of_replicas*
 parameter to the current size of the cluster for those indices as shown below.
 
 The output below shows that the replication factor of the indices created
-before the scale-up is zero. Here, a scale-up was performed on the 3rd of
-February, so the indices created after that date (*log-2016.02.04* in this
-example) are automatically updated with the correct number of replicas
-(number of cluster nodes - 1).
+before the scale-up is zero. In this example, a scale-up was performed on the
+3rd of February. Therefore, the indices created after that date
+(*log-2016.02.04* in this example) are automatically updated with the correct
+number of replicas (number of cluster nodes - 1).
 
 .. code-block:: console
 
@@ -59,7 +59,7 @@ example) are automatically updated with the correct number of replicas
   green  open   log-2016.02.04            5   2    1934581            0 ....
 
 If you want the *log-2016.02.03* index to be replicated, update the
-*number_of_replicas* parameter of that index as shown below:
+*number_of_replicas* parameter of that index:
 
 .. code-block:: console
 
@@ -78,9 +78,9 @@ If you want the *log-2016.02.03* index to be replicated, update the
 Scaling down
 ~~~~~~~~~~~~
 
-Similarly, after a scale-down the *number_of_replicas* of all indices must be
-aligned with the new size of the cluster. Not doing so will be reported by LMA
-as a critical status for the Elasticsearch cluster:
+After a scale-down, align the *number_of_replicas* of all indices with the
+new size of the cluster. Otherwise, StackLight reports a critical status of
+the Elasticsearch cluster:
 
 .. code-block:: console
 

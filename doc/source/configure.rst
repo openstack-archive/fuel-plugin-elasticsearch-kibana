@@ -7,7 +7,7 @@ To configure the StackLight Elasticsearch-Kibana plugin during an environment
 deployment:
 
 #. Using the Fuel web UI,
-   `Create a new environment <http://docs.openstack.org/developer/fuel-docs/userdocs/fuel-user-guide/create-environment/start-create-env.html>`_.
+   `create a new environment <http://docs.openstack.org/developer/fuel-docs/userdocs/fuel-user-guide/create-environment/start-create-env.html>`_.
 
 #. In the Fuel web UI, click the :guilabel:`Settings` tab and select the
    :guilabel:`Other` category.
@@ -136,3 +136,7 @@ deployment:
 
 10. `Deploy your environment
     <http://docs.openstack.org/developer/fuel-docs/userdocs/fuel-user-guide/deploy-environment.html>`_.
+
+.. raw:: latex
+
+   \pagebreak

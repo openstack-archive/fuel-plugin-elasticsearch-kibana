@@ -37,7 +37,7 @@ use the following troubleshooting tips:
 
      [root@node-1 ~]# /etc/init.d/elasticsearch-es-01 status
 
-#. If Elasticsearch is down, restart it on both CentOS and Ubuntu:
+   If Elasticsearch is down, restart it on both CentOS and Ubuntu:
 
    .. code-block:: console
 
@@ -49,7 +49,7 @@ use the following troubleshooting tips:
 
     [root@node-1 ~]# /etc/init.d/apache2 status
 
-#. If Apache is down, restart it on both CentOS and Ubuntu:
+   If Apache is down, restart it on both CentOS and Ubuntu:
 
    .. code-block:: console
 
@@ -63,4 +63,3 @@ use the following troubleshooting tips:
 .. raw:: latex
 
    \pagebreak
-
