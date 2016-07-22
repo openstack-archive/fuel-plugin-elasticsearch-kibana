@@ -7,7 +7,7 @@ By default, the Elasticsearch-Kibana cluster will be deployed on the Fuel
 management network. If this default configuration does not meet your
 requirements, you can leverage the Fuel
 `networking templates' <https://docs.mirantis.com/openstack/fuel/fuel-9.0/operations.html#using-networking-templates>`_
-capability to change that default configuration to use a dedicated network
+capability to change that default configuration and use a dedicated network
 instead.
 
 Below is a networking template example to define a new network named
@@ -36,7 +36,7 @@ and adapt it to your requirements.
       :width: 800
       :align: center
 
-#. Proceed to :ref:`Configure the plugin during an environment deployment <plugin_configuration>`.
+#. Proceed to :ref:`configure the plugin <plugin_configuration>`.
 
 For details on networking templates, see
 `Mirantis Operations Guide <https://docs.mirantis.com/openstack/fuel/fuel-9.0/operations.html#using-networking-templates>`_.
