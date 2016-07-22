@@ -1,0 +1,8 @@
+Code-Review+2: Patrick Petit <ppetit@mirantis.com>
+Workflow+1: Patrick Petit <ppetit@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Fri, 22 Jul 2016 13:45:39 +0000
+Reviewed-on: https://review.openstack.org/345996
+Project: openstack/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/master
