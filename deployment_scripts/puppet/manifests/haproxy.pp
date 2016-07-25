@@ -19,24 +19,27 @@ $kibana_backend_port = hiera('lma::elasticsearch::apache_port')
 $kibana_backend_viewer_port = hiera('lma::elasticsearch::apache_viewer_port')
 $kibana_frontend_port = hiera('lma::elasticsearch::kibana_frontend_port')
 $kibana_frontend_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
-$vip = hiera('lma::elasticsearch::vip')
+$es_vip = hiera('lma::elasticsearch::vip')
+$kibana_vip = hiera('lma::kibana::vip')
 
-$nodes_ips = hiera('lma::elasticsearch::nodes')
-$nodes_names = prefix(range(1, size($nodes_ips)), 'server_')
+$es_nodes_ips = hiera('lma::elasticsearch::nodes')
+$es_nodes_names = prefix(range(1, size($nodes_ips)), 'server_')
+$kibana_nodes_ips = hiera('lma::kibana::nodes')
+$kibana_nodes_names = prefix(range(1, size($nodes_ips)), 'server_')
 
 Openstack::Ha::Haproxy_service {
-  server_names        => $nodes_names,
-  ipaddresses         => $nodes_ips,
   public              => false,
   public_ssl          => false,
   internal            => true,
-  internal_virtual_ip => $vip,
 }
 
 $es_haproxy_service = hiera('lma::elasticsearch::es_haproxy_service')
 openstack::ha::haproxy_service { $es_haproxy_service:
   order                  => '920',
+  internal_virtual_ip    => $es_vip,
   listen_port            => $es_port,
+  server_names           => $es_nodes_names,
+  ipaddresses            => $es_nodes_ips,
   balancermember_port    => $es_port,
   balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
   haproxy_config_options => {
@@ -53,7 +56,10 @@ if $kibana_tls['enabled'] {
     order                  => '921',
     internal_ssl           => true,
     internal_ssl_path      => $kibana_tls['cert_file_path'],
+    internal_virtual_ip    => $kibana_vip,
     listen_port            => $kibana_frontend_port,
+    server_names           => $kibana_nodes_names,
+    ipaddresses            => $kibana_nodes_ips,
     balancermember_port    => $kibana_backend_port,
     balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
     haproxy_config_options => {
@@ -67,7 +73,10 @@ if $kibana_tls['enabled'] {
       order                  => '922',
       internal_ssl           => true,
       internal_ssl_path      => $kibana_tls['cert_file_path'],
+      internal_virtual_ip    => $kibana_vip,
       listen_port            => $kibana_frontend_viewer_port,
+      server_names           => $kibana_nodes_names,
+      ipaddresses            => $kibana_nodes_ips,
       balancermember_port    => $kibana_backend_viewer_port,
       balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
       haproxy_config_options => {
@@ -81,7 +90,10 @@ if $kibana_tls['enabled'] {
 } else {
   openstack::ha::haproxy_service { 'kibana':
     order                  => '921',
+    internal_virtual_ip    => $kibana_vip,
     listen_port            => $kibana_frontend_port,
+    server_names           => $kibana_nodes_names,
+    ipaddresses            => $kibana_nodes_ips,
     balancermember_port    => $kibana_backend_port,
     balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
     haproxy_config_options => {
@@ -93,7 +105,10 @@ if $kibana_tls['enabled'] {
   if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
     openstack::ha::haproxy_service { 'kibana-viewer':
       order                  => '922',
+      internal_virtual_ip    => $kibana_vip,
       listen_port            => $kibana_frontend_viewer_port,
+      server_names           => $kibana_nodes_names,
+      ipaddresses            => $kibana_nodes_ips,
       balancermember_port    => $kibana_backend_viewer_port,
       balancermember_options => 'check inter 10s fastinter 2s downinter 3s rise 3 fall 3',
       haproxy_config_options => {
