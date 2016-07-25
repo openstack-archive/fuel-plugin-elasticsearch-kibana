@@ -21,7 +21,7 @@ prepare_network_config($network_scheme)
 
 $elasticsearch_kibana = hiera_hash('elasticsearch_kibana')
 $hiera_file           = '/etc/hiera/plugins/elasticsearch_kibana.yaml'
-$listen_address       = get_network_role_property('elasticsearch', 'ipaddr')
+$es_listen_address       = get_network_role_property('elasticsearch', 'ipaddr')
 $es_nodes             = get_nodes_hash_by_roles($network_metadata, ['elasticsearch_kibana', 'primary-elasticsearch_kibana'])
 $es_addresses_map     = get_node_to_ipaddr_map_by_network_role($es_nodes, 'elasticsearch')
 $es_ip_addresses      = sort(values($es_addresses_map))
@@ -29,7 +29,18 @@ $es_nodes_count       = count($es_nodes)
 if ! $network_metadata['vips']['es_vip_mgmt'] {
   fail('Elasticsearch VIP is not defined')
 }
-$vip = $network_metadata['vips']['es_vip_mgmt']['ipaddr']
+$elasticsearch_vip = $network_metadata['vips']['es_vip_mgmt']['ipaddr']
+
+# For security reasons (eg not exposing Kibana directly on the public network),
+# only the Kibana VIP should listen on the 'kibana' network and the Kibana
+# services themselves should listen on the 'elasticsearch' network which is an
+# equivalent of the management network for OpenStack.
+$kibana_listen_address = $es_listen_address
+$kibana_ip_addresses   = $es_ip_addresses
+if ! $network_metadata['vips']['kibana'] {
+  fail('Kibana VIP is not defined')
+}
+$kibana_vip = $network_metadata['vips']['kibana']['ipaddr']
 
 if is_integer($elasticsearch_kibana['number_of_replicas']) and $elasticsearch_kibana['number_of_replicas'] < $es_nodes_count {
   $number_of_replicas = 0 + $elasticsearch_kibana['number_of_replicas']
@@ -129,7 +140,7 @@ lma::corosync_roles:
     - elasticsearch_kibana
 lma::elasticsearch::vip: <%= @vip %>
 lma::elasticsearch::es_haproxy_service: elasticsearch-rest
-lma::elasticsearch::listen_address: <%= @listen_address%>
+lma::elasticsearch::listen_address: <%= @es_listen_address%>
 <% if @tls_enabled -%>
 lma::elasticsearch::kibana_frontend_port: 443
 lma::elasticsearch::kibana_frontend_viewer_port: 8443
@@ -158,6 +169,11 @@ lma::elasticsearch::jvm_size: <%= @elasticsearch_kibana["jvm_heap_size"] %>
 lma::elasticsearch::instance_name: <%= @instance_name %>
 lma::elasticsearch::node_name: "<%= @fqdn %>_es-01"
 lma::elasticsearch::cluster_name: lma
+lma::kibana::listen_address: <%= @kibana_listen_address%>
+lma::kibana::nodes:
+<% @kibana_ip_addresses.each do |x| -%>
+    - "<%= x %>"
+<% end -%>
 lma::kibana::tls:
     enabled: <%= @tls_enabled %>
 <% if @tls_enabled -%>

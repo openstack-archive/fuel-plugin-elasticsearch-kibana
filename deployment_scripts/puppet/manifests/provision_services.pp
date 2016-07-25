@@ -16,7 +16,8 @@ notice('fuel-plugin-elasticsearch-kibana: provision_services.pp')
 
 $deployment_id = hiera('deployment_id')
 $master_ip = hiera('master_ip')
-$vip = hiera('lma::elasticsearch::vip')
+$es_vip = hiera('lma::elasticsearch::vip')
+$kibana_vip = hiera('lma::kibana::vip')
 $kibana_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
@@ -33,14 +34,14 @@ if $kibana_tls['enabled'] {
   $kibana_hostname = $kibana_tls['hostname']
   if $two_links {
     $kibana_link_data = "{\"title\":\"Kibana (Admin role)\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${kibana_vip})\",\
     \"url\":\"${protocol}://${kibana_hostname}\"}"
     $kibana_link_viewer_data = "{\"title\":\"Kibana (Viewer role)\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip}:${kibana_viewer_port})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${kibana_vip}:${kibana_viewer_port})\",\
     \"url\":\"${protocol}://${kibana_hostname}:${kibana_viewer_port}/\"}"
   } else {
     $kibana_link_data = "{\"title\":\"Kibana\",\
-    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${vip})\",\
+    \"description\":\"Dashboard for visualizing logs and notifications (${kibana_hostname}: ${protocol}://${kibana_vip})\",\
     \"url\":\"${protocol}://${kibana_hostname}\"}"
   }
 } else {
@@ -48,24 +49,24 @@ if $kibana_tls['enabled'] {
   if $two_links {
     $kibana_link_data = "{\"title\":\"Kibana (Admin role)\",\
     \"description\":\"Dashboard for visualizing logs and notifications\",\
-    \"url\":\"${protocol}://${vip}\"}"
+    \"url\":\"${protocol}://${kibana_vip}\"}"
     $kibana_link_viewer_data = "{\"title\":\"Kibana (Viewer role)\",\
     \"description\":\"Dashboard for visualizing logs and notifications\",\
-    \"url\":\"${protocol}://${vip}:${kibana_viewer_port}/\"}"
+    \"url\":\"${protocol}://${kibana_vip}:${kibana_viewer_port}/\"}"
   } else {
     $kibana_link_data = "{\"title\":\"Kibana\",\
     \"description\":\"Dashboard for visualizing logs and notifications\",\
-    \"url\":\"${protocol}://${vip}\"}"
+    \"url\":\"${protocol}://${kibana_vip}\"}"
   }
 }
 
 lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
-  host               => $vip,
+  host               => $es_vip,
   port               => $es_port,
 } ->
 class { 'lma_logging_analytics::curator':
-  host             => $vip,
+  host             => $es_vip,
   port             => $es_port,
   retention_period => hiera('lma::elasticsearch::retention_period'),
   prefixes         => ['log', 'notification'],
