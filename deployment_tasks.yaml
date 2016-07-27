@@ -13,6 +13,7 @@
     - logging
     - netconfig
     - hosts
+    - dns-client
     - elasticsearch-check-configuration
     - elasticsearch-hiera
     - elasticsearch-firewall
@@ -40,6 +41,7 @@
     - logging
     - netconfig
     - hosts
+    - dns-client
     - elasticsearch-check-configuration
     - elasticsearch-hiera
     - elasticsearch-firewall
