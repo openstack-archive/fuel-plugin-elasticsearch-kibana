@@ -158,6 +158,20 @@
 # Tasks defintions for the post-deployment
 ##########################################
 
+# Configure the default gateway (required for MOS 8 only)
+- id: elasticsearch-configure-default-route
+  type: puppet
+  version: 2.0.0
+  role: [primary-elasticsearch_kibana, elasticsearch_kibana]
+  requires: [post_deployment_start]
+  required_for: [post_deployment_end]
+  parameters:
+    puppet_manifest: "puppet/manifests/configure_default_route.pp"
+    puppet_modules: /etc/puppet/modules
+    timeout: 120
+  reexecute_on:
+    - deploy_changes
+
 # In order to automatically import dashboards, it is mandatory to create and
 # configure the Kibana index before Kibana4 starts. This task is ran at post-deployment
 # stage because the index creation must occur when the Elasticsearch cluster is ready
