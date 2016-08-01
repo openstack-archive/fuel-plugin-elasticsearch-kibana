@@ -11,7 +11,7 @@
     - globals
     - tools
     - logging
-    - netconfig
+    - elasticsearch-netconfig
     - hosts
     - elasticsearch-check-configuration
     - elasticsearch-hiera
@@ -38,7 +38,7 @@
     - globals
     - tools
     - logging
-    - netconfig
+    - elasticsearch-netconfig
     - hosts
     - elasticsearch-check-configuration
     - elasticsearch-hiera
@@ -62,7 +62,7 @@
 - id: elasticsearch-hiera
   type: puppet
   version: 2.0.0
-  requires: [netconfig]
+  requires: [globals]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/hiera_override.pp"
@@ -85,10 +85,24 @@
   reexecute_on:
     - deploy_changes
 
+# We cannot use the legacy 'netconfig' task because it won't create the proper
+# dependency on the virtual management router task.
+- id: elasticsearch-netconfig
+  type: puppet
+  version: 2.0.0
+  requires: [elasticsearch-check-configuration, virtual_ips]
+  required_for: [deploy_end]
+  parameters:
+    puppet_manifest: "/etc/puppet/modules/osnailyfacter/modular/netconfig/netconfig.pp"
+    puppet_modules: /etc/puppet/modules
+    timeout: 600
+  reexecute_on:
+    - deploy_changes
+
 - id: elasticsearch-firewall
   type: puppet
   version: 2.0.0
-  requires: [elasticsearch-check-configuration]
+  requires: [elasticsearch-netconfig]
   required_for: [deploy_end]
   parameters:
     puppet_manifest: "puppet/manifests/firewall.pp"
