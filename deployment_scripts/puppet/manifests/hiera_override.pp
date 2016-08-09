@@ -113,7 +113,7 @@ if $tls_enabled {
 }
 
 $ldap_enabled = $elasticsearch_kibana['ldap_enabled'] or false
-$ldap_protocol              = $elasticsearch_kibana['ldap_protocol']
+$ldap_protocol              = $elasticsearch_kibana['ldap_protocol_for_kibana']
 $ldap_servers               = split($elasticsearch_kibana['ldap_servers'], '\s+')
 $ldap_bind_dn               = $elasticsearch_kibana['ldap_bind_dn']
 $ldap_bind_password         = $elasticsearch_kibana['ldap_bind_password']
