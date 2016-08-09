@@ -148,7 +148,7 @@ attributes:
     weight: 100
     type: "checkbox"
 
-  ldap_protocol:
+  ldap_protocol_for_kibana:
     type: "radio"
     value: 'ldap'
     weight: 110
