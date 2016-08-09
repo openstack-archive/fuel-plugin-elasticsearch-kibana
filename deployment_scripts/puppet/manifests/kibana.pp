@@ -31,7 +31,7 @@ class { 'lma_logging_analytics::kibana_authentication':
   username                   => $authnz['username'],
   password                   => $authnz['password'],
   ldap_enabled               => $authnz['ldap_enabled'],
-  ldap_protocol              => $authnz['ldap_protocol'],
+  ldap_protocol              => $authnz['ldap_protocol_for_kibana'],
   ldap_port                  => $authnz['ldap_port'],
   ldap_servers               => $authnz['ldap_servers'],
   ldap_bind_dn               => $authnz['ldap_bind_dn'],
