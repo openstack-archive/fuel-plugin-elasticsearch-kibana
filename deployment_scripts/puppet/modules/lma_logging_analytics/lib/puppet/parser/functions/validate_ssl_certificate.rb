@@ -15,7 +15,7 @@
 # Otherwise it returns the number of seconds before the certificate expires
 #
 # Parameter:
-#   - the file path of the SSL certificate
+#   - the path to the SSL certificate
 #   - the expected CN
 
 module Puppet::Parser::Functions
@@ -39,8 +39,13 @@ module Puppet::Parser::Functions
         certend   = Time.parse(dates.gsub(/.*notAfter=(.+? GMT).*/, '\1'))
         now       = Time.now.utc
 
+        if cn_found.start_with? "*."
+            raise "'#{args[1]}' is not matching #{cn_found}" unless args[1].include? cn_found[1..-1]
+        elsif cn_found != args[1]
+            raise "Found #{cn_found} as CN whereas '#{args[1]}' was expected"
+        end
+
         raise "The certificate file doesn't contain the private key" unless pk == 'RSA key ok'
-        raise "Found #{cn_found} as CN whereas '#{args[1]}' was expected" unless cn_found == args[1]
         raise "Dates not found in the certificate" unless dates.match(/not(Before|After)=/)
 
         if (now > certend)
