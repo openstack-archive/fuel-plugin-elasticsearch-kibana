@@ -40,7 +40,6 @@ module Puppet::Parser::Functions
         now       = Time.now.utc
 
         raise "The certificate file doesn't contain the private key" unless pk == 'RSA key ok'
-        raise "Found #{cn_found} as CN whereas '#{args[1]}' was expected" unless cn_found == args[1]
         raise "Dates not found in the certificate" unless dates.match(/not(Before|After)=/)
 
         if (now > certend)
