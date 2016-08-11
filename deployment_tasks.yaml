@@ -91,7 +91,7 @@
   type: puppet
   version: 2.0.0
   requires: [elasticsearch-check-configuration, virtual_ips]
-  required_for: [deploy_end, hosts]
+  required_for: [deploy_end]
   cross-depends:
     - name: virtual_ips
       role: [primary-controller, controller]
