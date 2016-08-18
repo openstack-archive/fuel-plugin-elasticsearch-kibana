@@ -3,6 +3,18 @@
 Release notes
 =============
 
+Version 0.10.1
+--------------
+
+* Bug fixes:
+
+  * Support wildcard SSL certificates. See
+    `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
+
+  * Fix UI issue with the LDAP protocol radio button. See
+    `#1599778 <https://bugs.launchpad.net/lma-toolchain/+bug/1599778>`_.
+
+
 Version 0.10.0
 --------------
 
