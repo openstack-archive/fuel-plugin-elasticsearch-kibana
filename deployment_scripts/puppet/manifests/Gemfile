@@ -16,5 +16,6 @@ source 'https://rubygems.org'
 group :development, :test do
   gem 'rake'
   gem "puppet", ENV['PUPPET_VERSION'] || '~> 3.4.0'
-  gem 'puppetlabs_spec_helper'
+  # Newer puppetlabs_spec_helper depends on rubocop-rspec that requires ruby >= 2.2.0
+  gem 'puppetlabs_spec_helper', '~> 1.1.1'
 end
