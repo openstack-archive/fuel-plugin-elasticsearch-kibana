@@ -14,7 +14,6 @@
 
 notice('fuel-plugin-elasticsearch-kibana: elasticsearch.pp')
 
-
 # Java
 $java = $::operatingsystem ? {
   CentOS => 'java-1.8.0-openjdk-headless',
@@ -40,4 +39,23 @@ class { 'lma_logging_analytics::elasticsearch':
   recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
   version              => '2.3.3',
   require              => Package[$java],
+}
+
+# The plugin's packages used to have a higher priority but this isn't the case
+# anymore on MOS 9. Since MOS ships an older version of python-elasticsearch
+# (incompatible with python-elasticsearch-curator), we need to force the
+# installation of python-elasticsearch before installing the curator package.
+package { 'python-elasticsearch':
+  ensure => '2.3.0',
+}
+
+# The curator is installed on all the nodes but by configuration, it will only
+# be executed on the ES cluster master node
+class { 'lma_logging_analytics::curator':
+  host             => hiera('lma::elasticsearch::listen_address'),
+  port             => hiera('lma::elasticsearch::rest_port'),
+  retention_period => hiera('lma::elasticsearch::retention_period'),
+  prefixes         => ['log', 'notification'],
+  package_version  => '4.0.6',
+  require          => Package['python-elasticsearch'],
 }
