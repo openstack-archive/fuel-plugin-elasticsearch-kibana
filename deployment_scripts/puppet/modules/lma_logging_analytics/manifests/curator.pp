@@ -17,13 +17,14 @@ class lma_logging_analytics::curator (
   $port = '9200',
   $retention_period = $lma_logging_analytics::params::retention_period,
   $prefixes = $lma_logging_analytics::params::indexes_prefixes,
+  $package_version = 'latest',
 ) inherits lma_logging_analytics::params {
 
   validate_integer($retention_period)
   validate_array($prefixes)
 
   package { 'python-elasticsearch-curator':
-    ensure => installed,
+    ensure => $package_version,
   }
 
   if size($prefixes) > 0 and $retention_period > 0 {
@@ -32,13 +33,22 @@ class lma_logging_analytics::curator (
     # drop indices too early.
     $real_retention_period = 1 + $retention_period
     $regex = join($prefixes, '|')
+
+    file { '/etc/elasticsearch/curator.yaml':
+      ensure  => present,
+      # This template uses $host and $port
+      content => template('lma_logging_analytics/curator.yaml.erb'),
+    }
+
+    file { '/etc/elasticsearch/delete_indices.yaml':
+      ensure  => present,
+      # This template uses $regex and $real_retention_period
+      content => template('lma_logging_analytics/delete_indices.yaml.erb'),
+    }
+
     cron { 'es-curator':
       ensure   => present,
-      command  => join([
-        "/usr/local/bin/curator --host ${host} --port ${port} ",
-        "--debug delete indices --regex '^(${regex})-.*$' --time-unit days ",
-        "--older-than ${real_retention_period} ",
-        "--timestring \"\\%Y.\\%m.\\%d\""], ''),
+      command  => '/usr/local/bin/curator --config /etc/elasticsearch/curator.yaml /etc/elasticsearch/delete_indices.yaml',
       minute   => '0',
       hour     => '2',
       month    => '*',
