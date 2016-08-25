@@ -70,6 +70,7 @@ class { 'lma_logging_analytics::curator':
   port             => $es_port,
   retention_period => hiera('lma::elasticsearch::retention_period'),
   prefixes         => ['log', 'notification'],
+  package_version  => '4.0.6'
 }
 
 $kibana_link_created_file = '/var/cache/kibana_link_created'
