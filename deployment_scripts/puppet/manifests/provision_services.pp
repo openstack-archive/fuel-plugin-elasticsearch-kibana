@@ -64,12 +64,6 @@ lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
   host               => $es_vip,
   port               => $es_port,
-} ->
-class { 'lma_logging_analytics::curator':
-  host             => $es_vip,
-  port             => $es_port,
-  retention_period => hiera('lma::elasticsearch::retention_period'),
-  prefixes         => ['log', 'notification'],
 }
 
 $kibana_link_created_file = '/var/cache/kibana_link_created'
@@ -79,7 +73,6 @@ exec { 'notify_kibana_url':
 -H 'Content-Type: application/json' -X POST -d '${kibana_link_data}' \
 http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
 -o /dev/null | /bin/grep 201 && touch ${kibana_link_created_file}",
-  require => Class['lma_logging_analytics::curator'],
 }
 
 if $two_links {
