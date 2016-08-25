@@ -20,10 +20,12 @@ describe 'lma_logging_analytics::curator', :type => :class do
 
     describe 'with defaults' do
         it { is_expected.to contain_package('python-elasticsearch-curator').with(
-            :ensure => 'installed'
+            :ensure => 'latest'
         )}
 
         it { is_expected.not_to contain_cron('es-curator') }
+        it { is_expected.not_to contain_file('/etc/elasticsearch/curator.yaml') }
+        it { is_expected.not_to contain_file('/etc/elasticsearch/delete_indices.yaml') }
     end
 
     describe 'with index prefixes and retention period > 0' do
@@ -32,10 +34,13 @@ describe 'lma_logging_analytics::curator', :type => :class do
         end
 
         it { is_expected.to contain_package('python-elasticsearch-curator').with(
-            :ensure => 'installed'
+            :ensure => 'latest'
         )}
 
-        it { is_expected.to contain_cron('es-curator') }
+        it { is_expected.to contain_cron('es-curator').with_command(
+            '/usr/local/bin/curator --config /etc/elasticsearch/curator.yaml /etc/elasticsearch/delete_indices.yaml') }
+        it { is_expected.to contain_file('/etc/elasticsearch/curator.yaml') }
+        it { is_expected.to contain_file('/etc/elasticsearch/delete_indices.yaml') }
     end
 
     describe 'with index prefixes and retention period > 0 and host' do
@@ -43,6 +48,7 @@ describe 'lma_logging_analytics::curator', :type => :class do
             {:retention_period => 10, :prefixes => ['foo'], :host => 'foo.org'}
         end
 
-        it { is_expected.to contain_cron('es-curator').with_command(/--host foo.org/) }
+        it { is_expected.to contain_cron('es-curator').with_command(
+            '/usr/local/bin/curator --config /etc/elasticsearch/curator.yaml /etc/elasticsearch/delete_indices.yaml') }
     end
 end

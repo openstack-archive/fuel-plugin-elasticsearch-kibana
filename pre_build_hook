@@ -16,7 +16,7 @@ HTPASSWD_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/leinaddm-htpasswd
 TZ_VERSION="2016f-0ubuntu0.14.04_all"
 
 # Packages needed to install JRE headless
-download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
+download_packages http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
     http://mirrors.kernel.org/ubuntu/pool/main/j/java-common/java-common_0.51_all.deb \
     "http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata-java_${TZ_VERSION}.deb" \
     "http://security.ubuntu.com/ubuntu/pool/main/t/tzdata/tzdata_${TZ_VERSION}.deb" \
@@ -28,10 +28,14 @@ download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcscl
     https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/deb/elasticsearch/2.3.3/elasticsearch-2.3.3.deb
 
 # Download curator and dependencies
-download_package http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch-curator_3.3.0_all.deb \
-    http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-elasticsearch_1.6.0_all.deb \
-    http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-click_4.0_all.deb \
-    http://packages.elasticsearch.org/curator/3/debian/pool/main/p/python/python-urllib3_1.10.4_all.deb
+download_packages http://packages.elastic.co/curator/4/debian/pool/main/p/python/python-elasticsearch-curator_4.0.6_all.deb \
+    http://packages.elastic.co/curator/4/debian/pool/main/p/python/python-elasticsearch_2.3.0_all.deb \
+    http://packages.elastic.co/curator/4/debian/pool/main/p/python/python-click_6.6_all.deb \
+    http://packages.elastic.co/curator/4/debian/pool/main/p/python/python-pyyaml_3.11_amd64.deb
+check_md5sum python-elasticsearch-curator_4.0.6_all.deb eb69388edf54aafa2445423f615c0817
+check_md5sum python-click_6.6_all.deb f508745fcd6f64a317cc94603b7f4f9d
+check_md5sum python-pyyaml_3.11_amd64.deb 9f4ef75d24f6bc92879e0c57dc4f4b71
+check_md5sum python-elasticsearch_2.3.0_all.deb 4d17c82d397fc57034d78e9d09ae400d
 
 # Install puppet manifests
 download_puppet_module "concat" "$CONCAT_TARBALL_URL"
@@ -41,7 +45,6 @@ download_puppet_module "firewall" "$FIREWALL_TARBALL_URL"
 download_puppet_module "datacat" "$DATACAT_TARBALL_URL"
 download_puppet_module "apache" "${APACHE_TARBALL_URL}"
 download_puppet_module "htpasswd" "${HTPASSWD_TARBALL_URL}"
-
 
 # Update tzdata-java package to remove strict dependency on tzdata (see LP bug #1560436)
 ROOT="$(dirname "$(readlink -f "$0")")"
