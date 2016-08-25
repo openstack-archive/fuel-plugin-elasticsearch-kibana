@@ -14,7 +14,6 @@
 
 notice('fuel-plugin-elasticsearch-kibana: elasticsearch.pp')
 
-
 # Java
 $java = $::operatingsystem ? {
   CentOS => 'java-1.8.0-openjdk-headless',
@@ -40,4 +39,14 @@ class { 'lma_logging_analytics::elasticsearch':
   recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
   version              => '2.3.3',
   require              => Package[$java],
+}
+
+# The curator is installed on all the nodes but by configuration, it will only
+# be executed on the ES cluster master node
+class { 'lma_logging_analytics::curator':
+  host             => hiera('lma::elasticsearch::listen_address'),
+  port             => hiera('lma::elasticsearch::rest_port'),
+  retention_period => hiera('lma::elasticsearch::retention_period'),
+  prefixes         => ['log', 'notification'],
+  package_version  => '4.0.6'
 }

@@ -64,12 +64,6 @@ lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
   host               => $es_vip,
   port               => $es_port,
-} ->
-class { 'lma_logging_analytics::curator':
-  host             => $es_vip,
-  port             => $es_port,
-  retention_period => hiera('lma::elasticsearch::retention_period'),
-  prefixes         => ['log', 'notification'],
 }
 
 $kibana_link_created_file = '/var/cache/kibana_link_created'
