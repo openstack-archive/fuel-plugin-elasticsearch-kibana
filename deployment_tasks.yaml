@@ -85,12 +85,19 @@
   reexecute_on:
     - deploy_changes
 
-# We cannot use the legacy 'netconfig' task because it won't create the proper
-# dependency on the virtual management router task.
+# We cannot use the legacy 'netconfig' task because with MOS 9, it won't create
+# the proper dependency on the 'virtual_ips' task for the Elasticsearch-Kibana
+# nodes. As a consequence, the deployment will fail because the nodes will
+# perform operations that download stuff from the Internet (like running
+# 'apt-get update') while the virtual router isn't ready yet. For MOS 8, the
+# task depends on the 'tools' task and not on the 'virtual_ips' task otherwise
+# it creates a dependency cycle. In this case, this isn't an issue because the
+# default gateway is only changed at post-deployment (see the
+# 'influxdb-configure-default-route' task).
 - id: elasticsearch-netconfig
   type: puppet
   version: 2.0.0
-  requires: [elasticsearch-check-configuration, virtual_ips]
+  requires: [elasticsearch-check-configuration, tools]
   required_for: [deploy_end, hosts]
   cross-depends:
     - name: virtual_ips
