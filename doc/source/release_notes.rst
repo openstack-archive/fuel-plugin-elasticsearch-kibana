@@ -8,6 +8,9 @@ Version 0.10.1
 
 * Bug fixes:
 
+  * Fix the curator job to work with Elasticsearch 2.X. See
+    `#1616765 <https://bugs.launchpad.net/lma-toolchain/+bug/1616765>`_.
+
   * Support wildcard SSL certificates. See
     `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
 
