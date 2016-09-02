@@ -12,10 +12,8 @@
            - "elasticsearch_kibana"
            - "primary-elasticsearch_kibana"
 # Network and virtual IP address for the Kibana service
-# TODO(pasquier-s): expose the Kibana service on this virtual IP address
-# instead of es_vip_mgmt
 - id: "kibana"
-  default_mapping: "management"
+  default_mapping: "public"
   properties:
     subnet: true
     gateway: false
