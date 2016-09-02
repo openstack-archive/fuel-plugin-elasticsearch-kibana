@@ -2,7 +2,8 @@ elasticsearch_kibana:
   name: 'Elasticsearch Kibana'
   description: 'Install Elasticsearch and Kibana'
   has_primary: true
-  public_ip_required: false
+  # A public IP address is required when Kibana is deployed on the public network
+  public_ip_required: true
   weight: 100
   limits:
     max: 5
