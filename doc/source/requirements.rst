@@ -23,9 +23,10 @@ requirements:
 | Hardware configuration | The hardware configuration (RAM, CPU, disk) depends on the size of your cloud environment|
 |                        | of your cloud environment and other parameters such as the retention period and log      |
 |                        | level.                                                                                   |
-|                        |                                                                                          |
-|                        | A typical setup at least requires a quad-core server with 8 GB of RAM and fast disks     |
-|                        | (ideally, SSDs). The actual disk space you need to run the plugin on depends on several  |
+|                        | A typical setup would at least requires a quad-core server with 8 GB of RAM and access   |
+|                        | to a 500-1000 IOPS disk. For sizeable production deployments it is strongly recommended  |
+|                        | to use a disk capable of 1000+ IOPS like an SSD.                                         |
+|                        | The actual disk space you need to run the plugin on depends on several                   |
 |                        | factors including the size of your OpenStack environment, the retention period, the      |
 |                        | logging level, and workload. The more of the above, the more disk space you need to      |
 |                        | run the Elaticsearch-Kibana plugin. We also highly recommend using dedicated             |
