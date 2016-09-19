@@ -6,16 +6,17 @@ Release notes
 Version 0.10.1
 --------------
 
-* Bug fixes:
+The StackLight Elasticsearch-Kibana plugin 0.10.1 contains the following
+updates:
 
-  * Fix the curator job to work with Elasticsearch 2.X. See
-    `#1616765 <https://bugs.launchpad.net/lma-toolchain/+bug/1616765>`_.
+* Fixed the curator job to work with Elasticsearch 2.X. See
+  `#1616765 <https://bugs.launchpad.net/lma-toolchain/+bug/1616765>`_.
 
-  * Support wildcard SSL certificates. See
-    `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
+* Added support for wildcard SSL certificates. See
+  `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
 
-  * Fix UI issue with the LDAP protocol radio button. See
-    `#1599778 <https://bugs.launchpad.net/lma-toolchain/+bug/1599778>`_.
+* Fixed the UI issue with the LDAP protocol radio button. See
+  `#1599778 <https://bugs.launchpad.net/lma-toolchain/+bug/1599778>`_.
 
 
 Version 0.10.0
