@@ -25,6 +25,24 @@ package { $java:
   ensure => installed,
 }
 
+# The Telemetry plugin creates values in hiera if enabled
+# default value is 'sandbox'
+# related documentation:
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html#enable-dynamic-scripting
+if hiera(lma::elasticsearch::script_inline, undef){
+  $script_inline = hiera(lma::elasticsearch::script_inline)
+}
+else {
+  $script_inline = 'sandbox'
+}
+
+if hiera(lma::elasticsearch::script_indexed, undef){
+  $script_indexed = hiera(lma::elasticsearch::script_indexed)
+}
+else {
+  $script_indexed = 'sandbox'
+}
+
 class { 'lma_logging_analytics::elasticsearch':
   listen_address       => hiera('lma::elasticsearch::listen_address'),
   node_name            => hiera('lma::elasticsearch::node_name'),
@@ -39,6 +57,8 @@ class { 'lma_logging_analytics::elasticsearch':
   recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
   version              => '2.3.3',
   require              => Package[$java],
+  script_inline        => $script_inline,
+  script_indexed       => $script_indexed,
 }
 
 # The plugin's packages used to have a higher priority but this isn't the case
