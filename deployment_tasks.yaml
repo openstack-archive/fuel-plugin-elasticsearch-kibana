@@ -148,6 +148,8 @@
   version: 2.0.0
   requires: [elasticsearch-haproxy]
   required_for: [deploy_end]
+  cross-depends:
+    - name: telemetry-hiera
   parameters:
     puppet_manifest: puppet/manifests/elasticsearch.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
