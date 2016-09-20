@@ -35,7 +35,7 @@ function get_package_path {
 # Download RPM or DEB packages and store them in the local repository directory
 function download_packages {
     while [ $# -gt 0 ]; do
-        wget -qO - "$1" > "$(get_package_path "$1")"
+        wget "$1" -c -O $(get_package_path "$1")
         shift
     done
 }
