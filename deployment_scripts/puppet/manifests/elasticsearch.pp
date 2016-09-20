@@ -37,6 +37,12 @@ class { 'lma_logging_analytics::elasticsearch':
   minimum_master_nodes => hiera('lma::elasticsearch::minimum_master_nodes'),
   recover_after_time   => hiera('lma::elasticsearch::recover_after_time'),
   recover_after_nodes  => hiera('lma::elasticsearch::recover_after_nodes'),
+# The Telemetry plugin creates values for 'script_inline' and 'script_indexed' in hiera if enabled
+# default value is 'sandbox';
+# related documentation:
+# https://www.elastic.co/guide/en/elasticsearch/reference/current/modules-scripting.html#enable-dynamic-scripting
+  script_inline        => hiera('lma::elasticsearch::script_inline', 'sandbox'),
+  script_indexed       => hiera('lma::elasticsearch::script_indexed', 'sandbox'),
   version              => '2.3.3',
   require              => Package[$java],
 }
