@@ -28,6 +28,8 @@ class lma_logging_analytics::elasticsearch (
   $heap_size = 1,
   $listen_port = 9200,
   $version = 'latest',
+  $script_inline = 'sandbox',
+  $script_indexed = 'sandbox',
 ){
 
   validate_bool($is_master)
@@ -73,6 +75,8 @@ class lma_logging_analytics::elasticsearch (
     'http.bind_host'                     => $listen_address,
     'transport.bind_host'                => $listen_address,
     'transport.publish_host'             => $listen_address,
+    'script.inline'                      => $script_inline,
+    'script.indexed'                     => $script_indexed,
   }
   # Start an instance of elasticsearch
   ::elasticsearch::instance { $instance_name:
