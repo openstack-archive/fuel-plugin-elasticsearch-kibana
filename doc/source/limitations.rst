@@ -3,7 +3,7 @@
 Limitations
 ===========
 
-The StackLight Elasticsearch-Kibana plugin 0.10.1 has the following
+The StackLight Elasticsearch-Kibana plugin 0.10.2 has the following
 limitations:
 
 * Currently, the maximum size of an Elasticsearch cluster that can be

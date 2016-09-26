@@ -3,7 +3,7 @@
 Requirements
 ============
 
-The StackLight Elasticsearch-Kibana Plugin 0.10.1 has the following
+The StackLight Elasticsearch-Kibana Plugin 0.10.2 has the following
 requirements:
 
 +------------------------+------------------------------------------------------------------------------------------+
