@@ -3,6 +3,15 @@
 Release notes
 =============
 
+Version 0.10.2
+--------------
+
+The StackLight Elasticsearch-Kibana plugin 0.10.2 contains the following
+updates:
+
+* Added support to handle scripts execution option that is required for
+  the Telemetry plugin.
+
 Version 0.10.1
 --------------
 
