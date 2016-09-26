@@ -49,6 +49,9 @@ class lma_logging_analytics::kibana_authentication (
     if empty($ldap_servers) {
       fail('ldap_servers list parameter is empty')
     }
+    if ! is_array($ldap_servers) {
+      fail('ldap_servers list parameter must be an array')
+    }
     if ! $ldap_port { fail('Missing ldap_port parameter')}
     if ! $ldap_protocol { fail('Missing ldap_protocol parameter')}
     if ! $ldap_bind_dn { fail('Missing ldap_bind_dn parameter')}
@@ -68,9 +71,8 @@ class lma_logging_analytics::kibana_authentication (
     $apache_modules = concat($default_apache_modules, ['ldap', 'authnz_ldap'])
 
     # LDAP url is used by apache::custom_config
-    $ldap_urls = suffix($ldap_servers, ":${ldap_port}/${ldap_user_search_base_dns}?${ldap_user_attribute}?sub?${ldap_user_search_filter}")
-
-    $ldap_url = join($ldap_urls, ' ')
+    $ldap_servers_list = join($ldap_servers, ' ')
+    $ldap_url = "${ldap_servers_list}:${ldap_port}/${ldap_user_search_base_dns}?${ldap_user_attribute}?sub?${ldap_user_search_filter}"
   } else {
     $apache_modules = $default_apache_modules
   }
