@@ -9,7 +9,7 @@ project = u'The StackLight Elasticsearch-Kibana Plugin for Fuel'
 copyright = u'2016, Mirantis Inc.'
 
 version = '0.10'
-release = '0.10.1'
+release = '0.10.2'
 
 exclude_patterns = []
 
