@@ -35,6 +35,7 @@ describe 'lma_logging_analytics::kibana_authentication' do
           should contain_file('/etc/apache2/kibana.htpasswd')
         }
     end
+
     describe 'ldap parameters' do
         let(:params) do
             {:listen_address => '127.0.0.1', :listen_port => 80,
@@ -59,6 +60,32 @@ describe 'lma_logging_analytics::kibana_authentication' do
           should contain_file('/etc/apache2/kibana.htpasswd')
         }
     end
+
+    describe 'ldap parameters with several ldap servers' do
+        let(:params) do
+            {:listen_address => '127.0.0.1', :listen_port => 80,
+             :kibana_address  => '127.0.0.1', :kibana_port => 5106,
+             :username => 'foouser', :password => 'foopass',
+             :ldap_enabled => true,
+             :ldap_protocol => 'ldap',
+             :ldap_port => 389,
+             :ldap_servers => ['ldap.foo1.fr', 'ldap.foo2.fr'],
+             :ldap_bind_dn => 'cn=admin,dc=example,dc=com',
+             :ldap_bind_password => 'foopass',
+             :ldap_user_search_base_dns => 'ou=groups,dc=example,dc=com',
+             :ldap_user_search_filter => '(&(objectClass=posixGroup)(memberUid=%s))',
+             :ldap_user_attribute => 'uid',
+            }
+        end
+
+        it {
+          should contain_class('apache')
+          should contain_apache__custom_config('kibana-proxy').
+              with_content(/ldap:\/\/ldap.foo1.fr:389 ldap.foo2.fr:389/)
+          should contain_htpasswd('foouser')
+        }
+    end
+
     describe 'ldap parameters are missing' do
         let(:params) do
             {:listen_address => '127.0.0.1', :listen_port => 80,
