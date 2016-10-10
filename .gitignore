@@ -2,3 +2,6 @@
 .build/
 elasticsearch_kibana*rpm
 .tox
+
+# Ide
+.idea
