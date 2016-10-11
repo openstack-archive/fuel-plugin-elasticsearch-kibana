@@ -6,7 +6,7 @@ Deploy an OpenStack environment using networking templates
 By default, the Elasticsearch-Kibana cluster will be deployed on the Fuel
 management network. If this default configuration does not meet your
 requirements, you can leverage the Fuel
-`networking templates' <https://docs.mirantis.com/openstack/fuel/fuel-9.0/operations.html#using-networking-templates>`_
+`networking templates' <http://docs.openstack.org/developer/fuel-docs/userdocs/fuel-user-guide/configure-environment/network-templates.html>`_
 capability to change that default configuration and use a dedicated network
 instead.
 
@@ -30,16 +30,16 @@ and adapt it to your requirements.
 
     $ fuel2 network-group create -N <ENVIRONMENT_ID> -C 10.109.5.0/24 monitoring
 
-#. (Optional) Using the Fuel web UI, adjust the IP range:
+#. Optional. Using the Fuel web UI, adjust the IP range:
 
    .. image:: ../images/network_group_configuration.png
       :width: 800
       :align: center
 
-#. Proceed to :ref:`configure the plugin <plugin_configuration>`.
+#. Proceed to :ref:`Configure the plugin <plugin_configuration>`.
 
-For details on networking templates, see
-`Mirantis Operations Guide <https://docs.mirantis.com/openstack/fuel/fuel-9.0/operations.html#using-networking-templates>`_.
+For details on networking templates, see the
+`Fuel User Guide <http://docs.openstack.org/developer/fuel-docs/userdocs/fuel-user-guide/configure-environment/network-templates.html>`_.
 
 .. raw:: latex
 
