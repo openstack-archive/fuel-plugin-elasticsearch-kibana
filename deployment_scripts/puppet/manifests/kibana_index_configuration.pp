@@ -17,6 +17,7 @@ notice('fuel-plugin-elasticsearch-kibana: kibana_index_configuration.pp')
 $vip = hiera('lma::elasticsearch::vip')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $kibana_index = hiera('lma::elasticsearch::kibana_index')
+$number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
 
 # Elasticsearch must be reachable through HAproxy before the template creation.
 # This is due the fact that The Elasticsearch Puppet module miserably fails
@@ -39,6 +40,14 @@ lma_logging_analytics::es_template { 'kibana4':
   index_template => $kibana_index,
   require        => Haproxy_backend_status['elasticsearch'],
 }
+
+lma_logging_analytics::es_template { ['log', 'notification']:
+  number_of_replicas => $number_of_replicas,
+  host               => $vip,
+  port               => $es_port,
+  require            => Haproxy_backend_status['elasticsearch'],
+}
+
 
 # Import all Kibana objects in one time by issuing a Bulk request
 class { 'lma_logging_analytics::kibana_dashboards':
