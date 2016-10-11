@@ -224,34 +224,36 @@
 # configure the Kibana index before Kibana4 starts. This task is ran at post-deployment
 # stage because the index creation must occur when the Elasticsearch cluster is ready
 # (eg. all instances are started). This is required for MOS 8 (role-based deployment).
-- id: provision-kibana-index
+- id: provision-es-index
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana]
   requires: [post_deployment_start]
   required_for: [post_deployment_end]
   parameters:
-    puppet_manifest: puppet/manifests/kibana_index_configuration.pp
+    puppet_manifest: puppet/manifests/es_index_configuration.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
+  # This task needs to be reexecuted to reconfigure the index templates with an
+  # appropriate number_of_replicas.
+  # This is done at post_deployment time to ensure that the cluster is ready.
+  reexecute_on:
+    - deploy_changes
 
 - id: kibana-installation
   type: puppet
   version: 2.0.0
   role: [primary-elasticsearch_kibana, elasticsearch_kibana]
   cross-depends:
-    - name: provision-kibana-index
+    - name: provision-es-index
       role: [primary-elasticsearch_kibana]
-  requires: [post_deployment_start, provision-kibana-index]
+  requires: [post_deployment_start, provision-es-index]
   required_for: [post_deployment_end]
   parameters:
     puppet_manifest: puppet/manifests/kibana.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
     timeout: 600
 
-# This task needs to be reexecuted to reconfigure the index templates with an
-# appropriate number_of_replicas.
-# This is done at post_deployment time to ensure that the cluster is ready.
 - id: elasticsearch-kibana-configuration
   type: puppet
   version: 2.0.0
