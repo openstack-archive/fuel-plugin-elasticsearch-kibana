@@ -16,11 +16,8 @@ notice('fuel-plugin-elasticsearch-kibana: provision_services.pp')
 
 $deployment_id = hiera('deployment_id')
 $master_ip = hiera('master_ip')
-$es_vip = hiera('lma::elasticsearch::vip')
 $kibana_vip = hiera('lma::kibana::vip')
 $kibana_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
-$es_port = hiera('lma::elasticsearch::rest_port')
-$number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
 
 $authnz = hiera_hash('lma::kibana::authnz')
 if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
@@ -58,12 +55,6 @@ if $kibana_tls['enabled'] {
     \"description\":\"Dashboard for visualizing logs and notifications\",\
     \"url\":\"${protocol}://${kibana_vip}\"}"
   }
-}
-
-lma_logging_analytics::es_template { ['log', 'notification']:
-  number_of_replicas => $number_of_replicas,
-  host               => $es_vip,
-  port               => $es_port,
 }
 
 $kibana_link_created_file = '/var/cache/kibana_link_created'
