@@ -9,11 +9,11 @@ Version 0.10.2
 The StackLight Elasticsearch-Kibana plugin 0.10.2 contains the following
 updates:
 
-* Fixed issue to allow the configuration of a list of LDAP servers. See
+* Fixed an issue to allow the configuration of a list of LDAP servers. See
   `#1624002 <https://bugs.launchpad.net/lma-toolchain/+bug/1624002>`_.
 
-* Added support to handle scripts execution option that is required for
-  the Telemetry plugin.
+* Added support to handle the scripts execution option that is required for
+  the OpenStack Telemetry plugin.
 
 Version 0.10.1
 --------------
