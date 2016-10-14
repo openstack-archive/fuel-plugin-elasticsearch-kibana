@@ -261,6 +261,9 @@
   # by this plugin and the LMA collector plugin. The dependency chain is like this:
   # elasticsearch-kibana-configuration -> upload_nodes_info -> (LMA collector tasks)
   required_for: [upload_nodes_info, post_deployment_end]
+  cross-depended-by:
+    - name: lma-configure-apt
+      role: /.*/
   parameters:
     puppet_manifest: puppet/manifests/provision_services.pp
     puppet_modules: puppet/modules:/etc/puppet/modules
