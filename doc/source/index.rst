@@ -16,8 +16,8 @@ Overview
    licenses
    references
 
-Installing and configuring StackLight Elasticsearch-Kibana plugin for Fuel
-==========================================================================
+Installing and configuring the StackLight Elasticsearch-Kibana plugin for Fuel
+==============================================================================
 
 .. toctree::
    :maxdepth: 1
@@ -26,10 +26,9 @@ Installing and configuring StackLight Elasticsearch-Kibana plugin for Fuel
    configure
    deploy_with_network_templates
    verify
-   
 
-Using StackLight Elasticsearch-Kibana plugin for Fuel
-=====================================================
+Using the StackLight Elasticsearch-Kibana plugin for Fuel
+=========================================================
 
 .. toctree::
    :maxdepth: 1
@@ -37,4 +36,3 @@ Using StackLight Elasticsearch-Kibana plugin for Fuel
    user
    troubleshooting
    advanced_operations
-   
