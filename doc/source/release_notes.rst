@@ -9,11 +9,11 @@ Version 1.0.0
 The StackLight Elasticsearch-Kibana plugin 1.0.0 contains the following
 updates:
 
-* Fixed issue to allow the configuration of a list of LDAP servers. See
+* Fixed an issue to allow the configuration of a list of LDAP servers. See
   `#1624002 <https://bugs.launchpad.net/lma-toolchain/+bug/1624002>`_.
-* Added support to handle scripts execution option that is required for
-  the Telemetry plugin.
-* Fixed the curator job to work with Elasticsearch 2.X. See
+* Added support to handle the scripts execution option that is required for
+  the OpenStack Telemetry plugin.
+* Fixed the curator job to work with Elasticsearch 2.x. See
   `#1616765 <https://bugs.launchpad.net/lma-toolchain/+bug/1616765>`_.
 * Added support for wildcard SSL certificates. See
   `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
