@@ -124,7 +124,7 @@ file directly on the Fuel Master node not to copy that file later on.
 
 **To install the plugin:**
 
-#. Once you create the RPM file, install the plugin:
+#. Once you have created the RPM file, install the plugin:
 
    .. code-block:: console
 
