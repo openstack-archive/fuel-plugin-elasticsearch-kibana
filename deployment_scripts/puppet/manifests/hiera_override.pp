@@ -185,7 +185,8 @@ lma::kibana::tls:
 <% end -%>
 lma::kibana::authnz:
     username: <%= @elasticsearch_kibana["kibana_username"] %>
-    password: <%= @elasticsearch_kibana["kibana_password"] %>
+    password: >
+       <%= @elasticsearch_kibana["kibana_password"] %>
     ldap_enabled: <%= @ldap_enabled %>
     ldap_authorization_enabled: <%= @ldap_authorization_enabled %>
 <% if @ldap_enabled -%>
@@ -196,7 +197,8 @@ lma::kibana::authnz:
     ldap_protocol: <%= @ldap_protocol %>
     ldap_port: <%= @ldap_port %>
     ldap_bind_dn: <%= @ldap_bind_dn %>
-    ldap_bind_password: <%= @ldap_bind_password %>
+    ldap_bind_password: >
+        <%= @ldap_bind_password %>
     ldap_user_search_base_dns: <%= @ldap_user_search_base_dns %>
     ldap_user_attribute: <%= @ldap_user_attribute %>
     ldap_user_search_filter: <%= @ldap_user_search_filter %>
