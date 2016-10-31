@@ -185,7 +185,7 @@ lma::kibana::tls:
 <% end -%>
 lma::kibana::authnz:
     username: <%= @elasticsearch_kibana["kibana_username"] %>
-    password: <%= @elasticsearch_kibana["kibana_password"] %>
+    password: "<%= @elasticsearch_kibana["kibana_password"] %>"
     ldap_enabled: <%= @ldap_enabled %>
     ldap_authorization_enabled: <%= @ldap_authorization_enabled %>
 <% if @ldap_enabled -%>
