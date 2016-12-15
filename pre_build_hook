@@ -13,7 +13,7 @@ FIREWALL_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-firewa
 APACHE_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/puppetlabs-apache-1.4.0.tar.gz"
 HTPASSWD_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/leinaddm-htpasswd-0.0.3.tar.gz"
 
-TZ_VERSION="2016h-0ubuntu0.14.04_all"
+TZ_VERSION="2016j-0ubuntu0.14.04_all"
 
 # Packages needed to install JRE headless
 download_packages http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
