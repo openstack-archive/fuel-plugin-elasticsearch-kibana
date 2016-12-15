@@ -13,7 +13,7 @@ ELASTICSEARCH_TARBALL_URL="https://forgeapi.puppetlabs.com/v3/files/elasticsearc
 # Kibana 3 sources
 KIBANA_TARBALL_URL="https://download.elasticsearch.org/kibana/kibana/kibana-3.1.2.tar.gz"
 
-TZ_VERSION="2016d-0ubuntu0.14.04_all"
+TZ_VERSION="2016j-0ubuntu0.14.04_all"
 
 # Packages needed to install JRE headless
 download_package http://mirrors.kernel.org/ubuntu/pool/main/p/pcsc-lite/libpcsclite1_1.8.10-1ubuntu1_amd64.deb \
