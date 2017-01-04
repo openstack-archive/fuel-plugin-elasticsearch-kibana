@@ -47,7 +47,7 @@
   RewriteCond %{REQUEST_METHOD} POST
   RewriteCond %{QUERY_STRING} op_type=create
   RewriteRule .* - [F,L]
-  # Passthrough the request to Kibana with the orginal query string
+  # Passthrough the request to Kibana with the original query string
   RewriteRule .* http://<%= @kibana_address %>:<%= @kibana_port %>%{REQUEST_URI} [P,QSA,L]
 
   ErrorLog "/var/log/apache2/kibana_error.log"
