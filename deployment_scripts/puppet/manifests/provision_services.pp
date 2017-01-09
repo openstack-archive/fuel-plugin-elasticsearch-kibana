@@ -21,6 +21,7 @@ $kibana_vip = hiera('lma::kibana::vip')
 $kibana_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
+$kibana_index = hiera('lma::elasticsearch::kibana_index')
 
 $authnz = hiera_hash('lma::kibana::authnz')
 if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
@@ -64,6 +65,12 @@ lma_logging_analytics::es_template { ['log', 'notification']:
   number_of_replicas => $number_of_replicas,
   host               => $es_vip,
   port               => $es_port,
+}
+
+# Adjust the number of replicas for the Kibana index
+exec { 'adjust_kibana_replicas':
+  command => "/usr/bin/curl -sL -XPUT http://${es_vip}:${es_port}/${kibana_index}/_settings \
+  -d '{\"index\": {\"number_of_replicas\": ${number_of_replicas}}}'"
 }
 
 $kibana_link_created_file = '/var/cache/kibana_link_created'
