@@ -66,6 +66,12 @@ lma_logging_analytics::es_template { ['log', 'notification']:
   port               => $es_port,
 }
 
+# Adjust the number of replicas for the Kibana index
+exec { 'adjust_kibana_replicas':
+  command => "/usr/bin/curl -sL -XPUT http://${es_vip}:${es_port}/kibana4/_settings \
+  -d '{\"index\": {\"number_of_replicas\": ${number_of_replicas}}}')"
+}
+
 $kibana_link_created_file = '/var/cache/kibana_link_created'
 exec { 'notify_kibana_url':
   creates => $kibana_link_created_file,
