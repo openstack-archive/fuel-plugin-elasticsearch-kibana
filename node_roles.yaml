@@ -12,6 +12,13 @@ elasticsearch_kibana:
     - compute
     - cinder
     - ceph-osd
+    # The Contraill plugin ships a HAProxy package version that isn't
+    # compatible with the MOS version
+    # See https://bugs.launchpad.net/fuel/+bug/1646550
+    - contrail-controller
+    - contrail-analytics
+    - contrail-analytics-db
+    - contrail-tsn
   # 'update_required' is needed to make sure that the already deployed nodes
   # are updated in the same run as the new nodes. The 'reexecute_on' stanza
   # doesn't guarantee this since the reexecuted tasks are run after the new
