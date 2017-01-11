@@ -180,12 +180,14 @@ lma::kibana::nodes:
 lma::kibana::tls:
     enabled: <%= @tls_enabled %>
 <% if @tls_enabled -%>
-    hostname: <%= @kibana_hostname %>
+    hostname: "<%= @kibana_hostname %>"
     cert_file_path: <%= @cert_file_path %>
 <% end -%>
 lma::kibana::authnz:
-    username: <%= @elasticsearch_kibana["kibana_username"] %>
-    password: <%= @elasticsearch_kibana["kibana_password"] %>
+    username: >-
+      <%= @elasticsearch_kibana["kibana_username"] %>
+    password: >-
+      <%= @elasticsearch_kibana["kibana_password"] %>
     ldap_enabled: <%= @ldap_enabled %>
     ldap_authorization_enabled: <%= @ldap_authorization_enabled %>
 <% if @ldap_enabled -%>
@@ -195,15 +197,22 @@ lma::kibana::authnz:
 <% end -%>
     ldap_protocol: <%= @ldap_protocol %>
     ldap_port: <%= @ldap_port %>
-    ldap_bind_dn: <%= @ldap_bind_dn %>
-    ldap_bind_password: <%= @ldap_bind_password %>
-    ldap_user_search_base_dns: <%= @ldap_user_search_base_dns %>
+    ldap_bind_dn: >-
+      <%= @ldap_bind_dn %>
+    ldap_bind_password: >-
+      <%= @ldap_bind_password %>
+    ldap_user_search_base_dns: >-
+      <%= @ldap_user_search_base_dns %>
     ldap_user_attribute: <%= @ldap_user_attribute %>
-    ldap_user_search_filter: <%= @ldap_user_search_filter %>
-    ldap_group_attribute: <%= @ldap_group_attribute %>
+    ldap_user_search_filter: >-
+      <%= @ldap_user_search_filter %>
+    ldap_group_attribute: >-
+      <%= @ldap_group_attribute %>
 <% if @ldap_authorization_enabled -%>
-    ldap_admin_group_dn: <%= @ldap_admin_group_dn %>
-    ldap_viewer_group_dn: <%= @ldap_viewer_group_dn %>
+    ldap_admin_group_dn: >-
+      <%= @ldap_admin_group_dn %>
+    ldap_viewer_group_dn: >-
+      <%= @ldap_viewer_group_dn %>
 <% end -%>
 <% end -%>
 ')
