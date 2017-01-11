@@ -132,8 +132,7 @@
     },
     "settings": {
         "number_of_shards": <%= @number_of_shards %>,
-        "auto_expand_replicas": "0-all"
+        "number_of_replicas": <%= @number_of_replicas %>
     },
     "template": "<%= @template %>"
 }
-
