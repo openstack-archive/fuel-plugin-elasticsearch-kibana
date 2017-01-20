@@ -19,6 +19,11 @@ updates:
   `#1608665 <https://bugs.launchpad.net/lma-toolchain/+bug/1608665>`_.
 * Fixed the UI issue with the LDAP protocol radio button. See
   `#1599778 <https://bugs.launchpad.net/lma-toolchain/+bug/1599778>`_.
+* Fixed a race condition when scaling up the Elasticsearch cluster leading to
+  unavailability of Kibana dashboards.
+  `#1552258 <https://bugs.launchpad.net/lma-toolchain/+bug/1552258>`_.
+* Prevent co-installation with the Contrail plugin.
+  `#1646550 <https://bugs.launchpad.net/lma-toolchain/+bug/1646550>`_.
 
 
 Version 0.10.0
