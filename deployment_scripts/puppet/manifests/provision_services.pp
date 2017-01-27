@@ -22,6 +22,9 @@ $kibana_viewer_port = hiera('lma::elasticsearch::kibana_frontend_viewer_port')
 $es_port = hiera('lma::elasticsearch::rest_port')
 $number_of_replicas = hiera('lma::elasticsearch::number_of_replicas')
 $kibana_index = hiera('lma::elasticsearch::kibana_index')
+$plugin = hiera_hash('elasticsearch_kibana')
+$plugin_version = $plugin['metadata']['plugin_version']
+
 
 $authnz = hiera_hash('lma::kibana::authnz')
 if $authnz['ldap_enabled'] and $authnz['ldap_authorization_enabled'] {
@@ -73,7 +76,7 @@ exec { 'adjust_kibana_replicas':
   -d '{\"index\": {\"number_of_replicas\": ${number_of_replicas}}}'"
 }
 
-$kibana_link_created_file = '/var/cache/kibana_link_created'
+$kibana_link_created_file = "/var/cache/kibana_link_created_${plugin_version}"
 exec { 'notify_kibana_url':
   creates => $kibana_link_created_file,
   command => "/usr/bin/curl -sL -w \"%{http_code}\" \
@@ -83,7 +86,7 @@ http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
 }
 
 if $two_links {
-  $kibana_viewer_link_created_file = '/var/cache/kibana_viewer_link_created'
+  $kibana_viewer_link_created_file = "/var/cache/kibana_viewer_link_created_${plugin_version}"
   exec { 'notify_kibana_url_for_viewer':
     creates => $kibana_viewer_link_created_file,
     command => "/usr/bin/curl -sL -w \"%{http_code}\" \
