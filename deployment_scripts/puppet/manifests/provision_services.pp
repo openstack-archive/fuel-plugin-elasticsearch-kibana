@@ -73,7 +73,7 @@ exec { 'adjust_kibana_replicas':
   -d '{\"index\": {\"number_of_replicas\": ${number_of_replicas}}}'"
 }
 
-$kibana_link_created_file = '/var/cache/kibana_link_created'
+$kibana_link_created_file = '/var/cache/kibana_link_created_up_1.x'
 exec { 'notify_kibana_url':
   creates => $kibana_link_created_file,
   command => "/usr/bin/curl -sL -w \"%{http_code}\" \
@@ -83,7 +83,7 @@ http://${master_ip}:8000/api/clusters/${deployment_id}/plugin_links \
 }
 
 if $two_links {
-  $kibana_viewer_link_created_file = '/var/cache/kibana_viewer_link_created'
+  $kibana_viewer_link_created_file = '/var/cache/kibana_viewer_link_created_up_1.x'
   exec { 'notify_kibana_url_for_viewer':
     creates => $kibana_viewer_link_created_file,
     command => "/usr/bin/curl -sL -w \"%{http_code}\" \
