@@ -61,7 +61,7 @@ if $kibana_tls['enabled'] {
   }
 }
 
-lma_logging_analytics::es_template { ['log', 'notification']:
+lma_logging_analytics::es_template { ['log', 'notification', 'audit']:
   number_of_replicas => $number_of_replicas,
   host               => $es_vip,
   port               => $es_port,
