@@ -1,0 +1,91 @@
+{
+    "mappings": {
+        "message": {
+            "properties": {
+                "Payload": {
+                    "type": "string"
+                },
+                "Logger": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "Hostname": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "Pid": {
+                    "index": "not_analyzed",
+                    "type": "long"
+                },
+                "Severity": {
+                    "index": "not_analyzed",
+                    "type": "long"
+                },
+                "Type": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "severity_label": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "environment_label": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "action": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "event_type": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "outcome": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "notification_type": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "openstack_roles": {
+                    "type": "string",
+                    "analyzer": "ost_roles"
+                },
+                "openstack_region": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "openstack_release": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                },
+                "deployment_id": {
+                    "index": "not_analyzed",
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "settings": {
+        "analysis": {
+            "tokenizer": {
+                 "comma" : {
+                     "type": "pattern",
+                     "pattern": ","
+                 }
+            },
+            "analyzer": {
+                 "ost_roles": {
+                     "type": "custom",
+                     "tokenizer": "comma",
+                     "filter": ["lowercase"]
+                 }
+            }
+        },
+        "number_of_shards": <%= @number_of_shards %>,
+        "number_of_replicas": <%= @number_of_replicas %>
+    },
+    "template": "<%= @template %>"
+}

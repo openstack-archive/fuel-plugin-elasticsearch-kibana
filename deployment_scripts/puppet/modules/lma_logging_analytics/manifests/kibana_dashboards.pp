@@ -111,6 +111,14 @@ class lma_logging_analytics::kibana_dashboards (
       content => template('lma_logging_analytics/kibana4_objects/search_notifications.json'),
       type => 'search',
     },
+    'audit-*' => {
+      content => template('lma_logging_analytics/kibana4_objects/index-pattern_audit.json'),
+      type => 'index-pattern',
+    },
+    'search-audit' => {
+      content => template('lma_logging_analytics/kibana4_objects/search_audit.json'),
+      type => 'search',
+    },
   }
 
   create_resources(
