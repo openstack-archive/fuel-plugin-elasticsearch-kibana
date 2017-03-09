@@ -1,0 +1,9 @@
+Code-Review+2: Guillaume Thouvenin <gthouvenin@mirantis.com>
+Code-Review+2: Swann Croiset <scroiset@mirantis.com>
+Workflow+1: Simon Pasquier <spasquier@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Thu, 09 Mar 2017 15:40:21 +0000
+Reviewed-on: https://review.openstack.org/442314
+Project: openstack/fuel-plugin-elasticsearch-kibana
+Branch: refs/heads/master
