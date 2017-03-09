@@ -43,7 +43,7 @@ from the Fuel plugins' catalog:
 
    .. code-block:: console
 
-    [root@home ~]# scp elasticsearch_kibana-1.0-1.0.0-0.noarch.rpm \
+    [root@home ~]# scp elasticsearch_kibana-1.1-1.1.0-0.noarch.rpm \
     root@<Fuel Master node IP address>:
 
 #. Install the plugin using the `Fuel Plugins CLI
@@ -51,7 +51,7 @@ from the Fuel plugins' catalog:
 
    .. code-block:: console
 
-    [root@fuel ~]# fuel plugins --install elasticsearch_kibana-1.0-1.0.0-0.noarch.rpm
+    [root@fuel ~]# fuel plugins --install elasticsearch_kibana-1.1-1.1.0-0.noarch.rpm
 
 #. Verify that the plugin is installed correctly:
 
@@ -60,7 +60,7 @@ from the Fuel plugins' catalog:
     [root@fuel ~]# fuel plugins --list
     id | name                 | version  | package_version
     ---|----------------------|----------|----------------
-    1  | elasticsearch_kibana | 1.0.0   | 4.0.0
+    1  | elasticsearch_kibana | 1.1.0   | 4.0.0
 
 
 Install from source
@@ -138,7 +138,7 @@ file directly on the Fuel Master node not to copy that file later on.
     [root@fuel ~]# fuel plugins --list
     id | name                 | version | package_version
     ---|----------------------|---------|----------------
-    1  | elasticsearch_kibana | 1.0.0   | 4.0.0
+    1  | elasticsearch_kibana | 1.1.0   | 4.0.0
 
 .. raw:: latex
 
