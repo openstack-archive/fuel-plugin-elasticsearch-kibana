@@ -8,8 +8,8 @@ master_doc = 'index'
 project = u'The StackLight Elasticsearch-Kibana Plugin for Fuel'
 copyright = u'2016, Mirantis Inc.'
 
-version = '1.0'
-release = '1.0.0'
+version = '1.1'
+release = '1.1.0'
 
 exclude_patterns = []
 
