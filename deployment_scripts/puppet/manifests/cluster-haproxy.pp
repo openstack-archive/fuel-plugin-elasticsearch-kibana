@@ -42,17 +42,19 @@ package { 'haproxy':
 #  and this override looks the only possible if
 #  upstream manifests must be kept intact
 $global_options   = {
-  'log'                       => '/dev/log local0',
-  'pidfile'                   => '/var/run/haproxy.pid',
-  'maxconn'                   => $haproxy_maxconn,
-  'user'                      => 'haproxy',
-  'group'                     => 'haproxy',
-  'daemon'                    => '',
-  'stats'                     => 'socket /var/lib/haproxy/stats',
-  'spread-checks'             => $spread_checks,
-  'tune.bufsize'              => $haproxy_bufsize,
-  'tune.maxrewrite'           => $haproxy_maxrewrite,
-  'tune.ssl.default-dh-param' => $haproxy_ssl_default_dh_param,
+  'log'                        => '/dev/log local0',
+  'pidfile'                    => '/var/run/haproxy.pid',
+  'maxconn'                    => $haproxy_maxconn,
+  'user'                       => 'haproxy',
+  'group'                      => 'haproxy',
+  'daemon'                     => '',
+  'stats'                      => 'socket /var/lib/haproxy/stats',
+  'spread-checks'              => $spread_checks,
+  'tune.bufsize'               => $haproxy_bufsize,
+  'tune.maxrewrite'            => $haproxy_maxrewrite,
+  'tune.ssl.default-dh-param'  => $haproxy_ssl_default_dh_param,
+  'ssl-default-bind-options'   => 'no-sslv3 no-tls-tickets',
+  'ssl-default-server-options' => 'no-sslv3 no-tls-tickets',
 }
 
 $defaults_options = {
