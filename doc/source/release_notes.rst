@@ -3,6 +3,16 @@
 Release notes
 =============
 
+Version 1.0.1
+-------------
+
+The StackLight Elasticsearch-Kibana plugin 1.0.1 contains the following
+updates:
+
+* Disable SSLv3 for Kibana. See
+  `#1667356 <https://bugs.launchpad.net/lma-toolchain/+bug/1667356>`_.
+* Support for CADF notifications.
+
 Version 1.0.0
 -------------
 
