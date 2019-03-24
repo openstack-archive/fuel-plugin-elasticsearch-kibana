@@ -4,7 +4,7 @@
     "author": "Guillaume Thouvenin <gthouvenin@mirantis.com>",
     "summary": "Provides additional resources for the LMA logging analytics",
     "license": "Apache-2.0",
-    "source": "git://git.openstack.org/cgit/openstack/fuel-plugin-elasticsearch-kibana.git",
+    "source": "https://git.openstack.org/cgit/openstack/fuel-plugin-elasticsearch-kibana.git",
     "project_page": "none",
     "issues_url": "none",
     "operatingsystem_support": [
